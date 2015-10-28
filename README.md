@@ -1,7 +1,7 @@
 Descent (1994) for iOS
 ======================
 
-This is a source port of the original DOS game “Descent” for iOS. You will need the game files from a licensed copy in order to play it.
+This is a source port of the original DOS game “Descent” for iOS. You will need the game files from a licensed copy in order to play it. **See it in action: https://youtu.be/DRo6iyHhG3M**
 
 Parallax Notice
 ---------------
