@@ -18,9 +18,9 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 Requirements
 ------------
-Xcode 7.1 or later
-iOS 9.1 or later
-If you want to run on an iDevice: http://www.apple.com/ios/whats-new/#compatibility
+- Xcode 7.1 or later
+- iOS 9.1 or later
+- If you want to run on an iDevice: http://www.apple.com/ios/whats-new/#compatibility
 
 Building
 --------
