@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:MAIN/MAIN.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:IO/IO.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:UI/UI.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:TEXMAP/TEXMAP.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:MISC/MISC.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Descent/Descent.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CFILE/CFILE.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:MEM/MEM.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:VECMAT/VECMAT.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:IFF/IFF.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:FIX/FIX.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:3D/3D.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:2D/2D.xcodeproj">
+   </FileRef>
+</Workspace>
