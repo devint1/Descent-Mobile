@@ -199,6 +199,7 @@ static char rcsid[] = "$Id: titles.c 2.10 1995/06/15 12:14:16 john Exp $";
 #include "newmenu.h"
 #include "state.h"
 #include "mouse.h"
+#include "viewcontrollerc.h"
 
 ubyte New_pal[768];
 int	New_pal_254_bash;
@@ -286,11 +287,11 @@ int show_title_screen( char * filename, int allow_keys )
 		Int3();
 		return 0;
 	}
-
+	
 	vfx_set_palette_sub( New_pal );
-	gr_palette_clear();	
 	gr_set_current_canvas( NULL );
 	scale_bitmap(&title_bm, scale_pts);
+	showRenderBuffer();
 	if (gr_palette_fade_in( New_pal, 32, allow_keys ))	
 		return 1;
 
@@ -897,6 +898,9 @@ int show_briefing_message(int screen_num, char *message)
 		} else {
 			prev_ch = ch;
 			Briefing_text_x += show_char_delay(ch, delay_count, robot_num, flashing_cursor);
+			if (delay_count) {
+				showRenderBuffer();
+			}
 		}
 
 		//	Check for Esc -> abort.
@@ -935,6 +939,7 @@ int show_briefing_message(int screen_num, char *message)
 				flash_cursor(flashing_cursor);
 				show_spinning_robot_frame(robot_num);
 				show_bitmap_frame();
+				showRenderBuffer();
 				start_time += KEY_DELAY_DEFAULT/2;
 			}
 
@@ -1076,9 +1081,10 @@ int show_briefing_screen( int screen_num, int allow_keys)
 		return 0;
 	}
 
-	vfx_set_palette_sub( New_pal );
 	gr_palette_clear();
+	vfx_set_palette_sub( New_pal );
 	scale_bitmap( &briefing_bm, scale_pts );
+	showRenderBuffer();
 
 	if (gr_palette_fade_in( New_pal, 32, allow_keys ))	
 		return 1;

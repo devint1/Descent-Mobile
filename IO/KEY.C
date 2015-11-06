@@ -137,11 +137,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 //#define PASS_KEYS_TO_BIOS	1			//if set, bios gets keys
 
-// TODO: Basically need to port this entire file, it's just a hack right now
-
-#pragma off (unreferenced)
 static char rcsid[] = "$Id: key.c 1.35 1995/01/25 20:13:30 john Exp $";
-#pragma on (unreferenced)
+#pragma unused(rcsid)
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -575,10 +572,6 @@ void key_init()
 		printf( "Error locking keyboard handler's data!\n" );
 		exit(1);
 	}
-
-	// TODO: Port
-	//key_data.prev_int_9 = _dos_getvect( 9 );
-	//_dos_setvect( 9, key_handler );
 
 	atexit( key_close );
 }

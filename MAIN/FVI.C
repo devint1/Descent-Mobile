@@ -1022,15 +1022,6 @@ int fvi_sub(vms_vector *intp,int *ints,vms_vector *p0,int startseg,vms_vector *p
 	int hit_none_seglist[MAX_FVI_SEGS];
 	int cur_nest_level = fvi_nest_count;
 
-	//fvi_hit_object = -1;
-
-	// TODO: Port
-	/*if ( stackavail() < 1024 )                      
-	{
-		mprintf( (0, "In fvi_sub, stack left is < 1k !\n" ));
-		Int3();
-	}*/
-
 	if (flags&FQ_GET_SEGLIST)
 		*seglist = startseg; 
 	*n_segs=1;

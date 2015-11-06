@@ -122,6 +122,7 @@ void gr_ibitblt(grs_bitmap *src_bmp, grs_bitmap *dest_bmp, ubyte pixel_double)
 
 void gr_ibitblt_create_mask(grs_bitmap *mask_bmp, int sx, int sy, int sw, int sh, int srowsize)
 {
+#ifndef OGLES
 	int x, y, dest_offset;
 	ubyte pixel, mode;
 	int count = 0;
@@ -154,6 +155,7 @@ void gr_ibitblt_create_mask(grs_bitmap *mask_bmp, int sx, int sy, int sw, int sh
 		}
 		Assert(count <= MAX_HOLES);
 	}
+#endif
 }
 
 void gr_ibitblt_find_hole_size(grs_bitmap *mask_bmp, int *minx, int *miny, int *maxx, int *maxy)

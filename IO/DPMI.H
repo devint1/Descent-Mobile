@@ -101,6 +101,6 @@ extern int dpmi_set_pm_handler(unsigned intnum, void far * isr );
 extern unsigned int dpmi_virtual_memory;
 extern unsigned int dpmi_available_memory;
 extern unsigned int dpmi_physical_memory;
-extern unsigned int dpmi_dos_memory;
+extern long dpmi_dos_memory;
 
 #endif

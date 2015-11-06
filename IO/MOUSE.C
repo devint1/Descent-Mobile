@@ -247,14 +247,14 @@ void mouse_get_delta( int *dx, int *dy, int *dz)
 		*dx = *dy = 0;
 		return;
 	}
-	*dx = touch_dx;
-	*dy = touch_dy;
+	*dx = touch_dx * 3;
+	*dy = touch_dy * 4;
 	
 	// The multipliers here are arbitrary; they just adjust the sensitivity
 	getAttitude(&roll, &pitch, &yaw);
 	if (*dx == 0 && *dy == 0) {
-		*dx += ((last_yaw - yaw) * 500.0);
-		*dy += ((last_roll - roll) * 750.0);
+		*dx += ((last_yaw - yaw) * 750.0);
+		*dy += ((last_roll - roll) * 1000.0);
 		last_roll = roll;
 		last_yaw = yaw;
 	}

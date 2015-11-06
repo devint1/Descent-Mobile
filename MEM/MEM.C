@@ -484,7 +484,7 @@ void mem_free( void * buffer )
 		fprintf( stderr, "\tBlock at 0x%x, size %d\n", buffer, MallocSizes[CurrentMalloc] );
 		fprintf( stderr, "\t%d/%d check bytes were overwritten.\n", ErrorCount, CHECKSIZE );
 	}
-
+	
 	BytesMalloced -= MallocSizes[CurrentMalloc--];
 
 	free( buffer );

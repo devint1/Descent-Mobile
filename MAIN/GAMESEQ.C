@@ -1292,6 +1292,9 @@ died_in_mine_message(void)
 	gr_set_current_canvas(NULL);
 	
 	bmp.bm_data = NULL;
+#ifdef OGLES
+	bmp.bm_ogles_tex_id	= 0;
+#endif
 	pcx_error = pcx_read_bitmap("STARS.PCX",&bmp,BM_LINEAR,NULL);
 	Assert(pcx_error == PCX_ERROR_NONE);
 	scale_bitmap(&bmp, scale_pts);

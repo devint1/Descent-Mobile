@@ -159,14 +159,19 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #ifndef _GR_H
 #define _GR_H
 
+#include <OpenGLES/ES1/gl.h>
 #include "types.h"
 #include "fix.h"
+#include "oglestex.h"
 
 #define GR_FADE_LEVELS 34
 #define GR_ACTUAL_FADE_LEVELS 32
 
+#define TRANSPARENCY_COLOR 255
+
 extern int Gr_scanline_darkening_level;
 
+#pragma pack(1)
 typedef struct _grs_point {
 	fix	x,y;
 } grs_point;
@@ -190,6 +195,9 @@ typedef struct _grs_font {
 #define BM_SVGA     2
 #define BM_RGB15    3   //5 bits each r,g,b stored at 16 bits
 #define BM_SVGA15   4
+#ifdef OGLES
+#define BM_OGLES	5
+#endif
 
 #define BM_FLAG_TRANSPARENT			1
 #define BM_FLAG_SUPER_TRANSPARENT	2
@@ -216,6 +224,9 @@ typedef struct _grs_bitmap {
 	unsigned short bm_selector;
 	ubyte			avg_color;		//	Average color of all pixels in texture map.
 	byte			unused;			//	to 4-byte align.
+#ifdef OGLES
+	GLuint			bm_ogles_tex_id;
+#endif
 } grs_bitmap;
 
 typedef struct _grs_canvas {
@@ -225,6 +236,10 @@ typedef struct _grs_canvas {
 	grs_font *  cv_font;        // the currently selected font
 	short       cv_font_fg_color;   // current font foreground color (-1==Invisible)
 	short       cv_font_bg_color;   // current font background color (-1==Invisible)
+#ifdef OGLES
+	GLuint		cv_ogles_textures[NUM_OGL_TEXTURES];
+	uint		cv_next_ogles_texture;
+#endif
 } grs_canvas;
 
 typedef struct _grs_screen {     // This is a video screen
@@ -287,7 +302,7 @@ extern fix Scale_x, Scale_y;
 // canvas.  Saves the current VGA state and screen mode.
 
 int gr_init(int w, int h);
-int gr_set_mode(int mode);
+int gr_set_mode(int w, int h);
 void gr_enable_default_palette_loading();
 void gr_disable_default_palette_loading();
 
@@ -302,7 +317,7 @@ extern int gr_init_A0000();         // Initializes _A0000. Returns true if faile
 extern unsigned short _A0000;       // Selector for screen segment
 
 //shut down the 2d.  Restore the screen mode.
-int gr_close();
+void gr_close();
 
 //  0=Mode set OK
 //  1=No VGA adapter installed
@@ -443,8 +458,8 @@ int gr_disk(fix x,fix y,fix r);
 int gr_udisk(fix x,fix y,fix r);
 
 // Draw an outline circle
-void gr_circle(fix x,fix y,fix r);
-void gr_ucircle(fix x,fix y,fix r);
+int gr_circle(fix x,fix y,fix r);
+int gr_ucircle(fix x,fix y,fix r);
 
 // Draw an unfilled rectangle into the current canvas
 void gr_box(int left,int top,int right,int bot);
@@ -554,5 +569,7 @@ extern void gr_merge_textures( ubyte * lower, ubyte * upper, ubyte * dest );
 extern void gr_merge_textures_1( ubyte * lower, ubyte * upper, ubyte * dest );
 extern void gr_merge_textures_2( ubyte * lower, ubyte * upper, ubyte * dest );
 extern void gr_merge_textures_3( ubyte * lower, ubyte * upper, ubyte * dest );
+
+extern void gr_sync_display();
 
 #endif

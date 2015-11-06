@@ -10,4 +10,10 @@
 
 @interface RenderView : UIView
 
+#ifdef OGLES
+- (void)drawView;
+@property EAGLContext* context;
+@property GLuint colorRenderBuffer;
+#endif
+
 @end

@@ -1424,9 +1424,6 @@ int SenseGetData( int function, int cls, fix *yaw, fix *pitch, fix *roll, int *b
 	regs.x.eax = function | GET_DEVICE_DATA;
 	regs.x.ebx = 1 | (cls << 8);
 	
-	// TODO: Port
-	//int386x( SENSE_VECTOR, &regs, &regs, &sregs);
-	
 	*yaw     = (short)(regs.x.ebx & 0xffff);
 	*pitch   = (short)(regs.x.ecx & 0xffff);
 	*roll    = (short)(regs.x.edx & 0xffff);
@@ -1538,9 +1535,6 @@ void kconfig_read_external_controls()
 	if ( grd_curscreen->sc_mode != SM_320x200C )			// (If in automap...)
 		kc_external_control->automap_state = 1;
 	memset(&r,0,sizeof(r));
-
-	// TODO: Port
-	//int386 ( kc_external_intno, &r, &r);		// Read external info...
 
 	if ( Player_num > -1 )	{
 		Objects[Players[Player_num].objnum].mtype.phys_info.flags &= (~PF_TURNROLL);	// Turn off roll when turning
@@ -2218,8 +2212,6 @@ int SenseStatus1( void )
 		regs.x.edx = 0;
 		regs.x.ebx = 0;
 		regs.x.eax = function;
-		// TODO: Port
-		//int386( SENSE_VECTOR, &regs, &regs );
         
 		if( regs.x.eax == result )
 			return( function & 0xFF00 );
@@ -2251,9 +2243,6 @@ int SenseSetZero( int function, int cls )
 	memset( &sregs, 0, sizeof(sregs));
 	regs.x.eax = function | SET_ZERO;
 	regs.x.ebx = 1 | (cls << 8);
-	
-	// TODO: Port
-	//int386x( SENSE_VECTOR, &regs, &regs, &sregs);
 	
 	return( (int)(regs.x.eax >> 8) );
 }

@@ -407,6 +407,9 @@ void init_endlevel()
 	atexit(free_endlevel_data);
 
 	terrain_bm_instance.bm_data = satellite_bm_instance.bm_data = NULL;
+#ifdef OGLES
+	terrain_bm_instance.bm_ogles_tex_id = satellite_bm_instance.bm_ogles_tex_id = 0;
+#endif
 }
 
 static int cockpit_mode_save;

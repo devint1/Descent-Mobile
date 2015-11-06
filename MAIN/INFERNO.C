@@ -1026,17 +1026,17 @@ void dos_check_file_handles(int num_required)
 
 extern int piggy_low_memory;
 
-void mem_int_to_string( int number, char *dest )
+void mem_int_to_string( long number, char *dest )
 {
-	int i,l,c;
+	long i,l,c;
 	char buffer[20],*p;
 
-	sprintf( buffer, "%d", number );
+	sprintf( buffer, "%ld", number );
 
 	l = strlen(buffer);
 	if (l<=3) {
 		// Don't bother with less than 3 digits
-		sprintf( dest, "%d", number );
+		sprintf( dest, "%ld", number );
 		return;
 	}
 
@@ -1062,14 +1062,11 @@ void check_memory()
 	printf( "----------------\n" );
 	mem_int_to_string( dpmi_dos_memory/1024, text );
 	printf( "Conventional: %7s KB\n", text );
-	mem_int_to_string( dpmi_physical_memory/1024, text );
-	printf( "Extended:     %7s KB\n", text );
 	if ( dpmi_available_memory > dpmi_physical_memory )	{
 		mem_int_to_string( (dpmi_available_memory-dpmi_physical_memory)/1024, text );
 	} else {
 		mem_int_to_string( 0, text );
 	}
-	printf( "Virtual:      %7s KB\n", text );
 	printf( "\n" );
 
 	if ( dpmi_dos_memory < NEEDED_DOS_MEMORY )	{
@@ -1514,13 +1511,6 @@ int descent_main(int argc,char **argv)
 			printf("Error: Height provided without specifying width\n");
 			exit(1);
 		}
-		
-		// TODO: Port
-		// Nothing in command line, use current display settings
-		/*if(!screen_width && !screen_height) {
-			screen_width = GetSystemMetrics(SM_CXSCREEN);
-			screen_height = GetSystemMetrics(SM_CYSCREEN);
-		}*/
 
 		if ( FindArg( "-lcdbios" ) )	{
 			if (!is_3dbios_installed())	{
@@ -1648,7 +1638,7 @@ int descent_main(int argc,char **argv)
 		show_title_screen( "iplogo1.pcx", 1 );
 		show_title_screen( "logo.pcx", 1 );
 	}
-
+	
 	{
 		grs_bitmap title_bm;
 		int pcx_error;
@@ -1659,9 +1649,9 @@ int descent_main(int argc,char **argv)
 
 		title_bm.bm_data = NULL;
 		if ((pcx_error=pcx_read_bitmap( filename, &title_bm, BM_LINEAR, title_pal ))==PCX_ERROR_NONE)	{
-			scale_bitmap(&title_bm, scale_pts);
 			vfx_set_palette_sub( title_pal );
-			gr_palette_clear();
+			scale_bitmap(&title_bm, scale_pts);
+			//gr_palette_clear();
 			//gr_bitmap( 0, 0, &title_bm );
 			gr_palette_fade_in( title_pal, 32, 0 );
 			free(title_bm.bm_data);

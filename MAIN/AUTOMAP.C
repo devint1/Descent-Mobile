@@ -1019,6 +1019,9 @@ void do_automap( int key_code )	{
 	gr_init_sub_canvas(&DrawingPage,&Page, w * 0.04375, h * 0.17, w * 0.91, h * 0.69);
 
 	Automap_background.bm_data = NULL;
+#ifdef OGLES
+	Automap_background.bm_ogles_tex_id = 0;
+#endif
 	pcx_error = pcx_read_bitmap(filename,&Automap_background,BM_LINEAR,NULL);
 	if ( pcx_error != PCX_ERROR_NONE )	{
 		printf("File %s - PCX error: %s",filename,pcx_errormsg(pcx_error));
@@ -1048,7 +1051,10 @@ void do_automap( int key_code )	{
 	if ( Automap_background.bm_data )
 		free( Automap_background.bm_data );
 	Automap_background.bm_data = NULL;
-
+#ifdef OGLES
+	Automap_background.bm_ogles_tex_id = 0;
+#endif
+	
 	gr_set_current_canvas(&DrawingPage);
 
 	automap_build_edge_list();

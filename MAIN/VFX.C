@@ -169,6 +169,9 @@ void vfx_init()
 //download palette into VFX
 void vfx_set_palette_sub(ubyte * palette)
 {
+#ifdef OGLES
+	gr_palette_apply(palette);
+#endif
 	/*int i;
 
 	if (!vfx_initialized) return;

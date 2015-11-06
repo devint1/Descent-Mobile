@@ -360,6 +360,7 @@ static char rcsid[] = "$Id: game.c 2.36 1996/01/05 16:52:05 john Exp $";
 #include "piggy.h"
 #include "multibot.h"
 #include "ai.h"
+#include "viewcontrollerc.h"
 
 //#define TEST_TIMER	1		//if this is set, do checking on timer
 
@@ -403,7 +404,7 @@ int stop_count,start_count;
 int time_stopped,time_started;
 #endif
 
-ubyte Game_cockpit_copy_code = NULL;
+ubyte Game_cockpit_copy_code = 0;
 
 ubyte new_cheats[]= {KEY_B^0xaa, KEY_B^0xaa, KEY_B^0xaa, KEY_F^0xaa, KEY_A^0xaa,
 							KEY_U^0xaa, KEY_I^0xaa, KEY_R^0xaa, KEY_L^0xaa, KEY_H^0xaa,
@@ -708,12 +709,12 @@ void update_cockpits(int force_redraw)
 	switch( Cockpit_mode )	{
 	case CM_FULL_COCKPIT:
 	case CM_REAR_VIEW:
-		gr_set_current_canvas(VR_offscreen_buffer);
-		gr_clear_canvas(255);
+		//gr_set_current_canvas(VR_offscreen_buffer);
+		//gr_clear_canvas(255);
 		PIGGY_PAGE_IN(cockpit_bitmap[Cockpit_mode]);
 		scale_bitmap(&GameBitmaps[cockpit_bitmap[Cockpit_mode].index], cockpit_scale_pts);
-		gr_set_current_canvas(&VR_screen_pages[VR_current_page]);
-		gr_ubitmapm(0,0, &VR_offscreen_buffer->cv_bitmap);
+		//gr_set_current_canvas(&VR_screen_pages[VR_current_page]);
+		//gr_ubitmapm(0,0, &VR_offscreen_buffer->cv_bitmap);
 		break;
 	case CM_FULL_SCREEN:
 		break;
@@ -1011,6 +1012,10 @@ void game_init_render_buffers(int screen_mode, int render_w, int render_h, int u
 			gr_init_sub_canvas( &VR_render_buffer[0], VR_offscreen_buffer, 0, 0, render_w, render_h );
 			gr_init_sub_canvas( &VR_render_buffer[1], VR_offscreen_buffer, 0, 0, render_w, render_h );
 		}
+#ifdef OGLES
+		VR_render_buffer[0].cv_bitmap.bm_type = BM_OGLES;
+		VR_render_buffer[1].cv_bitmap.bm_type = BM_OGLES;
+#endif
 		game_init_render_sub_buffers( 0, 0, render_w, render_h );
 
 		// Initialize screen buffer
@@ -1103,7 +1108,6 @@ int set_screen_mode(int sm)
 	case SCREEN_MENU:
 
 		if (grd_curscreen->sc_mode != SM_320x200C)	{
-			if (gr_set_mode(SM_320x200C)) Error("Cannot set screen mode for game!");
 	 		gr_palette_load( gr_palette );
 		}
 
@@ -1117,13 +1121,7 @@ int set_screen_mode(int sm)
 		gr_init_sub_canvas( &VR_screen_pages[1], &grd_curscreen->sc_canvas, 0, 0, grd_curscreen->sc_w, grd_curscreen->sc_h );
 		break;
 	case SCREEN_GAME:
-		if (grd_curscreen->sc_mode != VR_screen_mode)	
-			if (gr_set_mode(VR_screen_mode))	{
-				if ( VR_screen_mode != SM_640x480V )	
-					Error("Cannot set screen mode for game!");
-				else
-					Error( "Cannot set screen mode for game!\nMake sure that you have a VESA driver loaded\nthat can display 640x480 in 256 colors.\n" );
-			}
+		if (grd_curscreen->sc_mode != VR_screen_mode)
 
 		if ( Game_3dmax_flag )
 			game_3dmax_on();
@@ -1902,7 +1900,7 @@ void game_render_frame_mono(void)
 	render_frame(0);
 
 	game_draw_hud_stuff();
-
+	
 	if ( Game_double_buffer ) {		//copy to visible screen
 		if ( Game_cockpit_copy_code==NULL )	{
 			if ( VR_use_paging )	{		
@@ -1920,7 +1918,7 @@ void game_render_frame_mono(void)
 				gr_bm_ubitblt( VR_render_sub_buffer[0].cv_w, VR_render_sub_buffer[0].cv_h, VR_render_sub_buffer[0].cv_bitmap.bm_x, VR_render_sub_buffer[0].cv_bitmap.bm_y, 0, 0, &VR_render_sub_buffer[0].cv_bitmap, &VR_screen_pages[0].cv_bitmap );
 			}
 		} else	{
-			gr_ibitblt( &VR_render_buffer[0].cv_bitmap, &VR_screen_pages[0].cv_bitmap, 0 );
+			//gr_ibitblt( &VR_render_buffer[0].cv_bitmap, &VR_screen_pages[0].cv_bitmap, 0 );
 		}
 	}
 
@@ -1931,6 +1929,10 @@ void game_render_frame_mono(void)
 			Game_mode = Newdemo_game_mode;
 #endif
 
+#ifdef OGLES
+		gr_set_current_canvas(NULL);
+		update_cockpits(Cockpit_mode == CM_FULL_COCKPIT);
+#endif
 		render_gauges();
 
 #ifndef SHAREWARE
@@ -1938,24 +1940,32 @@ void game_render_frame_mono(void)
 			Game_mode = GM_NORMAL;
 #endif
 	}
-
 }
 
 void game_render_frame()
 {
 	set_screen_mode( SCREEN_GAME );
 
+#ifdef OGLES
+	// Need this so textures can draw
+	gr_palette_load(gr_palette);
+#else
 	update_cockpits(0);
+#endif
 
 	play_homing_warning();
-
+	
 	if (VR_render_mode == VR_INTERLACED )
 		game_render_frame_stereo_interlaced();
 	else if (VR_render_mode == VR_AREA_DET)
 		game_render_frame_stereo_vfx();
 	else if (VR_render_mode == VR_NONE )
-		game_render_frame_mono();		
-
+		game_render_frame_mono();
+	
+#ifdef OGLES
+	showRenderBuffer();
+#endif
+	
 	// Make sure palette is faded in
 	stop_time();
 	gr_palette_fade_in( gr_palette, 32, 0 );
@@ -3864,6 +3874,7 @@ long last_start = -1;
 
 void GameLoop(int RenderFlag, int ReadControlsFlag)
 {
+#ifndef OGLES
 	// Cap the game speed at ~60fps
 	if (last_start > 0) {
 		long sleep_time = 15000 - (timer_get_usecs() - last_start);
@@ -3872,6 +3883,7 @@ void GameLoop(int RenderFlag, int ReadControlsFlag)
 		}
 	}
 	last_start = timer_get_usecs();
+#endif
 
 	static int desc_dead_countdown = 100;   /*  used if player shouldn't be playing */
 
@@ -4328,8 +4340,6 @@ void vr_reset_display()
 {
 	if (VR_render_mode == VR_NONE ) return;
 
-	if (VR_screen_mode == SCREEN_MENU)	// low res 320x200 (overall) mode
-		gr_set_mode( SM_320x400U );
 	set_screen_mode (SCREEN_MENU);
 	set_screen_mode (SCREEN_GAME);
 }

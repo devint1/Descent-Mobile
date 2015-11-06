@@ -7,17 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0356D7741BD48D2C00B013B9 /* CLIPPER.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7671BD48D2C00B013B9 /* CLIPPER.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7751BD48D2C00B013B9 /* DRAW.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7691BD48D2C00B013B9 /* DRAW.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7761BD48D2C00B013B9 /* GLOBVARS.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D76A1BD48D2C00B013B9 /* GLOBVARS.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7771BD48D2C00B013B9 /* INSTANCE.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D76C1BD48D2C00B013B9 /* INSTANCE.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7781BD48D2C00B013B9 /* INTERP.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D76D1BD48D2C00B013B9 /* INTERP.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7791BD48D2C00B013B9 /* MATRIX.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D76E1BD48D2C00B013B9 /* MATRIX.C */; settings = {ASSET_TAGS = (); }; };
-		0356D77A1BD48D2C00B013B9 /* POINTS.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D76F1BD48D2C00B013B9 /* POINTS.C */; settings = {ASSET_TAGS = (); }; };
-		0356D77B1BD48D2C00B013B9 /* ROD.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7701BD48D2C00B013B9 /* ROD.C */; settings = {ASSET_TAGS = (); }; };
-		0356D77C1BD48D2C00B013B9 /* SETUP.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7711BD48D2C00B013B9 /* SETUP.C */; settings = {ASSET_TAGS = (); }; };
-		0356D77D1BD48D2C00B013B9 /* UPVECS.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7721BD48D2C00B013B9 /* UPVECS.C */; settings = {ASSET_TAGS = (); }; };
-		0356D77E1BD48D2C00B013B9 /* VECVIEW.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7731BD48D2C00B013B9 /* VECVIEW.C */; settings = {ASSET_TAGS = (); }; };
+		0356D7741BD48D2C00B013B9 /* CLIPPER.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7671BD48D2C00B013B9 /* CLIPPER.C */; };
+		0356D7751BD48D2C00B013B9 /* DRAW.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7691BD48D2C00B013B9 /* DRAW.C */; };
+		0356D7761BD48D2C00B013B9 /* GLOBVARS.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D76A1BD48D2C00B013B9 /* GLOBVARS.C */; };
+		0356D7771BD48D2C00B013B9 /* INSTANCE.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D76C1BD48D2C00B013B9 /* INSTANCE.C */; };
+		0356D7781BD48D2C00B013B9 /* INTERP.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D76D1BD48D2C00B013B9 /* INTERP.C */; };
+		0356D7791BD48D2C00B013B9 /* MATRIX.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D76E1BD48D2C00B013B9 /* MATRIX.C */; };
+		0356D77A1BD48D2C00B013B9 /* POINTS.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D76F1BD48D2C00B013B9 /* POINTS.C */; };
+		0356D77B1BD48D2C00B013B9 /* ROD.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7701BD48D2C00B013B9 /* ROD.C */; };
+		0356D77C1BD48D2C00B013B9 /* SETUP.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7711BD48D2C00B013B9 /* SETUP.C */; };
+		0356D77D1BD48D2C00B013B9 /* UPVECS.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7721BD48D2C00B013B9 /* UPVECS.C */; };
+		0356D77E1BD48D2C00B013B9 /* VECVIEW.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7731BD48D2C00B013B9 /* VECVIEW.C */; };
+		0367D71E1BE711C7005192F6 /* SETUPOGLES.c in Sources */ = {isa = PBXBuildFile; fileRef = 0367D71C1BE711C7005192F6 /* SETUPOGLES.c */; };
+		03ED58841BE8465800C24B31 /* RODOGLES.c in Sources */ = {isa = PBXBuildFile; fileRef = 03ED58821BE8465800C24B31 /* RODOGLES.c */; };
+		E30579AC1BE673CD00B6C33F /* DRAWOGLES.c in Sources */ = {isa = PBXBuildFile; fileRef = E30579AA1BE673CD00B6C33F /* DRAWOGLES.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,6 +51,12 @@
 		0356D7711BD48D2C00B013B9 /* SETUP.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SETUP.C; sourceTree = SOURCE_ROOT; };
 		0356D7721BD48D2C00B013B9 /* UPVECS.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UPVECS.C; sourceTree = SOURCE_ROOT; };
 		0356D7731BD48D2C00B013B9 /* VECVIEW.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VECVIEW.C; sourceTree = SOURCE_ROOT; };
+		0367D71C1BE711C7005192F6 /* SETUPOGLES.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SETUPOGLES.c; path = OGLES/SETUPOGLES.c; sourceTree = "<group>"; };
+		0367D71D1BE711C7005192F6 /* SETUPOGLES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SETUPOGLES.h; path = OGLES/SETUPOGLES.h; sourceTree = "<group>"; };
+		03ED58821BE8465800C24B31 /* RODOGLES.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RODOGLES.c; path = OGLES/RODOGLES.c; sourceTree = "<group>"; };
+		03ED58831BE8465800C24B31 /* RODOGLES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RODOGLES.h; path = OGLES/RODOGLES.h; sourceTree = "<group>"; };
+		E30579AA1BE673CD00B6C33F /* DRAWOGLES.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = DRAWOGLES.c; path = OGLES/DRAWOGLES.c; sourceTree = "<group>"; };
+		E30579AB1BE673CD00B6C33F /* DRAWOGLES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DRAWOGLES.h; path = OGLES/DRAWOGLES.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +73,7 @@
 		0356D7511BD48CE700B013B9 = {
 			isa = PBXGroup;
 			children = (
+				E30579A91BE673AF00B6C33F /* OGLES */,
 				0356D75C1BD48CE700B013B9 /* 3D */,
 				0356D75B1BD48CE700B013B9 /* Products */,
 			);
@@ -96,6 +106,19 @@
 				0356D7731BD48D2C00B013B9 /* VECVIEW.C */,
 			);
 			path = 3D;
+			sourceTree = "<group>";
+		};
+		E30579A91BE673AF00B6C33F /* OGLES */ = {
+			isa = PBXGroup;
+			children = (
+				E30579AA1BE673CD00B6C33F /* DRAWOGLES.c */,
+				E30579AB1BE673CD00B6C33F /* DRAWOGLES.h */,
+				0367D71C1BE711C7005192F6 /* SETUPOGLES.c */,
+				0367D71D1BE711C7005192F6 /* SETUPOGLES.h */,
+				03ED58821BE8465800C24B31 /* RODOGLES.c */,
+				03ED58831BE8465800C24B31 /* RODOGLES.h */,
+			);
+			name = OGLES;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,10 +181,13 @@
 				0356D7771BD48D2C00B013B9 /* INSTANCE.C in Sources */,
 				0356D7741BD48D2C00B013B9 /* CLIPPER.C in Sources */,
 				0356D77D1BD48D2C00B013B9 /* UPVECS.C in Sources */,
+				03ED58841BE8465800C24B31 /* RODOGLES.c in Sources */,
+				E30579AC1BE673CD00B6C33F /* DRAWOGLES.c in Sources */,
 				0356D7791BD48D2C00B013B9 /* MATRIX.C in Sources */,
 				0356D77E1BD48D2C00B013B9 /* VECVIEW.C in Sources */,
 				0356D77B1BD48D2C00B013B9 /* ROD.C in Sources */,
 				0356D7761BD48D2C00B013B9 /* GLOBVARS.C in Sources */,
+				0367D71E1BE711C7005192F6 /* SETUPOGLES.c in Sources */,
 				0356D7751BD48D2C00B013B9 /* DRAW.C in Sources */,
 				0356D7781BD48D2C00B013B9 /* INTERP.C in Sources */,
 				0356D77A1BD48D2C00B013B9 /* POINTS.C in Sources */,
@@ -200,6 +226,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					OGLES,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -239,6 +266,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_INPUT_FILETYPE = sourcecode.c.c;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = OGLES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;

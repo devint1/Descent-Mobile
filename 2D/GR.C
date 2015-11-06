@@ -247,10 +247,6 @@ typedef struct screen_save {
 screen_save gr_saved_screen;
 int gr_show_screen_info = 0;
 
-// TODO: Port
-/*HWND hwnd;
-extern HDC hDibDC;*/
-
 int fullscreen_installed = 0;
 
 void gr_set_cellheight( ubyte height )
@@ -509,57 +505,8 @@ int gr_vesa_setmode( int mode )
 	return gr_vesa_setmodea( mode );
 }
 
-// TODO: Port
-/*DWORD WINAPI render_window_run(LPVOID lpThreadParameter) {
-	int border_thickness = GetSystemMetrics(SM_CXSIZEFRAME);
-	int title_thickness = GetSystemMetrics(SM_CYCAPTION);
-	hwnd = CreateWindowEx(0, CLASS_NAME,
-		"DESCENT", fullscreen_installed ? WS_POPUP : (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX),
-		CW_USEDEFAULT, CW_USEDEFAULT,
-		grd_curscreen->sc_canvas.cv_bitmap.bm_w + 4 * border_thickness,
-		grd_curscreen->sc_canvas.cv_bitmap.bm_h + title_thickness + 4 * border_thickness,
-		NULL, NULL, GetModuleHandle(NULL), NULL);
-
-	// Show the window
-	ShowWindow(hwnd, 1);
-
-	// Hide the cursor
-	ShowCursor(false);
-
-	MSG msg;
-	memset(&msg, 0, sizeof(msg));
-	while (GetMessage(&msg, NULL, 0, 0))
-	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
-}*/
-
 // New awesome version for the 21st century! Any resolution we want!
 int gr_set_mode(int w, int h) {
-	
-	// TODO: Port
-	// Changing dimensions, rezize video buffer
-	/*if (w != bmi->bmiHeader.biWidth || -h != bmi->bmiHeader.biHeight) {
-		// Initialize window buffer
-		bmi->bmiHeader.biWidth = w;
-		bmi->bmiHeader.biHeight = -h;
-
-		HDC hDesktopDC = GetDC(GetDesktopWindow());
-		HBITMAP hDib = CreateDIBSection(hDesktopDC, bmi, DIB_PAL_COLORS, &gr_video_memory, 0, 0);
-		if (gr_video_memory == NULL) {
-			Error("Could not resize window buffer.");
-		}
-		hDibDC = CreateCompatibleDC(hDesktopDC);
-		HGDIOBJ hOldObj = SelectObject(hDibDC, hDib);
-
-		int border_thickness = GetSystemMetrics(SM_CXSIZEFRAME);
-		int title_thickness = GetSystemMetrics(SM_CYCAPTION);
-		SetWindowPos(hwnd, NULL, 0, 0,
-			w + 4 * border_thickness,
-			h + title_thickness + 4 * border_thickness, SWP_NOMOVE);
-	}*/
-
 	memset(grd_curscreen, 0, sizeof(grs_screen));
 	grd_curscreen->sc_mode = 0;
 	grd_curscreen->sc_w = w;
@@ -570,7 +517,12 @@ int gr_set_mode(int w, int h) {
 	grd_curscreen->sc_canvas.cv_bitmap.bm_w = w;
 	grd_curscreen->sc_canvas.cv_bitmap.bm_h = h;
 	grd_curscreen->sc_canvas.cv_bitmap.bm_rowsize = w;
+#ifdef OGLES
+	grd_curscreen->sc_canvas.cv_bitmap.bm_type = BM_OGLES;
+	grd_curscreen->sc_canvas.cv_next_ogles_texture = 0;
+#else
 	grd_curscreen->sc_canvas.cv_bitmap.bm_type = BM_LINEAR;
+#endif
 	grd_curscreen->sc_canvas.cv_bitmap.bm_data = (unsigned char *)gr_video_memory;
 	gr_set_current_canvas(NULL);
 
@@ -583,61 +535,6 @@ int gr_set_mode(int w, int h) {
 	return 0;
 }
 
-// TODO: Port
-/*LRESULT CALLBACK window_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
-	switch (uMsg)
-	{
-	case WM_KEYDOWN:
-	case WM_KEYUP:
-	case WM_SYSKEYDOWN:
-	case WM_SYSKEYUP:
-		key_handler(wParam, lParam);
-		break;
-	case WM_LBUTTONDOWN:
-	case WM_MBUTTONDOWN:
-	case WM_RBUTTONDOWN:
-	case WM_XBUTTONDOWN:
-	case WM_MOUSEHWHEEL:
-	case WM_MOUSEWHEEL:
-	case WM_LBUTTONUP:
-	case WM_MBUTTONUP:
-	case WM_RBUTTONUP:
-	case WM_XBUTTONUP:
-		mouse_handler(uMsg, wParam, lParam);
-		break;
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		exit(0);
-		return 0;
-	case WM_PAINT:
-	{
-		PAINTSTRUCT paint;
-		memset(&paint, 0, sizeof(PAINTSTRUCT));
-		HDC hWndDc = BeginPaint(hWnd, &paint);
-		EnterCriticalSection(&palettecs);
-		BitBlt(hWndDc, 0, 0,
-			grd_curscreen->sc_canvas.cv_bitmap.bm_w,
-			grd_curscreen->sc_canvas.cv_bitmap.bm_w,
-			hDibDC, 0, 0, SRCCOPY);
-		LeaveCriticalSection(&palettecs);
-		EndPaint(hWnd, &paint);
-		break;
-	}
-	return 0;
-
-	}
-	return DefWindowProc(hWnd, uMsg, wParam, lParam);
-}*/
-
-// TODO: Port
-/*DWORD WINAPI screen_painter(LPVOID lpThreadParameter) {
-	while (Function_mode != FMODE_NORENDER) {
-		InvalidateRect(hwnd, NULL, 1);
-		//Sleep(17);
-	}
-}*/
-
 int gr_init(int w, int h)
 {
 	int org_gamma;
@@ -646,17 +543,9 @@ int gr_init(int w, int h)
 	// Only do this function once!
 	if (gr_installed==1)
 		return 1;
-
-	//if (gr_init_A0000())
-	//	return 10;
-
 	// Save the current text screen mode
 	if (gr_save_mode()==1)
 		return 1;
-
-	// Critical section for palette changes
-	// TODO: Port
-	//InitializeCriticalSection(&palettecs);
 
 	// Save the current palette, and fade it out to black.
 	gr_palette_read( gr_pal_default );
@@ -674,7 +563,7 @@ int gr_init(int w, int h)
 	memset( grd_curscreen, 0, sizeof(grs_screen));
 
 	// Set the mode.
-	if (retcode=gr_set_mode(w, h))
+	if ((retcode=gr_set_mode(w, h)))
 	{
 		gr_restore_mode();
 		return retcode;
@@ -698,19 +587,6 @@ int gr_init(int w, int h)
 
 //	if (!dpmi_allocate_selector( &gr_inverse_table, 32*32*32, &gr_inverse_table_selector ))
 //		Error( "Error allocating inverse table selector!" );
-
-	// TODO: Port
-	// Register window class
-	/*WNDCLASS wc;
-	memset(&wc, 0, sizeof(wc));
-	wc.lpfnWndProc = window_proc;
-	wc.hInstance = GetModuleHandle(NULL);
-	wc.lpszClassName = CLASS_NAME;
-	wc.hCursor = NULL;
-	RegisterClass(&wc);
-
-	// Create screen painter thread
-	CreateThread(NULL, 0, screen_painter, NULL, 0, NULL);*/
 
 	// Set flags indicating that this is installed.
 	gr_installed = 1;

@@ -35,11 +35,21 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #include "gr.h"
 #include "grdef.h"
+#ifdef OGLES
+#include "rectogles.h"
+#endif
 
 void gr_urect(int left,int top,int right,int bot)
 {
 	int i;
 
+#ifdef OGLES
+	if (grd_curcanv->cv_bitmap.bm_type == BM_OGLES) {
+		gr_rect_ogles(left, top, right, bot);
+		return;
+	}
+#endif
+	
 	for ( i=top; i<=bot; i++ )
 		gr_uscanline( left, right, i );
 }
@@ -48,6 +58,13 @@ void gr_rect(int left,int top,int right,int bot)
 {
 	int i;
 
+#ifdef OGLES
+	if (grd_curcanv->cv_bitmap.bm_type == BM_OGLES) {
+		gr_rect_ogles(left, top, right, bot);
+		return;
+	}
+#endif
+	
 	for ( i=top; i<=bot; i++ )
 		gr_scanline( left, right, i );
 }

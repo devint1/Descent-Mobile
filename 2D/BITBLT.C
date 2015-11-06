@@ -15,6 +15,11 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "error.h"
 #include "byteswap.h"
 #include "rle.h"
+#ifdef OGLES
+#include "bitbltogles.h"
+#include <stdlib.h>
+#include <string.h>
+#endif
 
 int gr_bitblt_dest_step_shift = 0;
 int gr_bitblt_double = 0;
@@ -144,8 +149,16 @@ void gr_linear_rep_movsdm_faded(ubyte * src, ubyte * dest, uint num_pixels, ubyt
 void gr_bm_ubitblt_rle(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest) {
 	unsigned char * dbits;
 	unsigned char * sbits;
-
+	short dest_rowsize = dest->bm_rowsize;
 	int i;
+	
+#ifdef OGLES
+	if(dest->bm_type == BM_OGLES) {
+		dbits = malloc(w * h);
+		memset(dbits, 255, w*h);
+		dest_rowsize = w;
+	}
+#endif
 
 	sbits = &src->bm_data[4 + src->bm_h];
 	for (i = 0; i<sy; i++)
@@ -157,8 +170,22 @@ void gr_bm_ubitblt_rle(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap 
 	for (i = 0; i < h; i++) {
 		gr_rle_expand_scanline(dbits, sbits, sx, sx + w - 1);
 		sbits += (int)src->bm_data[4 + i + sy];
-		dbits += dest->bm_rowsize << gr_bitblt_dest_step_shift;
+		dbits += dest_rowsize << gr_bitblt_dest_step_shift;
 	}
+	
+#ifdef OGLES
+	if (dest->bm_type == BM_OGLES) {
+		grs_bitmap src_ogles = *src;
+		dbits -= w * h;
+		src_ogles.bm_data = dbits;
+		src_ogles.bm_w = w;
+		src_ogles.bm_h = h;
+		gr_ubitmapm_ogles(dx, dy, &src_ogles);
+		glDeleteTextures(1, &src_ogles.bm_ogles_tex_id);
+		free(dbits);
+		return;
+	}
+#endif
 }
 
 void gr_bitblt_cockpit(grs_bitmap *bm) {
@@ -240,6 +267,14 @@ void gr_ubitmapm(int x, int y, grs_bitmap *bm) {
 
 	src = bm->bm_data;
 
+#ifdef OGLES
+	if(grd_curcanv->cv_bitmap.bm_type == BM_OGLES) {
+		dest = malloc(bm->bm_w * bm->bm_h);
+		memset(dest, 255, bm->bm_w * bm->bm_h);
+		dest_rowsize = bm->bm_w;
+	}
+#endif
+	
 	if (gr_bitblt_fade_table == NULL) {
 		for (y1 = 0; y1 < bm->bm_h; y1++) {
 			gr_linear_rep_movsdm(src, dest, bm->bm_w);
@@ -254,6 +289,19 @@ void gr_ubitmapm(int x, int y, grs_bitmap *bm) {
 			dest += (int)(dest_rowsize);
 		}
 	}
+	
+#ifdef OGLES
+	if (grd_curcanv->cv_bitmap.bm_type == BM_OGLES) {
+		grs_bitmap src_ogles = *bm;
+		dest -= bm->bm_w * bm->bm_h;
+		src_ogles.bm_data = dest;
+		src_ogles.bm_flags = 0;
+		gr_ubitmapm_ogles(x, y, &src_ogles);
+		glDeleteTextures(1, &src_ogles.bm_ogles_tex_id);
+		free(dest);
+		return;
+	}
+#endif
 }
 
 extern void BlitLargeAlign(ubyte *draw_buffer, int dstRowBytes, ubyte *dstPtr, int w, int h, int modulus);
@@ -310,28 +358,50 @@ void gr_bm_ubitblt(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * sr
 void gr_bm_ubitbltm(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest) {
 	unsigned char * dbits;
 	unsigned char * sbits;
-
 	int i;
+	short dest_rowsize = dest->bm_rowsize;
 
 	sbits = src->bm_data + (src->bm_rowsize * sy) + sx;
 	dbits = dest->bm_data + (dest->bm_rowsize * dy) + dx;
 
+#ifdef OGLES
+	if(dest->bm_type == BM_OGLES) {
+		dbits = malloc(w * h);
+		memset(dbits, 255, w*h);
+		dest_rowsize = w;
+	}
+#endif
+	
 	// No interlacing, copy the whole buffer.
 
 	if (gr_bitblt_fade_table == NULL) {
 		for (i = 0; i < h; i++) {
 			gr_linear_rep_movsdm(sbits, dbits, w);
 			sbits += src->bm_rowsize;
-			dbits += dest->bm_rowsize;
+			dbits += dest_rowsize;
 		}
 	}
 	else {
 		for (i = 0; i < h; i++) {
 			gr_linear_rep_movsdm_faded(sbits, dbits, w, gr_bitblt_fade_table[dy + i]);
 			sbits += src->bm_rowsize;
-			dbits += dest->bm_rowsize;
+			dbits += dest_rowsize;
 		}
 	}
+	
+#ifdef OGLES
+	if (dest->bm_type == BM_OGLES) {
+		grs_bitmap src_ogles = *src;
+		dbits -= w * h;
+		src_ogles.bm_data = dbits;
+		src_ogles.bm_w = w;
+		src_ogles.bm_h = h;
+		gr_ubitmapm_ogles(dx, dy, &src_ogles);
+		glDeleteTextures(1, &src_ogles.bm_ogles_tex_id);
+		free(dbits);
+		return;
+	}
+#endif
 }
 
 
@@ -390,6 +460,12 @@ void gr_bitmap(int x, int y, grs_bitmap *bm) {
 }
 
 void gr_bitmapm(int x, int y, grs_bitmap *bm) {
+#ifdef OGLES
+	if (grd_curcanv->cv_bitmap.bm_type == BM_OGLES) {
+		gr_ubitmapm_ogles(x, y, bm);
+		return;
+	}
+#endif
 	int dx1 = x, dx2 = x + bm->bm_w - 1;
 	int dy1 = y, dy2 = y + bm->bm_h - 1;
 	int sx = 0, sy = 0;

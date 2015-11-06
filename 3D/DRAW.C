@@ -51,6 +51,9 @@ static char rcsid[] = "$Id: draw.c 1.5 1995/10/11 00:27:17 allender Exp $";
 #include "globvars.h"
 #include "texmap.h"
 #include "clipper.h"
+#ifdef OGLES
+#include "drawogles.h"
+#endif
 
 void(*tmap_drawer_ptr)(grs_bitmap *bm, int nv, g3s_point **vertlist) = draw_tmap;
 void(*flat_drawer_ptr)(int nv, int *vertlist) = gr_upoly_tmap;
@@ -213,6 +216,9 @@ free_points:
 //draw a flat-shaded face.
 //returns 1 if off screen, 0 if drew
 bool g3_draw_poly(int nv, g3s_point **pointlist) {
+#ifdef OGLES
+	return g3_draw_poly_ogles(nv, pointlist);
+#else
 	int i;
 	g3s_point **bufptr;
 	g3s_codes cc;
@@ -253,6 +259,7 @@ bool g3_draw_poly(int nv, g3s_point **pointlist) {
 	(*flat_drawer_ptr)(nv, (int *)Vertex_list);
 
 	return 0;	//say it drew
+#endif
 }
 
 bool must_clip_tmap_face(int nv, g3s_codes cc, grs_bitmap *bm);
@@ -260,10 +267,13 @@ bool must_clip_tmap_face(int nv, g3s_codes cc, grs_bitmap *bm);
 //draw a texture-mapped face.
 //returns 1 if off screen, 0 if drew
 bool g3_draw_tmap(int nv, g3s_point **pointlist, g3s_uvl *uvl_list, grs_bitmap *bm) {
+#ifdef OGLES
+	return g3_draw_tmap_ogles(nv, pointlist, uvl_list, bm);
+#else
 	int i;
 	g3s_point **bufptr;
 	g3s_codes cc;
-
+	
 	cc.uor = 0; cc.uand = 0xff;
 
 	bufptr = Vbuf0;
@@ -307,6 +317,7 @@ bool g3_draw_tmap(int nv, g3s_point **pointlist, g3s_uvl *uvl_list, grs_bitmap *
 	(*tmap_drawer_ptr)(bm, nv, bufptr);
 
 	return 0;	//say it drew
+#endif
 }
 
 bool must_clip_tmap_face(int nv, g3s_codes cc, grs_bitmap *bm) {

@@ -8,9 +8,6 @@
 
 #import "AppDelegate.h"
 
-#include "cfile.h"
-#include "inferno.h"
-
 @interface AppDelegate ()
 
 @end
@@ -19,42 +16,6 @@
 
 // Launches Descent!
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-		Resource_path = [[[NSBundle mainBundle] resourcePath] cStringUsingEncoding:NSASCIIStringEncoding];
-		NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-		Document_path = [paths.firstObject cStringUsingEncoding:NSASCIIStringEncoding];
-		
-		// Get screen resolution
-		CGRect screenRect = [[UIScreen mainScreen] bounds];
-		CGFloat screenWidth = screenRect.size.width;
-		CGFloat screenHeight = screenRect.size.height;
-		
-#ifdef NORETINA
-		CGFloat screenScale = 1;
-#else
-		CGFloat screenScale = [[UIScreen mainScreen] scale];
-#endif
-		
-		screenWidth *= screenScale;
-		screenHeight *= screenScale;
-		
-		// Swap width/height if portrait
-		UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-		if(UIDeviceOrientationIsPortrait(orientation)) {
-			CGFloat temp;
-			temp = screenWidth;
-			screenWidth = screenHeight;
-			screenHeight = temp;
-		}
-		
-		// HACK! HACK! HACK! Emulating command line arguments!
-		char w[6], h[6];
-		sprintf(w, "%d", (int)screenWidth);
-		sprintf(h, "%d", (int)screenHeight);
-		const char *args[] = { "", "-width", w, "-height", h };
-		
-		descent_main(5, (char**)args);
-	});
 	return YES;
 }
 

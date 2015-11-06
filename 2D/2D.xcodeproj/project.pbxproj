@@ -7,38 +7,41 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0356D7071BD4789A00B013B9 /* BITBLT.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6D81BD4789A00B013B9 /* BITBLT.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7081BD4789A00B013B9 /* BITMAP.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6D91BD4789A00B013B9 /* BITMAP.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7091BD4789A00B013B9 /* BOX.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6DA1BD4789A00B013B9 /* BOX.C */; settings = {ASSET_TAGS = (); }; };
-		0356D70A1BD4789A00B013B9 /* CANVAS.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6DB1BD4789A00B013B9 /* CANVAS.C */; settings = {ASSET_TAGS = (); }; };
-		0356D70B1BD4789A00B013B9 /* CIRCLE.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6DC1BD4789A00B013B9 /* CIRCLE.C */; settings = {ASSET_TAGS = (); }; };
-		0356D70C1BD4789A00B013B9 /* CURSOR.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6DE1BD4789A00B013B9 /* CURSOR.C */; settings = {ASSET_TAGS = (); }; };
-		0356D70D1BD4789A00B013B9 /* DISC.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6DF1BD4789A00B013B9 /* DISC.C */; settings = {ASSET_TAGS = (); }; };
-		0356D70E1BD4789A00B013B9 /* EFFECTS.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6E11BD4789A00B013B9 /* EFFECTS.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7101BD4789A00B013B9 /* FONT.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6E31BD4789A00B013B9 /* FONT.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7111BD4789A00B013B9 /* GPIXEL.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6E41BD4789A00B013B9 /* GPIXEL.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7121BD4789A00B013B9 /* GR.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6E51BD4789A00B013B9 /* GR.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7131BD4789A00B013B9 /* IBITBLT.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6E81BD4789A00B013B9 /* IBITBLT.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7151BD4789A00B013B9 /* LBITBLT.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6EB1BD4789A00B013B9 /* LBITBLT.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7161BD4789A00B013B9 /* LINE.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6EC1BD4789A00B013B9 /* LINE.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7171BD4789A00B013B9 /* LINEAR.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6ED1BD4789A00B013B9 /* LINEAR.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7181BD4789A00B013B9 /* LINEARC.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6EE1BD4789A00B013B9 /* LINEARC.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7191BD4789A00B013B9 /* MEDIAN.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6EF1BD4789A00B013B9 /* MEDIAN.C */; settings = {ASSET_TAGS = (); }; };
-		0356D71A1BD4789A00B013B9 /* MODEX.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6F01BD4789A00B013B9 /* MODEX.C */; settings = {ASSET_TAGS = (); }; };
-		0356D71B1BD4789A00B013B9 /* MODEXC.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6F11BD4789A00B013B9 /* MODEXC.C */; settings = {ASSET_TAGS = (); }; };
-		0356D71D1BD4789A00B013B9 /* PALETTE.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6F31BD4789A00B013B9 /* PALETTE.C */; settings = {ASSET_TAGS = (); }; };
-		0356D71E1BD4789A00B013B9 /* PCX.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6F51BD4789A00B013B9 /* PCX.C */; settings = {ASSET_TAGS = (); }; };
-		0356D71F1BD4789A00B013B9 /* PIXEL.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6F81BD4789A00B013B9 /* PIXEL.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7201BD4789A00B013B9 /* POLY.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6F91BD4789A00B013B9 /* POLY.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7211BD4789A00B013B9 /* RECT.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6FA1BD4789A00B013B9 /* RECT.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7221BD4789A00B013B9 /* RLE.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6FB1BD4789A00B013B9 /* RLE.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7231BD4789A00B013B9 /* ROLLER.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6FD1BD4789A00B013B9 /* ROLLER.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7241BD4789A00B013B9 /* SCALE.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6FE1BD4789A00B013B9 /* SCALE.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7251BD4789A00B013B9 /* SCANLINE.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6FF1BD4789A00B013B9 /* SCANLINE.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7271BD4789A00B013B9 /* TMAPBITS.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7011BD4789A00B013B9 /* TMAPBITS.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7281BD4789A00B013B9 /* TPOLY.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7021BD4789A00B013B9 /* TPOLY.C */; settings = {ASSET_TAGS = (); }; };
-		0356D7291BD4789A00B013B9 /* VESA.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7031BD4789A00B013B9 /* VESA.C */; settings = {ASSET_TAGS = (); }; };
-		0356D72A1BD4789A00B013B9 /* VESALIB.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7041BD4789A00B013B9 /* VESALIB.C */; settings = {ASSET_TAGS = (); }; };
+		0356D7071BD4789A00B013B9 /* BITBLT.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6D81BD4789A00B013B9 /* BITBLT.C */; };
+		0356D7081BD4789A00B013B9 /* BITMAP.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6D91BD4789A00B013B9 /* BITMAP.C */; };
+		0356D7091BD4789A00B013B9 /* BOX.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6DA1BD4789A00B013B9 /* BOX.C */; };
+		0356D70A1BD4789A00B013B9 /* CANVAS.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6DB1BD4789A00B013B9 /* CANVAS.C */; };
+		0356D70B1BD4789A00B013B9 /* CIRCLE.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6DC1BD4789A00B013B9 /* CIRCLE.C */; };
+		0356D70C1BD4789A00B013B9 /* CURSOR.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6DE1BD4789A00B013B9 /* CURSOR.C */; };
+		0356D70D1BD4789A00B013B9 /* DISC.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6DF1BD4789A00B013B9 /* DISC.C */; };
+		0356D70E1BD4789A00B013B9 /* EFFECTS.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6E11BD4789A00B013B9 /* EFFECTS.C */; };
+		0356D7101BD4789A00B013B9 /* FONT.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6E31BD4789A00B013B9 /* FONT.C */; };
+		0356D7111BD4789A00B013B9 /* GPIXEL.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6E41BD4789A00B013B9 /* GPIXEL.C */; };
+		0356D7121BD4789A00B013B9 /* GR.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6E51BD4789A00B013B9 /* GR.C */; };
+		0356D7131BD4789A00B013B9 /* IBITBLT.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6E81BD4789A00B013B9 /* IBITBLT.C */; };
+		0356D7151BD4789A00B013B9 /* LBITBLT.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6EB1BD4789A00B013B9 /* LBITBLT.C */; };
+		0356D7161BD4789A00B013B9 /* LINE.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6EC1BD4789A00B013B9 /* LINE.C */; };
+		0356D7171BD4789A00B013B9 /* LINEAR.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6ED1BD4789A00B013B9 /* LINEAR.C */; };
+		0356D7181BD4789A00B013B9 /* LINEARC.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6EE1BD4789A00B013B9 /* LINEARC.C */; };
+		0356D7191BD4789A00B013B9 /* MEDIAN.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6EF1BD4789A00B013B9 /* MEDIAN.C */; };
+		0356D71A1BD4789A00B013B9 /* MODEX.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6F01BD4789A00B013B9 /* MODEX.C */; };
+		0356D71B1BD4789A00B013B9 /* MODEXC.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6F11BD4789A00B013B9 /* MODEXC.C */; };
+		0356D71D1BD4789A00B013B9 /* PALETTE.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6F31BD4789A00B013B9 /* PALETTE.C */; };
+		0356D71E1BD4789A00B013B9 /* PCX.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6F51BD4789A00B013B9 /* PCX.C */; };
+		0356D71F1BD4789A00B013B9 /* PIXEL.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6F81BD4789A00B013B9 /* PIXEL.C */; };
+		0356D7201BD4789A00B013B9 /* POLY.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6F91BD4789A00B013B9 /* POLY.C */; };
+		0356D7211BD4789A00B013B9 /* RECT.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6FA1BD4789A00B013B9 /* RECT.C */; };
+		0356D7221BD4789A00B013B9 /* RLE.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6FB1BD4789A00B013B9 /* RLE.C */; };
+		0356D7231BD4789A00B013B9 /* ROLLER.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6FD1BD4789A00B013B9 /* ROLLER.C */; };
+		0356D7241BD4789A00B013B9 /* SCALE.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6FE1BD4789A00B013B9 /* SCALE.C */; };
+		0356D7251BD4789A00B013B9 /* SCANLINE.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6FF1BD4789A00B013B9 /* SCANLINE.C */; };
+		0356D7271BD4789A00B013B9 /* TMAPBITS.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7011BD4789A00B013B9 /* TMAPBITS.C */; };
+		0356D7281BD4789A00B013B9 /* TPOLY.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7021BD4789A00B013B9 /* TPOLY.C */; };
+		0356D7291BD4789A00B013B9 /* VESA.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7031BD4789A00B013B9 /* VESA.C */; };
+		0356D72A1BD4789A00B013B9 /* VESALIB.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7041BD4789A00B013B9 /* VESALIB.C */; };
+		035B2CF61BE3FF9600334C3D /* RECTOGLES.c in Sources */ = {isa = PBXBuildFile; fileRef = 035B2CF41BE3FF9600334C3D /* RECTOGLES.c */; };
+		038CF7A51BE30CB50073AB9B /* SCALEOGLES.c in Sources */ = {isa = PBXBuildFile; fileRef = 038CF7A31BE30CB50073AB9B /* SCALEOGLES.c */; };
+		038CF7B01BE3F66A0073AB9B /* BITBLTOGLES.c in Sources */ = {isa = PBXBuildFile; fileRef = 038CF7AE1BE3F66A0073AB9B /* BITBLTOGLES.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -97,6 +100,12 @@
 		0356D7031BD4789A00B013B9 /* VESA.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VESA.C; sourceTree = SOURCE_ROOT; };
 		0356D7041BD4789A00B013B9 /* VESALIB.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VESALIB.C; sourceTree = SOURCE_ROOT; };
 		0356D7051BD4789A00B013B9 /* VESALIB.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VESALIB.H; sourceTree = SOURCE_ROOT; };
+		035B2CF41BE3FF9600334C3D /* RECTOGLES.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RECTOGLES.c; path = OGLES/RECTOGLES.c; sourceTree = "<group>"; };
+		035B2CF51BE3FF9600334C3D /* RECTOGLES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RECTOGLES.h; path = OGLES/RECTOGLES.h; sourceTree = "<group>"; };
+		038CF7A31BE30CB50073AB9B /* SCALEOGLES.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SCALEOGLES.c; path = OGLES/SCALEOGLES.c; sourceTree = "<group>"; };
+		038CF7A41BE30CB50073AB9B /* SCALEOGLES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCALEOGLES.h; path = OGLES/SCALEOGLES.h; sourceTree = "<group>"; };
+		038CF7AE1BE3F66A0073AB9B /* BITBLTOGLES.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = BITBLTOGLES.c; path = OGLES/BITBLTOGLES.c; sourceTree = "<group>"; };
+		038CF7AF1BE3F66A0073AB9B /* BITBLTOGLES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BITBLTOGLES.h; path = OGLES/BITBLTOGLES.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +122,7 @@
 		0356D6C31BD4781000B013B9 = {
 			isa = PBXGroup;
 			children = (
+				038CF79E1BE307FA0073AB9B /* OGLES */,
 				0356D6CE1BD4781000B013B9 /* 2D */,
 				0356D6CD1BD4781000B013B9 /* Products */,
 			);
@@ -173,6 +183,19 @@
 				0356D7051BD4789A00B013B9 /* VESALIB.H */,
 			);
 			path = 2D;
+			sourceTree = "<group>";
+		};
+		038CF79E1BE307FA0073AB9B /* OGLES */ = {
+			isa = PBXGroup;
+			children = (
+				038CF7A31BE30CB50073AB9B /* SCALEOGLES.c */,
+				038CF7A41BE30CB50073AB9B /* SCALEOGLES.h */,
+				038CF7AE1BE3F66A0073AB9B /* BITBLTOGLES.c */,
+				038CF7AF1BE3F66A0073AB9B /* BITBLTOGLES.h */,
+				035B2CF41BE3FF9600334C3D /* RECTOGLES.c */,
+				035B2CF51BE3FF9600334C3D /* RECTOGLES.h */,
+			);
+			name = OGLES;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,14 +261,17 @@
 				0356D70E1BD4789A00B013B9 /* EFFECTS.C in Sources */,
 				0356D7211BD4789A00B013B9 /* RECT.C in Sources */,
 				0356D7241BD4789A00B013B9 /* SCALE.C in Sources */,
+				038CF7B01BE3F66A0073AB9B /* BITBLTOGLES.c in Sources */,
 				0356D7191BD4789A00B013B9 /* MEDIAN.C in Sources */,
 				0356D7281BD4789A00B013B9 /* TPOLY.C in Sources */,
 				0356D7091BD4789A00B013B9 /* BOX.C in Sources */,
 				0356D7251BD4789A00B013B9 /* SCANLINE.C in Sources */,
 				0356D70A1BD4789A00B013B9 /* CANVAS.C in Sources */,
 				0356D71E1BD4789A00B013B9 /* PCX.C in Sources */,
+				038CF7A51BE30CB50073AB9B /* SCALEOGLES.c in Sources */,
 				0356D7171BD4789A00B013B9 /* LINEAR.C in Sources */,
 				0356D7131BD4789A00B013B9 /* IBITBLT.C in Sources */,
+				035B2CF61BE3FF9600334C3D /* RECTOGLES.c in Sources */,
 				0356D71B1BD4789A00B013B9 /* MODEXC.C in Sources */,
 				0356D7231BD4789A00B013B9 /* ROLLER.C in Sources */,
 				0356D7291BD4789A00B013B9 /* VESA.C in Sources */,
@@ -358,6 +384,12 @@
 				CODE_SIGN_IDENTITY = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_INPUT_FILETYPE = sourcecode.c.c;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					OGLES,
+				);
+				HEADER_SEARCH_PATHS = $SRCROOT/../LIB;
 				LINKER_DISPLAYS_MANGLED_NAMES = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -373,6 +405,12 @@
 				CODE_SIGN_IDENTITY = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_INPUT_FILETYPE = sourcecode.c.c;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					RELEASE,
+					NDEBUG,
+					OGLES,
+				);
+				HEADER_SEARCH_PATHS = $SRCROOT/../LIB;
 				LINKER_DISPLAYS_MANGLED_NAMES = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

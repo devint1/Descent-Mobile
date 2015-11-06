@@ -13,6 +13,9 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "gr.h"
 #include "grdef.h"
 #include "rle.h"
+#ifdef OGLES
+#include "scaleogles.h"
+#endif
 
 // John's new stuff below here....
 
@@ -392,6 +395,16 @@ void scale_bitmap(grs_bitmap *bp, grs_point *vertbuf )
 		scale_bitmap_c_rle(bp, dbp, dx0, dy0, dx1, dy1, clipped_u0, clipped_v0, clipped_u1, clipped_v1  );
 	else
 		scale_bitmap_c(bp, dbp, dx0, dy0, dx1, dy1, clipped_u0, clipped_v0, clipped_u1, clipped_v1  );
+#endif
+#ifdef OGLES
+	if (dbp->bm_type == BM_OGLES) {
+		dx0 += dbp->bm_x;
+		dx1 += dbp->bm_x;
+		dy0 += dbp->bm_y;
+		dy1 += dbp->bm_y;
+		scale_bitmap_ogles(bp, dx0, dy0, dx1, dy1);
+		return;
+	}
 #endif
 	if ( bp->bm_flags & BM_FLAG_RLE )	{
 		if ( (dtemp < (f2i(clipped_x1)-f2i(clipped_x0))) && (dtemp>0) )

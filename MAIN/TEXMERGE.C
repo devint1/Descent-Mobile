@@ -402,11 +402,15 @@ grs_bitmap * texmerge_get_cached_bitmap( int tmap_bottom, int tmap_top )
 		Cache[least_recently_used].bitmap->bm_flags = bitmap_bottom->bm_flags & (~BM_FLAG_RLE);
 		Cache[least_recently_used].bitmap->avg_color = bitmap_bottom->avg_color;
 	}
-		
+
+#ifdef OGLES
+	glDeleteTextures(1, &Cache[least_recently_used].bitmap->bm_ogles_tex_id);
+	Cache[least_recently_used].bitmap->bm_ogles_tex_id = 0;
+#endif
 	Cache[least_recently_used].top_bmp = bitmap_top;
 	Cache[least_recently_used].bottom_bmp = bitmap_bottom;
 	Cache[least_recently_used].last_frame_used = FrameCount;
 	Cache[least_recently_used].orient = orient;
-
+	
 	return Cache[least_recently_used].bitmap;
 }

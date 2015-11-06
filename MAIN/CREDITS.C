@@ -232,7 +232,7 @@ void credits_show()
 	title_font = gr_init_font( "font2-3.fnt" );
 	names_font = gr_init_font( "font2-2.fnt" );
 	backdrop.bm_data=NULL;
-	pcx_error = pcx_read_bitmap("stars.pcx",&backdrop,grd_curcanv->cv_bitmap.bm_type,backdrop_palette);
+	pcx_error = pcx_read_bitmap("stars.pcx",&backdrop,BM_LINEAR,backdrop_palette);
 	if (pcx_error != PCX_ERROR_NONE)		{
 		cfclose(file);
 		return;

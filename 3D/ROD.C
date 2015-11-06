@@ -38,6 +38,9 @@ static char rcsid[] = "$Id: rod.c 1.2 1995/09/13 11:31:46 allender Exp $";
 #include "3d.h"
 #include "globvars.h"
 #include "fix.h"
+#ifdef OGLES
+#include "rodogles.h"
+#endif
 
 grs_point blob_vertices[4];
 g3s_point rod_points[4];
@@ -143,9 +146,17 @@ int checkmuldiv(fix *r, fix a, fix b, fix c);
 //draws a bitmap with the specified 3d width & height 
 //returns 1 if off screen, 0 if drew
 bool g3_draw_bitmap(vms_vector *pos, fix width, fix height, grs_bitmap *bm) {
-#ifndef __powerc
 	g3s_point pnt;
-	fix t, w, h;
+	fix w, h;
+#ifdef OGLES
+	if (g3_rotate_point(&pnt, pos) & CC_BEHIND)
+		return 1;
+	w = fixmul(width, Matrix_scale.x) * 2;
+	h = fixmul(height, Matrix_scale.y) * 2;
+	return g3_draw_bitmap_ogles(&pnt, w, h, bm);
+#else
+#ifndef __powerc
+	fix t;
 
 	if (g3_rotate_point(&pnt, pos) & CC_BEHIND)
 		return 1;
@@ -201,5 +212,6 @@ bool g3_draw_bitmap(vms_vector *pos, fix width, fix height, grs_bitmap *bm) {
 	scale_bitmap(bm, blob_vertices);
 
 	return 0;
+#endif
 #endif
 }

@@ -12,5 +12,8 @@
 int textIsActive();
 void activateText();
 void deactivateText();
+#ifdef OGLES
+void showRenderBuffer();
+#endif
 
 #endif /* ViewControllerC_h */

@@ -1553,17 +1553,15 @@ void draw_player_ship(int cloak_state,int old_cloak_state,int x, int y)
 		}
 	}
 
-	gr_set_current_canvas(&VR_render_buffer[0]);
-	gr_clear_canvas(255); // DANGER! Potentially expensive op!
+	gr_set_current_canvas(VR_offscreen_buffer);
+	gr_clear_canvas(255);
 	scale_bitmap(bm, scale_pts);
-
 	Gr_scanline_darkening_level = cloak_fade_value;
 	gr_rect(x, y, x+scale_w-1, y+scale_h-1);
 	Gr_scanline_darkening_level = GR_FADE_LEVELS;
 
 	gr_set_current_canvas(get_current_game_screen());
-	gr_bm_ubitbltm(scale_w, scale_h, x, y, x, y, &VR_render_buffer[0].cv_bitmap, &grd_curcanv->cv_bitmap);
-
+	gr_bm_ubitbltm(scale_w, scale_h, x, y, x, y, &VR_offscreen_buffer->cv_bitmap, &grd_curcanv->cv_bitmap);
 }
 
 #define INV_FRAME_TIME	(f1_0/10)		//how long for each frame
@@ -2525,7 +2523,6 @@ void render_gauges()
 
 		old_cloak[VR_current_page]=cloak;
 	}
-
 
 	draw_weapon_boxes();
 

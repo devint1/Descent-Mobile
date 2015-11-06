@@ -37,9 +37,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 *
 */
 
-#pragma off (unreferenced)
 static char rcsid[] = "$Id: setup.c 1.4 1995/10/11 00:27:04 allender Exp $";
-#pragma on (unreferenced)
+#pragma unused(rcsid)
 
 #include <stdlib.h>
 
@@ -48,7 +47,9 @@ static char rcsid[] = "$Id: setup.c 1.4 1995/10/11 00:27:04 allender Exp $";
 #include "3d.h"
 #include "globvars.h"
 #include "clipper.h"
-//#include "div0.h"
+#ifdef OGLES
+#include "setupogles.h"
+#endif
 
 //initialize the 3d system
 void g3_init(void) {
@@ -91,6 +92,9 @@ void g3_start_frame(void) {
 	init_free_points();
 
 	init_interface_vars_to_assembler();		//for the texture-mapper
+#ifdef OGLES
+	g3_ogles_start_frame();
+#endif
 
 }
 
@@ -98,4 +102,7 @@ void g3_start_frame(void) {
 void g3_end_frame(void) {
 	//	Assert(free_point_num==0);
 	free_point_num = 0;
+#ifdef OGLES
+	g3_ogles_end_frame();
+#endif
 }

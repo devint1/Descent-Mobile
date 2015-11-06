@@ -32,6 +32,8 @@
 		03A28F5A1BE05D4F00642A6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03A28F541BE05D2600642A6D /* LaunchScreen.storyboard */; };
 		03A28F5B1BE05D4F00642A6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03A28F561BE05D2600642A6D /* Main.storyboard */; };
 		03A28F5C1BE05D6000642A6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03A28F361BE05BCE00642A6D /* Assets.xcassets */; };
+		03A28FB11BE2E82200642A6D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A28FB01BE2E82200642A6D /* OpenGLES.framework */; };
+		03A28FB41BE2EA8900642A6D /* ControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A28FB31BE2EA8900642A6D /* ControlsView.m */; };
 		03B84A2A1BDB6E5F005D04FB /* merlin_silver.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 03B84A291BDB6E5F005D04FB /* merlin_silver.sf2 */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +76,9 @@
 		03A28F4C1BE05C0300642A6D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
 		03A28F551BE05D2600642A6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		03A28F571BE05D2600642A6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		03A28FB01BE2E82200642A6D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		03A28FB21BE2EA8900642A6D /* ControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlsView.h; sourceTree = SOURCE_ROOT; };
+		03A28FB31BE2EA8900642A6D /* ControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControlsView.m; sourceTree = SOURCE_ROOT; };
 		03B84A291BDB6E5F005D04FB /* merlin_silver.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = merlin_silver.sf2; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -82,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03A28FB11BE2E82200642A6D /* OpenGLES.framework in Frameworks */,
 				0300DB411BDD4F4900AED00D /* OpenAL.framework in Frameworks */,
 				033B56661BD593F300A20894 /* libMAIN.a in Frameworks */,
 				031232F01BD4DAD900BEBA87 /* libIO.a in Frameworks */,
@@ -148,6 +154,7 @@
 		0356D80C1BD4A22A00B013B9 = {
 			isa = PBXGroup;
 			children = (
+				03A28FB01BE2E82200642A6D /* OpenGLES.framework */,
 				03A28F361BE05BCE00642A6D /* Assets.xcassets */,
 				03A28F381BE05BD400642A6D /* Info.plist */,
 				033B56781BD5C47F00A20894 /* UI */,
@@ -171,6 +178,8 @@
 			children = (
 				03A28F431BE05BF900642A6D /* AppDelegate.h */,
 				03A28F441BE05BF900642A6D /* AppDelegate.m */,
+				03A28FB21BE2EA8900642A6D /* ControlsView.h */,
+				03A28FB31BE2EA8900642A6D /* ControlsView.m */,
 				03A28F451BE05BF900642A6D /* RenderView.h */,
 				03A28F461BE05BF900642A6D /* RenderView.m */,
 				03A28F471BE05BF900642A6D /* ViewController.h */,
@@ -277,6 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03A28FB41BE2EA8900642A6D /* ControlsView.m in Sources */,
 				03A28F411BE05BEB00642A6D /* Music.m in Sources */,
 				03A28F401BE05BEB00642A6D /* Motion.m in Sources */,
 				03A28F4B1BE05BF900642A6D /* ViewController.m in Sources */,
@@ -397,11 +407,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 					NETWORK,
 					NORETINA,
+					OGLES,
 				);
 				HEADER_SEARCH_PATHS = ../LIB;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
@@ -410,6 +423,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = tuchsen.Descent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -418,11 +432,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					RELEASE,
 					NORETINA,
 					NETWORK,
+					OGLES,
 				);
 				HEADER_SEARCH_PATHS = ../LIB;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
@@ -431,6 +448,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = tuchsen.Descent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

@@ -710,6 +710,9 @@ int piggy_init()
 		temp_bitmap.bm_flags = BM_FLAG_PAGED_OUT;
 		temp_bitmap.avg_color = bmh.avg_color;
 		temp_bitmap.bm_data = Piggy_bitmap_cache_data;
+#ifdef OGLES
+		temp_bitmap.bm_ogles_tex_id = 0;
+#endif
 
 		GameBitmapFlags[i+1] = 0;
 		if ( bmh.flags & BM_FLAG_TRANSPARENT ) GameBitmapFlags[i+1] |= BM_FLAG_TRANSPARENT;

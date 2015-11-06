@@ -71,7 +71,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #include "mem.h"
 
-
 #include "gr.h"
 #include "grdef.h"
 
@@ -94,6 +93,9 @@ grs_canvas *gr_create_canvas(int w, int h)
 	new_canvas->cv_bitmap.bm_type = BM_LINEAR;
 	new_canvas->cv_bitmap.bm_rowsize = w;
 	new_canvas->cv_bitmap.bm_data = data;
+#ifdef OGLES
+	new_canvas->cv_bitmap.bm_ogles_tex_id = 0;
+#endif
 
 	new_canvas->cv_color = 0;
 	new_canvas->cv_drawmode = 0;
@@ -176,6 +178,10 @@ void gr_init_sub_canvas(grs_canvas *new_canvas, grs_canvas *src, int x, int y, i
 void gr_free_canvas(grs_canvas *canv)
 {
 	free(canv->cv_bitmap.bm_data );
+#ifdef OGLES
+	glDeleteTextures(1, &canv->cv_bitmap.bm_ogles_tex_id);
+	canv->cv_bitmap.bm_ogles_tex_id = 0;
+#endif
     free(canv);
 }
 
@@ -217,6 +223,14 @@ void gr_set_current_canvas( grs_canvas *canv )
 
 void gr_clear_canvas(int color)
 {
+#ifdef OGLES
+	if (grd_curcanv->cv_bitmap.bm_type == BM_OGLES) {
+		ogles_clear_canvas_textures();
+		if (&grd_curscreen->sc_canvas == grd_curcanv) {
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		}
+	}
+#endif
 	gr_setcolor(color);
 	gr_rect(0,0,WIDTH-1,HEIGHT-1);
 }

@@ -395,7 +395,7 @@ int gr_internal_string0m(int x, int y, unsigned char *s )
 					for (i=0; i< width; i++ )
 					{
 						if (BitMask==0) {
-							bits = *fp++; // TODO: Crash here
+							bits = *fp++;
 							BitMask = 0x80;
 						}
 
@@ -986,21 +986,17 @@ int gr_printf( int x, int y, char * format, ... )
 }
 
 // Maybe there's a nicer way to do this instead of allocating/freeing canvases
+// TODO: Tune this for OpenGL ES; profiling shows it uses a bit too much CPU
 void gr_scale_string(int x, int y, fix scale_x, fix scale_y, char * s) {
 	int w, h, aw;
 	int scaled_w, scaled_h;
 	ubyte *fade_table = gr_bitblt_fade_table;
-	grs_canvas *temp_canvas, *scaled_canvas, *prev_canvas = grd_curcanv;
+	grs_canvas *temp_canvas, *prev_canvas = grd_curcanv;
 
 	// Create the scale points
 	gr_get_string_size(s, &w, &h, &aw);
 	h += 2;
 	w += 3;
-	grs_point scale_pts[] = {
-		{ 0, 0 },
-		{ i2f(w), i2f(h) },
-		{ fixmul(i2f(w - 1), scale_x), fixmul(i2f(h - 1), scale_y) }
-	};
 
 	// Calculate scaled width/height
 	scaled_w = f2fl(scale_x) * w;
@@ -1009,31 +1005,31 @@ void gr_scale_string(int x, int y, fix scale_x, fix scale_y, char * s) {
 	// Draw original string to temporary canvas
 	gr_bitblt_fade_table = NULL;
 	temp_canvas = gr_create_canvas(w, h);
+	temp_canvas->cv_bitmap.bm_type = BM_LINEAR;
 	gr_set_current_canvas(temp_canvas);
 	gr_clear_canvas(TRANSPARENCY_COLOR);
 	gr_set_curfont(prev_canvas->cv_font);
 	gr_set_fontcolor(prev_canvas->cv_font_fg_color, prev_canvas->cv_font_bg_color);
 	gr_string(x == 0x8000 ? x : 1, 0, s);
 
-	// Draw scaled string to another temporary canvas
-	scaled_canvas = gr_create_canvas(scaled_w, scaled_h);
-	gr_set_current_canvas(scaled_canvas);
-	gr_clear_canvas(TRANSPARENCY_COLOR);
-	scale_bitmap(&temp_canvas->cv_bitmap, scale_pts);
-
 	// If centered, center it!
 	if (x == 0x8000) {
 		x = prev_canvas->cv_bitmap.bm_w / 2 - scaled_w / 2;
 	}
-
+	
+	grs_point scale_pts[] = {
+		{ i2f(x), i2f(y) },
+		{ i2f(w) + i2f(x), i2f(h) + i2f(y) },
+		{ fixmul(i2f(w - 1), scale_x) + i2f(x), fixmul(i2f(h - 1), scale_y) + i2f(y) }
+	};
+	
 	// Draw the scaled string to the current canvas
 	gr_set_current_canvas(prev_canvas);
 	gr_bitblt_fade_table = fade_table;
-	gr_bitmapm(x, y, &scaled_canvas->cv_bitmap);
+	scale_bitmap(&temp_canvas->cv_bitmap, scale_pts);
 
-	// Free temporary canvases
+	// Free temporary canvas
 	gr_free_canvas(temp_canvas);
-	gr_free_canvas(scaled_canvas);
 }
 
 void gr_scale_printf(int x, int y, fix scale_x, fix scale_y, char * format, ... ) {

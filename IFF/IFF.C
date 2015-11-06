@@ -941,6 +941,9 @@ int iff_read_bitmap(char *ifilename,grs_bitmap *bm,int bitmap_type,ubyte *palett
 	if (ret != IFF_NO_ERROR) goto done;
 
 	bm->bm_data = NULL;
+#ifdef OGLES
+	bm->bm_ogoes_tex_id = 0;
+#endif
 
 	ret = iff_parse_bitmap(&ifile,bm,bitmap_type,palette,NULL);
 

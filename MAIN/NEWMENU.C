@@ -1164,8 +1164,8 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 		gr_set_current_canvas(VR_offscreen_buffer);
 		nm_draw_background(x,y,x+w-1,y+h-1);
 		gr_set_current_canvas(NULL);
-		gr_bm_bitblt(w, h, x, y, x, y, &VR_offscreen_buffer->cv_bitmap, &grd_curcanv->cv_bitmap);
-		bg.background = gr_create_sub_bitmap(VR_offscreen_buffer,x,y,w,h);
+		nm_draw_background(x,y,x+w-1,y+h-1);
+		bg.background = gr_create_sub_bitmap(&VR_offscreen_buffer->cv_bitmap,x,y,w,h);
 		gr_set_current_canvas( bg.menu_canvas );
 	} else {
 		bg.saved = NULL;
@@ -1246,7 +1246,8 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 
 	// Clear mouse, joystick to clear button presses.
 	game_flush_inputs();
-
+	showRenderBuffer();
+	
 	while(!done)	{
 		//network_listen();
 		
@@ -1514,6 +1515,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 			else if (i==choice && (item[i].type==NM_TYPE_INPUT || (item[i].type==NM_TYPE_INPUT_MENU && item[i].group)))
 				update_cursor( &item[i]);
 		}
+		showRenderBuffer();
 
 		if ( gr_palette_faded_out )	{
 			gr_palette_fade_in( gr_palette, 32, 0 );
@@ -1536,9 +1538,10 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 		gr_free_bitmap(bg.saved);
 		free( bg.background );
 	} else {
-		gr_bitmap(0, 0, bg.background); 	
+		gr_bitmap(0, 0, bg.background);
 		gr_free_bitmap(bg.background);
 	}
+	showRenderBuffer();
 	if (textIsActive()) {
 		deactivateText();
 	}
@@ -1816,7 +1819,8 @@ ReadFileNames:
 				citem = i;
 		}
 	}
-
+	showRenderBuffer();
+	
 	while(!done)	{
 		ocitem = citem;
 		ofirst_item = first_item;
@@ -1970,6 +1974,7 @@ ReadFileNames:
 					items[i].w = w * f2fl(scale_factor);
 					items[i].h = h * f2fl(scale_factor);
 				}
+				showRenderBuffer();
 			}		
 		} else if ( citem != ocitem )	{
 			int w, h, aw, y;
@@ -2000,6 +2005,7 @@ ReadFileNames:
 				gr_rect(rect_x0, rect_y0, rect_x1, rect_y1);
 				gr_scale_string(string_x, y, scale_factor, scale_factor, (&filenames[i*14])+((player_mode && filenames[i*14]=='$')?1:0)  );
 			}
+			showRenderBuffer();
 		}
 	}
 

@@ -366,7 +366,11 @@ void gr_palette_step_up(int r, int g, int b) {
 	int temp;
 
 	if (gr_palette_faded_out) return;
-
+	
+#ifdef OGLES
+	return;
+#endif
+	
 	if ( (r==last_r) && (g==last_g) && (b==last_b) ) return;
 
 	last_r = r;
@@ -408,6 +412,11 @@ int gr_palette_fade_out(ubyte *pal, int nsteps, int allow_keys )
 	allow_keys  = allow_keys;
 
 	if (gr_palette_faded_out)  return 0;
+	
+#ifdef OGLES
+	gr_palette_apply(pal);
+	return 1;
+#endif
 
 	for (i=0; i<768; i++ )	{
 		fade_palette[i] = i2f(pal[i]+gr_palette_gamma);
@@ -439,6 +448,11 @@ int gr_palette_fade_in(ubyte *pal, int nsteps, int allow_keys)
 	allow_keys  = allow_keys;
 
 	if (!gr_palette_faded_out) return 0;
+	
+#ifdef OGLES
+	gr_palette_apply(pal);
+	return 0;
+#endif
 
 	for (i=0; i<768; i++ )	{
 		fade_palette[i] = 0;

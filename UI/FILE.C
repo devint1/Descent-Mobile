@@ -178,32 +178,16 @@ void SetFloppy(int d)
 
 void file_capitalize( char * s )
 {
-	while( *s++ = toupper(*s) );
+	while( (*s++ = toupper(*s)) );
 }
 
 
 // Changes to a drive if valid.. 1=A, 2=B, etc
 // If flag, then changes to it.
 // Returns 0 if not-valid, 1 if valid.
-// TODO: Port
 int file_chdrive( int DriveNum, int flag )
 {
-	unsigned NumDrives, n, org;
-	int Valid = 0;
-
-	//if (!flag)
-	//	_dos_getdrive( &org );
-
-	//_dos_setdrive( DriveNum, &NumDrives );
-	//_dos_getdrive( &n );
-
-	/*if (n == DriveNum )
-		Valid = 1;
-
-	if ( (!flag) && (n != org) )
-		_dos_setdrive( org, &NumDrives );*/
-
-	return Valid;
+	return 1;
 }
 
 

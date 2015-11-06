@@ -757,7 +757,7 @@ void draw_model_picture(int mn,vms_angvec *orient_angles)
 
 	Assert(mn>=0 && mn<N_polygon_models);
 
-	temp_canv = gr_create_canvas(save_canv->cv_bitmap.bm_w,save_canv->cv_bitmap.bm_h);
+	temp_canv = gr_create_sub_canvas(save_canv, 0, 0, save_canv->cv_bitmap.bm_w,save_canv->cv_bitmap.bm_h);
 	gr_set_current_canvas(temp_canv);
 	gr_clear_canvas( BM_XRGB(0,0,0) );
 
@@ -776,9 +776,11 @@ void draw_model_picture(int mn,vms_angvec *orient_angles)
 	draw_polygon_model(&temp_pos,&temp_orient,NULL,mn,0,f1_0,NULL,NULL);
 	//Lighting_on = save_light;
 
+	g3_end_frame();
+	
 	gr_set_current_canvas(save_canv);
 
 	gr_bitmap(0,0,&temp_canv->cv_bitmap);
 
-	gr_free_canvas(temp_canv);
+	gr_free_sub_canvas(temp_canv);
 }

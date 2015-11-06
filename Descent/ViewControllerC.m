@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <OpenGLES/ES1/gl.h>
+#import <OpenGLES/ES1/glext.h>
 
 #import "AppDelegate.h"
 #import "ViewController.h"
@@ -38,3 +40,11 @@ void deactivateText() {
 		[[viewController dummyTextField] resignFirstResponder];
 	});
 }
+
+#ifdef OGLES
+void showRenderBuffer() {
+	AppDelegate	*appDelegate = [[UIApplication sharedApplication] delegate];
+	RenderView *view = (RenderView*)[[[appDelegate window] rootViewController] view];
+	[[view context] presentRenderbuffer:GL_RENDERBUFFER_OES];
+}
+#endif
