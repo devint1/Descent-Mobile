@@ -1651,8 +1651,6 @@ int descent_main(int argc,char **argv)
 		if ((pcx_error=pcx_read_bitmap( filename, &title_bm, BM_LINEAR, title_pal ))==PCX_ERROR_NONE)	{
 			vfx_set_palette_sub( title_pal );
 			scale_bitmap(&title_bm, scale_pts);
-			//gr_palette_clear();
-			//gr_bitmap( 0, 0, &title_bm );
 			gr_palette_fade_in( title_pal, 32, 0 );
 			free(title_bm.bm_data);
 		} else {

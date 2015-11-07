@@ -96,6 +96,12 @@ bool must_clip_line(g3s_point *p0, g3s_point *p1, ubyte codes_or) {
 //draws a line. takes two points.  returns true if drew
 bool g3_draw_line(g3s_point *p0, g3s_point *p1) {
 	ubyte codes_or;
+	
+#ifdef OGLES
+	if (grd_curcanv->cv_bitmap.bm_type == BM_OGLES) {
+		return g3_draw_line_ogles(p0, p1);
+	}
+#endif
 
 	if (p0->p3_codes & p1->p3_codes)
 		return 0;
@@ -363,6 +369,11 @@ int checkmuldiv(fix *r, fix a, fix b, fix c);
 //draw a sortof sphere - i.e., the 2d radius is proportional to the 3d
 //radius, but not to the distance from the eye
 int g3_draw_sphere(g3s_point *pnt, fix rad) {
+#ifdef OGLES
+	if (grd_curcanv->cv_bitmap.bm_type == BM_OGLES) {
+		return g3_draw_sphere_ogles(pnt, rad);
+	}
+#endif
 	if (!(pnt->p3_codes & CC_BEHIND)) {
 
 		if (!(pnt->p3_flags & PF_PROJECTED))

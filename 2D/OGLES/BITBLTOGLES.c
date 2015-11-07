@@ -25,6 +25,7 @@ void gr_ubitmapm_ogles(int dx, int dy, grs_bitmap * src) {
 	// Draw
 	GLfloat vertices[] = { x0f, y1f, x1f, y1f, x1f, y0f, x0f, y0f };
 	GLfloat texCoords[] = { 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f };
+	glEnable(GL_TEXTURE_2D);
 	ogles_bm_bind_teximage_2d(src);
 	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

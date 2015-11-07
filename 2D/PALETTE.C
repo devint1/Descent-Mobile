@@ -510,7 +510,7 @@ int gr_palette_fade_in(ubyte *pal, int nsteps, int allow_keys)
 {
 	int i;
 	
-	if (!gr_palette_faded_out) return 0;
+	if (!gr_palette_faded_out) return 1;
 	
 #ifdef OGLES
 	GLuint saved_screen_tex;

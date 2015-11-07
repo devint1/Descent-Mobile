@@ -462,7 +462,7 @@ void gr_bitmap(int x, int y, grs_bitmap *bm) {
 void gr_bitmapm(int x, int y, grs_bitmap *bm) {
 #ifdef OGLES
 	if (grd_curcanv->cv_bitmap.bm_type == BM_OGLES) {
-		gr_ubitmapm_ogles(x, y, bm);
+		gr_ubitmapm_ogles(x + grd_curcanv->cv_bitmap.bm_x, y + grd_curcanv->cv_bitmap.bm_y, bm);
 		return;
 	}
 #endif

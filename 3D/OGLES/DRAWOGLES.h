@@ -13,8 +13,10 @@
 #include "gr.h"
 #include "3d.h"
 
-int g3_draw_tmap_ogles(int nv, g3s_point **pointlist, g3s_uvl *uvl_list, grs_bitmap *bm);
-int g3_draw_poly_ogles(int nv, g3s_point **pointlist);
+extern int g3_draw_tmap_ogles(int nv, g3s_point **pointlist, g3s_uvl *uvl_list, grs_bitmap *bm);
+extern int g3_draw_poly_ogles(int nv, g3s_point **pointlist);
+extern int g3_draw_line_ogles(g3s_point *p0, g3s_point *p1);
+extern int g3_draw_sphere_ogles(g3s_point *pnt, fix rad);
 #endif
 
 #endif /* DRAWOGLES_h */

@@ -170,6 +170,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 static char rcsid[] = "$Id: automap.c 2.2 1995/03/21 14:41:26 john Exp $";
+#pragma unused(rcsid)
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -212,6 +213,9 @@ static char rcsid[] = "$Id: automap.c 2.2 1995/03/21 14:41:26 john Exp $";
 #include "gauges.h"
 #include "powerup.h"
 #include "network.h" 
+#ifdef OGLES
+#include "viewcontrollerc.h"
+#endif
 
 #define EF_USED			1		// This edge is used
 #define EF_DEFINING		2		// A structure defining edge that should always draw.
@@ -525,12 +529,14 @@ void draw_automap()
 			break;
 		}
 	}
-
+	
 	g3_end_frame();
 
 	gr_bitmapm(5,5,&name_canv->cv_bitmap);
-
+	
+#ifndef OGLES
 	gr_bm_ubitblt(Page.cv_bitmap.bm_w, Page.cv_bitmap.bm_h, Page.cv_bitmap.bm_x, Page.cv_bitmap.bm_y, 0, 0, &Page.cv_bitmap, &VR_screen_pages[0].cv_bitmap);
+#endif
 	
 }
 
@@ -1204,6 +1210,10 @@ void do_automap( int key_code )	{
 		if (pause_game)
 			FrameTime=t2-t1;
 		t1 = t2;
+		
+#ifdef OGLES
+		showRenderBuffer();
+#endif
 	}
 
 	//free(Edges);

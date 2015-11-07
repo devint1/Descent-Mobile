@@ -232,7 +232,7 @@ void gr_clear_canvas(int color)
 	}
 #endif
 	gr_setcolor(color);
-	gr_rect(0,0,WIDTH-1,HEIGHT-1);
+	gr_rect(0,0,WIDTH,HEIGHT);
 }
 
 void gr_setcolor(int color)

@@ -172,6 +172,9 @@ static char rcsid[] = "$Id: credits.c 2.2 1995/06/14 17:26:08 john Exp $";
 #include "compbit.h"
 #include "vfx.h"
 #include "songs.h"
+#ifdef OGLES
+#include "viewcontrollerc.h"
+#endif
 
 #define ROW_SPACING (11 * f2fl(Scale_y))
 #define NUM_LINES 20			//19
@@ -372,6 +375,9 @@ void credits_show()
 				extra_inc++;
 			}
 		}
+#ifdef OGLES
+		showRenderBuffer();
+#endif
 	}
 	free(fade_values);
 }
