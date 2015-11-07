@@ -291,7 +291,6 @@ int show_title_screen( char * filename, int allow_keys )
 	vfx_set_palette_sub( New_pal );
 	gr_set_current_canvas( NULL );
 	scale_bitmap(&title_bm, scale_pts);
-	showRenderBuffer();
 	if (gr_palette_fade_in( New_pal, 32, allow_keys ))	
 		return 1;
 
@@ -1084,10 +1083,11 @@ int show_briefing_screen( int screen_num, int allow_keys)
 	gr_palette_clear();
 	vfx_set_palette_sub( New_pal );
 	scale_bitmap( &briefing_bm, scale_pts );
-	showRenderBuffer();
 
 	if (gr_palette_fade_in( New_pal, 32, allow_keys ))	
 		return 1;
+
+	showRenderBuffer();
 
 	rval = show_briefing_text(screen_num);
 

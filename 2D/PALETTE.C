@@ -158,6 +158,9 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "mono.h"
 #include "fix.h"
 #include "key.h"
+#ifdef OGLES
+#include "viewcontrollerc.h"
+#endif
 
 extern int gr_installed;
 
@@ -357,19 +360,23 @@ int gr_find_closest_color_current( int r, int g, int b )
 	return best_index;
 }
 
-
+#ifndef OGLES
 static int last_r=0, last_g=0, last_b=0;
+#endif
 
 void gr_palette_step_up(int r, int g, int b) {
-	int i;
-	ubyte *p, new_pallete[256 * 3];
-	int temp;
-
 	if (gr_palette_faded_out) return;
 	
 #ifdef OGLES
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	gr_setcolor(BM_XRGB(r, g, b));
+	gr_rect(0, 0, grd_curscreen->sc_w - 1, grd_curscreen->sc_h - 1);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	return;
-#endif
+#else
+	int i;
+	ubyte *p, new_pallete[256 * 3];
+	int temp;
 	
 	if ( (r==last_r) && (g==last_g) && (b==last_b) ) return;
 
@@ -393,6 +400,7 @@ void gr_palette_step_up(int r, int g, int b) {
 		new_pallete[3 * i + 2] = temp;
 	}
 	gr_palette_apply(new_pallete);
+#endif
 }
 
 void gr_palette_clear()
@@ -402,21 +410,80 @@ void gr_palette_clear()
 	gr_palette_faded_out = 1;
 }
 
+// TODO: Get view bounds instead of hard-coded 600
+#ifdef OGLES
+void ogles_draw_saved_screen() {
+	GLfloat vertices[] = { -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f };
+	GLfloat texCoords[] = { 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f };
+	
+	glEnable(GL_TEXTURE_2D);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
+	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+GLuint ogles_save_screen() {
+	GLubyte *saved_screen;
+	GLuint tex;
+	
+	saved_screen = malloc(600 * 600 * 4);
+	glEnable(GL_TEXTURE_2D);
+	glReadPixels(0, 0, 600, 600, GL_RGBA, GL_UNSIGNED_BYTE, saved_screen);
+	glGenTextures(1, &tex);
+	glBindTexture(GL_TEXTURE_2D, tex);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 600, 600, 0, GL_RGBA, GL_UNSIGNED_BYTE, saved_screen);
+	free(saved_screen);
+	return tex;
+}
+#endif
+
 int gr_palette_fade_out(ubyte *pal, int nsteps, int allow_keys )	
 {
-	ubyte c[768];
-	int i,j;
-	fix fade_palette[768];
-	fix fade_palette_delta[768];
-
-	allow_keys  = allow_keys;
-
+	int i;
+	
 	if (gr_palette_faded_out)  return 0;
 	
 #ifdef OGLES
+	GLuint saved_screen_tex;
+	grs_canvas *save_canvas;
+	int darken_step;
+	
+	if (!grd_curscreen) {
+		return 0;
+	}
+
+	save_canvas = grd_curcanv;
+	gr_set_current_canvas(NULL);
+	darken_step = GR_FADE_LEVELS / nsteps;
+	Gr_scanline_darkening_level = GR_FADE_LEVELS;
+	saved_screen_tex = ogles_save_screen();
+	for (i = 0; i < nsteps; ++i) {
+		ogles_draw_saved_screen();
+		Gr_scanline_darkening_level	-= darken_step;
+		gr_urect(0, 0, grd_curscreen->sc_w, grd_curscreen->sc_h);
+		showRenderBuffer();
+		gr_sync_display();
+	}
+	glDeleteTextures(1, &saved_screen_tex);
+	Gr_scanline_darkening_level = GR_FADE_LEVELS;
+	gr_set_current_canvas(save_canvas);
 	gr_palette_apply(pal);
-	return 1;
-#endif
+#else
+	ubyte c[768];
+	int j;
+	fix fade_palette[768];
+	fix fade_palette_delta[768];
+	
+	allow_keys  = allow_keys;
 
 	for (i=0; i<768; i++ )	{
 		fade_palette[i] = i2f(pal[i]+gr_palette_gamma);
@@ -434,26 +501,50 @@ int gr_palette_fade_out(ubyte *pal, int nsteps, int allow_keys )
 		}
 		gr_palette_apply(c);
 	}
+#endif
 	gr_palette_faded_out = 1;
-	return 0;
+	return 1;
 }
 
 int gr_palette_fade_in(ubyte *pal, int nsteps, int allow_keys)	
 {
-	int i,j;
-	ubyte c[768];
-	fix fade_palette[768];
-	fix fade_palette_delta[768];
-
-	allow_keys  = allow_keys;
-
+	int i;
+	
 	if (!gr_palette_faded_out) return 0;
 	
 #ifdef OGLES
+	GLuint saved_screen_tex;
+	grs_canvas *save_canvas;
+	int darken_step;
+	
+	if (!grd_curscreen) {
+		return 0;
+	}
+	
+	save_canvas = grd_curcanv;
+	gr_set_current_canvas(NULL);
+	darken_step = GR_FADE_LEVELS / nsteps;
+	Gr_scanline_darkening_level = 1;
+	saved_screen_tex = ogles_save_screen();
+	for (i = 0; i < nsteps; ++i) {
+		ogles_draw_saved_screen();
+		Gr_scanline_darkening_level	+= darken_step;
+		gr_urect(0, 0, grd_curscreen->sc_w, grd_curscreen->sc_h);
+		showRenderBuffer();
+		gr_sync_display();
+	}
+	glDeleteTextures(1, &saved_screen_tex);
+	Gr_scanline_darkening_level = GR_FADE_LEVELS;
+	gr_set_current_canvas(save_canvas);
 	gr_palette_apply(pal);
-	return 0;
-#endif
-
+#else
+	int j;
+	ubyte c[768];
+	fix fade_palette[768];
+	fix fade_palette_delta[768];
+	
+	allow_keys  = allow_keys;
+	
 	for (i=0; i<768; i++ )	{
 		fade_palette[i] = 0;
 		fade_palette_delta[i] = i2f(pal[i]+gr_palette_gamma) / nsteps;
@@ -470,6 +561,7 @@ int gr_palette_fade_in(ubyte *pal, int nsteps, int allow_keys)
 		}
 		gr_palette_apply(c);
 	}
+#endif
 	gr_palette_faded_out = 0;
 	return 0;
 }

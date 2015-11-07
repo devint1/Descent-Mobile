@@ -1515,11 +1515,12 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 			else if (i==choice && (item[i].type==NM_TYPE_INPUT || (item[i].type==NM_TYPE_INPUT_MENU && item[i].group)))
 				update_cursor( &item[i]);
 		}
-		showRenderBuffer();
 
 		if ( gr_palette_faded_out )	{
 			gr_palette_fade_in( gr_palette, 32, 0 );
 		}
+
+		showRenderBuffer();
 		
 		if(mouse_clicked) {
 			if (item[choice].type == NM_TYPE_INPUT_MENU) {

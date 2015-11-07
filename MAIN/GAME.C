@@ -1918,7 +1918,9 @@ void game_render_frame_mono(void)
 				gr_bm_ubitblt( VR_render_sub_buffer[0].cv_w, VR_render_sub_buffer[0].cv_h, VR_render_sub_buffer[0].cv_bitmap.bm_x, VR_render_sub_buffer[0].cv_bitmap.bm_y, 0, 0, &VR_render_sub_buffer[0].cv_bitmap, &VR_screen_pages[0].cv_bitmap );
 			}
 		} else	{
-			//gr_ibitblt( &VR_render_buffer[0].cv_bitmap, &VR_screen_pages[0].cv_bitmap, 0 );
+#ifndef OGLES
+			gr_ibitblt( &VR_render_buffer[0].cv_bitmap, &VR_screen_pages[0].cv_bitmap, 0 );
+#endif
 		}
 	}
 
@@ -1931,7 +1933,7 @@ void game_render_frame_mono(void)
 
 #ifdef OGLES
 		gr_set_current_canvas(NULL);
-		update_cockpits(Cockpit_mode == CM_FULL_COCKPIT);
+		update_cockpits(1);
 #endif
 		render_gauges();
 
@@ -1961,10 +1963,6 @@ void game_render_frame()
 		game_render_frame_stereo_vfx();
 	else if (VR_render_mode == VR_NONE )
 		game_render_frame_mono();
-	
-#ifdef OGLES
-	showRenderBuffer();
-#endif
 	
 	// Make sure palette is faded in
 	stop_time();
@@ -3910,7 +3908,9 @@ void GameLoop(int RenderFlag, int ReadControlsFlag)
 #endif
 
 	update_player_stats();
+#ifndef OGLES
 	diminish_palette_towards_normal();		//	Should leave palette effect up for as long as possible by putting right before render.
+#endif
 	//--killed--do_afterburner_stuff();
 	do_cloak_stuff();
 	do_invulnerable_stuff();
@@ -3930,6 +3930,10 @@ void GameLoop(int RenderFlag, int ReadControlsFlag)
 			force_cockpit_redraw = 0;
 		}
 		game_render_frame();
+#ifdef OGLES
+		diminish_palette_towards_normal();
+		showRenderBuffer();
+#endif
 	}
 
 	//		mprintf(0,"Velocity %2.2f\n", f2fl(vm_vec_mag(&ConsoleObject->phys_info.velocity)));

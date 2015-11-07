@@ -430,6 +430,8 @@ static int old_ammo_count[2][2]	= {{ -1, -1 },{-1,-1}};
 static int old_cloak[2]				= { 0, 0 };
 static int old_lives[2]				= { -1, -1 };
 
+static bool force_weapon_draw[2];
+
 static int invulnerable_frame = 0;
 
 static int cloak_fade_state;		//0=steady, -1 fading out, 1 fading in 
@@ -1393,8 +1395,8 @@ void init_gauges()
 		old_flags[i]			= -1;
 		old_cloak[i]			= -1;
 		old_lives[i]			= -1;
-	
-		old_weapon[0][i] = old_weapon[1][i] = -1;
+
+		force_weapon_draw[i] = true;
 		old_ammo_count[0][i] = old_ammo_count[1][i] = -1;
 	}
 
@@ -1700,16 +1702,15 @@ void draw_weapon_info(int weapon_type,int weapon_num)
 	if (Newdemo_state==ND_STATE_RECORDING )
 		newdemo_record_player_weapon(weapon_type, weapon_num);
 #endif
+	gr_set_current_canvas(&VR_screen_pages[0]);
 	if (weapon_type == 0)
 		if (Cockpit_mode == CM_STATUS_BAR) {
-			gr_set_current_canvas(&VR_screen_pages[0]);
 			gb = get_gauge_box(2);
 			draw_weapon_info_sub(Primary_weapon_to_weapon_info[weapon_num],
 				&gb,
 				SB_PRIMARY_W_PIC_X, SB_PRIMARY_W_PIC_Y,
 				PRIMARY_WEAPON_NAMES_SHORT(weapon_num),
 				SB_PRIMARY_W_TEXT_X, SB_PRIMARY_W_TEXT_Y);
-			gr_set_current_canvas(get_current_game_screen());
 		}
 		else {
 			gb = get_gauge_box(0);
@@ -1721,14 +1722,12 @@ void draw_weapon_info(int weapon_type,int weapon_num)
 		}
 	else
 		if (Cockpit_mode == CM_STATUS_BAR) {
-			gr_set_current_canvas(&VR_screen_pages[0]);
 			gb = get_gauge_box(3);
 			draw_weapon_info_sub(Secondary_weapon_to_weapon_info[weapon_num],
 				&gb,
 				SB_SECONDARY_W_PIC_X, SB_SECONDARY_W_PIC_Y,
 				SECONDARY_WEAPON_NAMES_SHORT(weapon_num),
 				SB_SECONDARY_W_TEXT_X, SB_SECONDARY_W_TEXT_Y);
-			gr_set_current_canvas(get_current_game_screen());
 		}
 		else {
 			gb = get_gauge_box(1);
@@ -1738,6 +1737,7 @@ void draw_weapon_info(int weapon_type,int weapon_num)
 				SECONDARY_WEAPON_NAMES_SHORT(weapon_num),
 				SECONDARY_W_TEXT_X, SECONDARY_W_TEXT_Y);
 		}
+	gr_set_current_canvas(get_current_game_screen());
 }
 
 void draw_ammo_info(int x,int y,int ammo_count,int primary)
@@ -1784,7 +1784,12 @@ int draw_weapon_box(int weapon_type,int weapon_num)
 		weapon_box_states[weapon_type] = WS_FADING_OUT;
 		weapon_box_fade_values[weapon_type]=i2f(GR_FADE_LEVELS-1);
 	}
-		
+	
+	if (force_weapon_draw[weapon_type]) {
+		draw_weapon_info(weapon_type,weapon_num);
+		force_weapon_draw[weapon_type] = false;
+	}
+	
 	if (old_weapon[weapon_type][VR_current_page] == -1) {
 		draw_weapon_info(weapon_type,weapon_num);
 		old_weapon[weapon_type][VR_current_page] = weapon_num;
