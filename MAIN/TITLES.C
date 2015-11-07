@@ -851,6 +851,9 @@ int show_briefing_message(int screen_num, char *message)
 					show_spinning_robot_frame(robot_num);
 					show_bitmap_frame();
 					start_time += KEY_DELAY_DEFAULT/2;
+#ifdef OGLES
+					showRenderBuffer();
+#endif
 				}
 
 #ifndef NDEBUG
@@ -897,9 +900,11 @@ int show_briefing_message(int screen_num, char *message)
 		} else {
 			prev_ch = ch;
 			Briefing_text_x += show_char_delay(ch, delay_count, robot_num, flashing_cursor);
+#ifdef OGLES
 			if (delay_count) {
 				showRenderBuffer();
 			}
+#endif
 		}
 
 		//	Check for Esc -> abort.
@@ -938,8 +943,10 @@ int show_briefing_message(int screen_num, char *message)
 				flash_cursor(flashing_cursor);
 				show_spinning_robot_frame(robot_num);
 				show_bitmap_frame();
-				showRenderBuffer();
 				start_time += KEY_DELAY_DEFAULT/2;
+#ifdef OGLES
+				showRenderBuffer();
+#endif
 			}
 
 			robot_num = -1;
@@ -1086,8 +1093,6 @@ int show_briefing_screen( int screen_num, int allow_keys)
 
 	if (gr_palette_fade_in( New_pal, 32, allow_keys ))	
 		return 1;
-
-	showRenderBuffer();
 
 	rval = show_briefing_text(screen_num);
 
