@@ -827,7 +827,8 @@ void init_cockpit()
 		}
 	case CM_LETTERBOX:	{
 		int x,y,w,h;
-			
+		
+		gr_clear_canvas(BM_XRGB(0, 0, 0));
 		x = 0; w = VR_render_width;
 		h = LETTERBOX_HEIGHT;
 		y = (VR_render_height-h)/2;
