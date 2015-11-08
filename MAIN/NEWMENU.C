@@ -1565,7 +1565,6 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 #endif
 		gr_free_bitmap(bg.background);
 	}
-	showRenderBuffer();
 	if (textIsActive()) {
 		deactivateText();
 	}
