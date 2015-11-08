@@ -587,8 +587,6 @@ int bm_init_use_tbl()
 	atexit(bm_close);
 
 	Assert(N_robot_types == Num_robot_ais);		//should be one ai info per robot
-
-	init_endlevel();		//this is here so endlevel bitmaps go into pig
 	
 	verify_textures();
 

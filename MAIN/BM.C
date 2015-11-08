@@ -112,6 +112,7 @@ int bm_init()
 	init_polygon_models();
 	piggy_init();				// This calls bm_read_all
 	piggy_read_sounds();
+	init_endlevel();		//this is here so endlevel bitmaps go into pig
 	return 0;
 }
 

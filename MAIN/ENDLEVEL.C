@@ -357,11 +357,19 @@ int matt_find_connect_side(int seg0,int seg1)
 
 void free_endlevel_data()
 {
-	if (terrain_bm_instance.bm_data)
+	if (terrain_bm_instance.bm_data) {
 		free(terrain_bm_instance.bm_data);
+#ifdef OGLES
+		glDeleteTextures(1, &terrain_bm_instance.bm_ogles_tex_id);
+#endif
+	}
 
-	if (satellite_bm_instance.bm_data)
+	if (satellite_bm_instance.bm_data) {
 		free(satellite_bm_instance.bm_data);
+#ifdef OGLES
+		glDeleteTextures(1, &satellite_bm_instance.bm_ogles_tex_id);
+#endif
+	}
 }
 
 #define MAX_STARS 500
@@ -403,7 +411,7 @@ void init_endlevel()
 //!!	destroyed_exit_modelnum = load_polygon_model("exit01d.pof",1,exit_bitmap_list,NULL);
 
 	generate_starfield();
-
+	
 	atexit(free_endlevel_data);
 
 	terrain_bm_instance.bm_data = satellite_bm_instance.bm_data = NULL;
@@ -1255,7 +1263,11 @@ void draw_stars()
 			
 			g3_project_point(&p);
 			
+#ifdef OGLES
+			g3_draw_sphere(&p, F1_0 * 10);
+#else
 			gr_pixel(f2i(p.p3_sx),f2i(p.p3_sy));
+#endif
 		}
 	}
 	
@@ -1389,7 +1401,10 @@ void endlevel_render_mine(fix eye_offset)
 
 void render_endlevel_frame(fix eye_offset)
 {
-
+#ifdef OGLES
+	glClear(GL_COLOR_BUFFER_BIT);
+#endif
+	
 	g3_start_frame();
 
 	if (Endlevel_sequence < EL_OUTSIDE)
