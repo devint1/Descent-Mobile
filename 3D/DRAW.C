@@ -269,12 +269,32 @@ bool g3_draw_poly(int nv, g3s_point **pointlist) {
 }
 
 bool must_clip_tmap_face(int nv, g3s_codes cc, grs_bitmap *bm);
+void draw_tmap_flat(grs_bitmap *bp,int nverts,g3s_point **vertbuf);
 
 //draw a texture-mapped face.
 //returns 1 if off screen, 0 if drew
 bool g3_draw_tmap(int nv, g3s_point **pointlist, g3s_uvl *uvl_list, grs_bitmap *bm) {
 #ifdef OGLES
-	return g3_draw_tmap_ogles(nv, pointlist, uvl_list, bm);
+	fix average_light;
+	int i;
+	
+	if (tmap_drawer_ptr == draw_tmap_flat) {
+		average_light = uvl_list[0].l;
+		for (i=1; i<nv; i++)
+			average_light += uvl_list[i].l;
+		if (nv == 4)
+			average_light = f2i(average_light * NUM_LIGHTING_LEVELS/4);
+		else
+			average_light = f2i(average_light * NUM_LIGHTING_LEVELS/nv);
+		if (average_light < 0)
+			average_light = 0;
+		else if (average_light > NUM_LIGHTING_LEVELS-1)
+			average_light = NUM_LIGHTING_LEVELS-1;
+		gr_setcolor(gr_fade_table[average_light*256]);
+		return g3_draw_poly_ogles(nv, pointlist);
+	} else {
+		return g3_draw_tmap_ogles(nv, pointlist, uvl_list, bm);
+	}
 #else
 	int i;
 	g3s_point **bufptr;

@@ -80,10 +80,10 @@ int g3_draw_poly_ogles(int nv, g3s_point **pointlist) {
 		vertices[i * 3 + 2] = -f2fl(pointlist[i]->p3_vec.z);
 	}
 	
-	if (Gr_scanline_darkening_level >= GR_FADE_LEVELS) {
+	if (Gr_scanline_darkening_level >= GR_FADE_LEVELS ) {
 		alpha = 255;
 	} else {
-		alpha = Gr_scanline_darkening_level * 4;
+		alpha = 255 - ((float)Gr_scanline_darkening_level / (float)GR_FADE_LEVELS) * 255.0f;
 	}
 	
 	glDisable(GL_TEXTURE_2D);

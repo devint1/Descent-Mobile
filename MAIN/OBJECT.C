@@ -534,7 +534,7 @@ void draw_cloaked_object(object *obj,fix light,fix *glow,fix cloak_start_time,fi
 {
 	fix cloak_delta_time,total_cloaked_time;
 	fix light_scale;
-	int cloak_value;
+	int cloak_value = 0;
 	int fading=0;		//if true, fading, else cloaking
 
 	total_cloaked_time = cloak_end_time-cloak_start_time;
