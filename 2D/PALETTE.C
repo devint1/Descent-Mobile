@@ -410,42 +410,6 @@ void gr_palette_clear()
 	gr_palette_faded_out = 1;
 }
 
-// TODO: Get view bounds instead of hard-coded 600
-#ifdef OGLES
-void ogles_draw_saved_screen() {
-	GLfloat vertices[] = { -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f };
-	GLfloat texCoords[] = { 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f };
-	
-	glEnable(GL_TEXTURE_2D);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	glVertexPointer(2, GL_FLOAT, 0, vertices);
-	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
-	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-}
-
-GLuint ogles_save_screen() {
-	GLubyte *saved_screen;
-	GLuint tex;
-	
-	saved_screen = malloc(600 * 600 * 4);
-	glEnable(GL_TEXTURE_2D);
-	glReadPixels(0, 0, 600, 600, GL_RGBA, GL_UNSIGNED_BYTE, saved_screen);
-	glGenTextures(1, &tex);
-	glBindTexture(GL_TEXTURE_2D, tex);
-	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 600, 600, 0, GL_RGBA, GL_UNSIGNED_BYTE, saved_screen);
-	free(saved_screen);
-	return tex;
-}
-#endif
-
 int gr_palette_fade_out(ubyte *pal, int nsteps, int allow_keys )	
 {
 	int i;
@@ -467,7 +431,7 @@ int gr_palette_fade_out(ubyte *pal, int nsteps, int allow_keys )
 	Gr_scanline_darkening_level = GR_FADE_LEVELS;
 	saved_screen_tex = ogles_save_screen();
 	for (i = 0; i < nsteps; ++i) {
-		ogles_draw_saved_screen();
+		ogles_draw_saved_screen(saved_screen_tex);
 		Gr_scanline_darkening_level	-= darken_step;
 		gr_urect(0, 0, grd_curscreen->sc_w, grd_curscreen->sc_h);
 		showRenderBuffer();
@@ -527,7 +491,7 @@ int gr_palette_fade_in(ubyte *pal, int nsteps, int allow_keys)
 	Gr_scanline_darkening_level = 1;
 	saved_screen_tex = ogles_save_screen();
 	for (i = 0; i < nsteps; ++i) {
-		ogles_draw_saved_screen();
+		ogles_draw_saved_screen(saved_screen_tex);
 		Gr_scanline_darkening_level	+= darken_step;
 		gr_urect(0, 0, grd_curscreen->sc_w, grd_curscreen->sc_h);
 		showRenderBuffer();

@@ -45,7 +45,7 @@ void gr_urect(int left,int top,int right,int bot)
 
 #ifdef OGLES
 	if (grd_curcanv->cv_bitmap.bm_type == BM_OGLES) {
-		gr_rect_ogles(left, top, right, bot);
+		gr_rect_ogles(left, top, right + 1, bot + 1);
 		return;
 	}
 #endif
@@ -60,7 +60,7 @@ void gr_rect(int left,int top,int right,int bot)
 
 #ifdef OGLES
 	if (grd_curcanv->cv_bitmap.bm_type == BM_OGLES) {
-		gr_rect_ogles(left, top, right, bot);
+		gr_rect_ogles(left, top, right + 1, bot + 1);
 		return;
 	}
 #endif

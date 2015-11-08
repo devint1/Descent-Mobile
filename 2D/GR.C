@@ -643,3 +643,40 @@ int gr_check_mode(int mode)
 	}
 	return 11;
 }
+
+// TODO: Get view bounds instead of hard-coded 600
+#ifdef OGLES
+void ogles_draw_saved_screen(GLuint saved_screen_tex) {
+	GLfloat vertices[] = { -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f };
+	GLfloat texCoords[] = { 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f };
+	
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, saved_screen_tex);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	glVertexPointer(2, GL_FLOAT, 0, vertices);
+	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+GLuint ogles_save_screen() {
+	GLubyte *saved_screen;
+	GLuint tex;
+	
+	saved_screen = malloc(600 * 600 * 4);
+	glEnable(GL_TEXTURE_2D);
+	glReadPixels(0, 0, 600, 600, GL_RGBA, GL_UNSIGNED_BYTE, saved_screen);
+	glGenTextures(1, &tex);
+	glBindTexture(GL_TEXTURE_2D, tex);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 600, 600, 0, GL_RGBA, GL_UNSIGNED_BYTE, saved_screen);
+	free(saved_screen);
+	return tex;
+}
+#endif

@@ -443,6 +443,12 @@ void gr_bm_bitblt(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src
 // Clipped bitmap ... 
 
 void gr_bitmap(int x, int y, grs_bitmap *bm) {
+#ifdef OGLES
+	if (grd_curcanv->cv_bitmap.bm_type == BM_OGLES) {
+		gr_ubitmapm_ogles(x + grd_curcanv->cv_bitmap.bm_x, y + grd_curcanv->cv_bitmap.bm_y, bm);
+		return;
+	}
+#endif
 	int dx1 = x, dx2 = x + bm->bm_w - 1;
 	int dy1 = y, dy2 = y + bm->bm_h - 1;
 	int sx = 0, sy = 0;

@@ -1157,10 +1157,18 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 	gr_set_current_canvas( bg.menu_canvas );
 
 	if ( filename == NULL )	{
-		// Save the background under the menu...
+#ifdef OGLES
+		// TODO: No hard-coded 600!!!
+		bg.saved = gr_create_bitmap( 600, 600 );
+		Assert( bg.saved != NULL );
+		bg.saved->bm_type = BM_OGLES;
+		bg.saved->bm_ogles_tex_id = ogles_save_screen();
+#else
 		bg.saved = gr_create_bitmap( w, h );
 		Assert( bg.saved != NULL );
 		gr_bm_bitblt(w, h, 0, 0, 0, 0, &grd_curcanv->cv_bitmap, bg.saved );
+#endif
+		// Save the background under the menu...
 		gr_set_current_canvas(VR_offscreen_buffer);
 		nm_draw_background(x,y,x+w-1,y+h-1);
 		gr_set_current_canvas(NULL);
@@ -1169,9 +1177,17 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 		gr_set_current_canvas( bg.menu_canvas );
 	} else {
 		bg.saved = NULL;
+#ifdef OGLES
+		// TODO: No hard-coded 600!!!
+		bg.background = gr_create_bitmap( 600, 600 );
+		Assert( bg.background != NULL );
+		bg.background->bm_type = BM_OGLES;
+		bg.background->bm_ogles_tex_id = ogles_save_screen();
+#else
 		bg.background = gr_create_bitmap( w, h );
 		Assert( bg.background != NULL );
 		gr_bm_bitblt(w, h, 0, 0, 0, 0, &grd_curcanv->cv_bitmap, bg.background );
+#endif
 	}
 
 // ty = 15 + (yborder/4);
@@ -1534,11 +1550,19 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 	gr_set_current_canvas(bg.menu_canvas);
 	if ( filename == NULL )	{
 		// Save the background under the menu...
-		gr_bitmap(0, 0, bg.saved); 	
+#ifdef OGLES
+		ogles_draw_saved_screen(bg.saved->bm_ogles_tex_id);
+#else
+		gr_bitmap(0, 0, bg.saved);
+#endif
 		gr_free_bitmap(bg.saved);
 		free( bg.background );
 	} else {
+#ifdef OGLES
+		ogles_draw_saved_screen(bg.background->bm_ogles_tex_id);
+#else
 		gr_bitmap(0, 0, bg.background);
+#endif
 		gr_free_bitmap(bg.background);
 	}
 	showRenderBuffer();
