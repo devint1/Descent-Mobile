@@ -1947,11 +1947,7 @@ void game_render_frame_mono(void)
 void game_render_frame()
 {
 	set_screen_mode( SCREEN_GAME );
-
-#ifdef OGLES
-	// Need this so textures can draw
-	gr_palette_load(gr_palette);
-#else
+#ifndef OGLES
 	update_cockpits(0);
 #endif
 

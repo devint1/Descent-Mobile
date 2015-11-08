@@ -1551,6 +1551,10 @@ void copy_defaults_to_robot_all(void)
 			copy_defaults_to_robot(&Objects[i]);
 }
 
+#ifdef OGLES
+extern void vfx_set_palette_sub(ubyte *);
+#endif
+
 //called when the player is starting a new level for normal game mode and restore state
 void StartNewLevelSub(int level_num, int page_in_textures)
 {
@@ -1652,6 +1656,11 @@ void StartNewLevelSub(int level_num, int page_in_textures)
 
 	reset_special_effects();
 
+#ifdef OGLES
+	// Need this so textures can draw
+	vfx_set_palette_sub(gr_palette);
+#endif
+	
 #ifdef NETWORK
 	if (Network_rejoined == 1)
 	{

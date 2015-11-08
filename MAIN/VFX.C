@@ -55,12 +55,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * 
  */
 
-
-#pragma off (unreferenced)
 static char rcsid[] = "$Id: vfx.c 2.4 1995/05/11 13:28:59 john Exp $";
-#pragma on (unreferenced)
-
-
+#pragma unused(rcsid)
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -172,25 +168,6 @@ void vfx_set_palette_sub(ubyte * palette)
 #ifdef OGLES
 	gr_palette_apply(palette);
 #endif
-	/*int i;
-
-	if (!vfx_initialized) return;
-
-	if ( Game_vfx_flag )	{
-		outp( PORT_AIR, INDEX_PCR );
-		outp( PORT_CSR, 1+0+4 );				// Enable palette snoop
-	
-		outp( PORT_AIR, 7 );
-		outp( PORT_CSR, 0xFF );				// Disable palette masking
-	
-		outp( PORT_AIR, 9 );					//start palette copy
-		outp( PORT_CSR, 0 );
-	
-		for (i=0; i<768; i++ )	{
-			outp( PORT_AIR, 10 );
-			outp( PORT_CSR, palette[i] );
-		}
-	}*/
 }
 
 void vfx_set_palette()
@@ -201,74 +178,15 @@ void vfx_set_palette()
 
 void vfx_init_graphics()
 {
-	/*int overscan, overscan_flag;
-
-	if (!vfx_initialized) return;
-
-	vfx_set_palette();		//download palette into VFX
-
-	//0xFF
-	outp( 0x3d4, 0x6);
-	overscan = 0x01 & inp( 0x3d5 );
-	outp( 0x3d4, 0x16 );
-	overscan ^= 0x01 & inp( 0x3d5 );
-	
-	if ( overscan )
-		overscan_flag = 0;
-	else
-		overscan_flag = 0x8;
-
-	//odd/even mode...
-	
-	outp( vfx_base_port+2, 0x2 ); 		// Index/data
-	// stereo
-	outp( vfx_base_port+3, overscan_flag & 0xFE );*/
-	// mono
-	//outp( vfx_base_port+3, overscan_flag | 0x01 );
-
 }
 
 
 void vfx_close_graphics()
 {
-	/*int overscan, overscan_flag;
-
-	if (!vfx_initialized) return;
-
-	outp( 0x3d4, 0x6);
-	overscan = 0x01 & inp( 0x3d5 );
-	outp( 0x3d4, 0x16 );
-	overscan ^= 0x01 & inp( 0x3d5 );
-	
-	if ( overscan )
-		overscan_flag = 0;
-	else
-		overscan_flag = 0x8;
-
-	//odd/even mode...
-	
-	//
-	outp( vfx_base_port + 2, 0x2 ); 		// Index/data
-	// mono
-	outp( vfx_base_port + 3, overscan_flag | 0x01 );*/
 }
 
 
 
 void vfx_set_page(ubyte page)
 {
-	/*DATA_PSR page_register;
-
-	if (!vfx_initialized) return;
-	
-	if ( page == 0 )	{
-		page_register.leps = 0;
-		page_register.reps = 1;
-	} else {
-		page_register.leps = 2;
-		page_register.reps = 3;
-	}
-
-	outp( PORT_AIR, INDEX_PSR );
-	outp( PORT_CSR, page_register.value );*/
 }

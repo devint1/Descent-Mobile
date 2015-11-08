@@ -317,6 +317,9 @@ int show_title_screen( char * filename, int allow_keys )
 	if (gr_palette_fade_out( New_pal, 32, allow_keys ))
 		return 1;
 	free(title_bm.bm_data);
+#ifdef OGLES
+	glDeleteTextures(1, &title_bm.bm_ogles_tex_id);
+#endif
 	return 0;
 }
 
@@ -681,6 +684,9 @@ int load_briefing_screen( int screen_num )
 
 	scale_bitmap(&briefing_bm, scale_pts);
 	free(briefing_bm.bm_data);
+#ifdef OGLES
+	glDeleteTextures(1, &briefing_bm.bm_ogles_tex_id);
+#endif
 	return 0;
 }
 
@@ -822,6 +828,9 @@ int show_briefing_message(int screen_num, char *message)
 
 				show_briefing_bitmap(&guy_bitmap);
 				free(guy_bitmap.bm_data);
+#ifdef OGLES
+				glDeleteTextures(1, &guy_bitmap.bm_ogles_tex_id);
+#endif
 				prev_ch = 10;
 //			} else if (ch == 'B') {
 //				if (Robot_canv != NULL)
@@ -1100,6 +1109,9 @@ int show_briefing_screen( int screen_num, int allow_keys)
 		return 1;
 
 	free(briefing_bm.bm_data);
+#ifdef OGLES
+	glDeleteTextures(1, &briefing_bm.bm_ogles_tex_id);
+#endif
 
 	return rval;
 }

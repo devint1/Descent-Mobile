@@ -1246,7 +1246,6 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 
 	// Clear mouse, joystick to clear button presses.
 	game_flush_inputs();
-	showRenderBuffer();
 	
 	while(!done)	{
 		//network_listen();

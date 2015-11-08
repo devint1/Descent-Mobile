@@ -1218,6 +1218,9 @@ void do_automap( int key_code )	{
 
 	//free(Edges);
 	//free(DrawingListBright);
+#ifdef OGLES
+	glDeleteTextures(1, &Automap_background.bm_ogles_tex_id);
+#endif
 	gr_free_canvas(name_canv);  name_canv=NULL;
 
 	mprintf( (0, "Automap memory freed\n" ));
