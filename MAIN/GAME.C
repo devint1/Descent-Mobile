@@ -751,7 +751,7 @@ void game_init_render_sub_buffers(int x, int y, int w, int h)
 //called every time the screen mode or cockpit changes
 void init_cockpit()
 {
-	int minx, maxx, miny, maxy;
+	int y, minx, maxx, miny, maxy;
 
 	//Initialize the on-screen canvases
 
@@ -795,7 +795,16 @@ void init_cockpit()
 		Game_cockpit_copy_code = 1;
 		gr_ibitblt_create_mask( bm, minx, miny, maxx-minx+1, maxy-miny+1, VR_offscreen_buffer->cv_bitmap.bm_rowsize );
 		bm->bm_flags = 0;		// Clear all flags for offscreen canvas
-		game_init_render_sub_buffers( 0, 0, maxx-minx+1, maxy-miny+1 );
+#ifdef OGLES
+		if (Cockpit_mode == CM_REAR_VIEW) {
+			y = miny;
+		} else {
+			y = 0;
+		}
+#else
+		y = 0;
+#endif
+		game_init_render_sub_buffers( 0, y, maxx-minx+1, maxy-miny+1 );
 		break;
 		}
 	case CM_FULL_SCREEN:
@@ -1924,10 +1933,10 @@ void game_render_frame_mono(void)
 		}
 	}
 
-	if (Cockpit_mode==CM_FULL_COCKPIT || Cockpit_mode==CM_STATUS_BAR) {
+	if (Cockpit_mode==CM_FULL_COCKPIT || Cockpit_mode==CM_STATUS_BAR || Cockpit_mode==CM_REAR_VIEW) {
 
 #ifndef SHAREWARE
-		if ( (Newdemo_state == ND_STATE_PLAYBACK) )
+		if ( Newdemo_state == ND_STATE_PLAYBACK && Cockpit_mode!=CM_REAR_VIEW )
 			Game_mode = Newdemo_game_mode;
 #endif
 
@@ -1935,10 +1944,11 @@ void game_render_frame_mono(void)
 		gr_set_current_canvas(NULL);
 		update_cockpits(1);
 #endif
-		render_gauges();
+		if (Cockpit_mode != CM_REAR_VIEW)
+			render_gauges();
 
 #ifndef SHAREWARE
-		if ( (Newdemo_state == ND_STATE_PLAYBACK) )
+		if ( Newdemo_state == ND_STATE_PLAYBACK && Cockpit_mode!=CM_REAR_VIEW )
 			Game_mode = GM_NORMAL;
 #endif
 	}
