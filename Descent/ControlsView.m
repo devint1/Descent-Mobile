@@ -204,12 +204,6 @@ typedef struct GameButton {
 	unsigned char sharedKeys[MAX_KEYS];
 	bool ignoreKey;
 	
-#ifdef NORETINA
-	CGFloat screenScale = 1;
-#else
-	CGFloat screenScale = [[UIScreen mainScreen] scale];
-#endif
-	
 	NSValue *touchValue;
 	NSNumber *prev;
 	
@@ -226,8 +220,8 @@ typedef struct GameButton {
 				touch_dx = touch_dy = 0;
 			}
 			if ([trackingTouch isEqualToValue:touchValue]) {
-				touch_dx = ([touch locationInView:self].x - [touch previousLocationInView:self].x) * screenScale;
-				touch_dy = ([touch previousLocationInView:self].y - [touch locationInView:self].y) * screenScale;
+				touch_dx = ([touch locationInView:self].x - [touch previousLocationInView:self].x);
+				touch_dy = ([touch previousLocationInView:self].y - [touch locationInView:self].y);
 			}
 			
 			// Get the button the touch is currently in

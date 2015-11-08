@@ -413,7 +413,6 @@
 					"DEBUG=1",
 					"$(inherited)",
 					NETWORK,
-					NORETINA,
 					OGLES,
 				);
 				HEADER_SEARCH_PATHS = ../LIB;
@@ -437,7 +436,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					RELEASE,
-					NORETINA,
 					NETWORK,
 					OGLES,
 				);
