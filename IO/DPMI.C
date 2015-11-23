@@ -87,6 +87,7 @@ static char rcsid[] = "$Id: dpmi.c 1.19 1995/02/23 09:02:57 john Exp $";
 
 #define far
 
+#include <limits.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -100,9 +101,14 @@ static char rcsid[] = "$Id: dpmi.c 1.19 1995/02/23 09:02:57 john Exp $";
 
 long dpmi_find_dos_memory()
 {
+#ifndef __LP64__
+	// Since sysconf can overflow on 32-bit
+	return LONG_MAX;
+#else
 	long pages = sysconf(_SC_PHYS_PAGES);
 	long page_size = sysconf(_SC_PAGE_SIZE);
 	return pages * page_size;
+#endif
 }
 
 void *dpmi_real_malloc( int size, ushort *selector )
