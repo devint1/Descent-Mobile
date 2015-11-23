@@ -15,46 +15,19 @@
 #include "rle.h"
 #include "oglestex.h"
 
-GLuint Ogles_textures[NUM_OGL_TEXTURES];
-unsigned int Next_texture_index = 0;
-
 extern ubyte gr_current_pal[256*3];
-
-GLsizei findpow2(GLsizei num) {
-	GLsizei result = 1;
-	while (result < num) {
-		result *= 2;
-	}
-	return result;
-}
-
-GLuint ogles_get_new_texture() {
-	GLuint tex;
-	
-	glGenTextures(1, &Ogles_textures[Next_texture_index]);
-	tex = Ogles_textures[Next_texture_index];
-	//grd_curcanv->cv_ogles_textures[grd_curcanv->cv_next_ogles_texture++] = tex;
-	++Next_texture_index;
-	if (Next_texture_index > NUM_OGL_TEXTURES) {
-		Next_texture_index = 0;
-	}
-	if (grd_curcanv->cv_next_ogles_texture > NUM_OGL_TEXTURES) {
-		grd_curcanv->cv_next_ogles_texture = 0;
-	}
-	return tex;
-}
 
 void ogles_clear_canvas_textures() {
 	//glDeleteTextures(NUM_OGL_TEXTURES, grd_curcanv->cv_ogles_textures);
 }
 
 void ogles_bm_bind_teximage_2d(grs_bitmap *bm) {
-	GLubyte *image_data, alpha;
+	GLubyte *image_data;
 	ubyte *data, *sbits, *dbits;
 	int i;
 	
 	if (!bm->bm_ogles_tex_id) {
-		bm->bm_ogles_tex_id = ogles_get_new_texture();
+		glGenTextures(1, &bm->bm_ogles_tex_id);
 		glBindTexture(GL_TEXTURE_2D, bm->bm_ogles_tex_id);
 		image_data = malloc(bm->bm_w * bm->bm_h * 4);
 		if (bm->bm_flags & BM_FLAG_RLE) {
