@@ -22,10 +22,10 @@ extern int get_centered_x_scaled(char *s, fix scale_x);
 extern void get_char_width(unsigned int c,unsigned int c2,int *width,int *spacing);
 
 // Draw scaled string as OpenGL ES textures
-void gr_scale_string_ogles(int x, int y, fix scale_x, fix scale_y, char * s) {
+void gr_scale_string_ogles(int x, int y, fix scale_x, fix scale_y, unsigned char * s) {
 	int base_x = x;
 	int width, spacing;
-	char temp_str[2];
+	unsigned char temp_str[2];
 	grs_canvas *temp_canv, *save_canv = grd_curcanv;
 	grs_bitmap temp_bm;
 	ubyte pal_save[3];
@@ -65,13 +65,13 @@ void gr_scale_string_ogles(int x, int y, fix scale_x, fix scale_y, char * s) {
 		if (!grd_curcanv->cv_font->ft_ogles_texes[*s - grd_curcanv->cv_font->ft_minchar] && INFONT(*s - grd_curcanv->cv_font->ft_minchar)) {
 			
 			// Render the character to a temp canvas
-			temp_canv = gr_create_canvas(grd_curcanv->cv_font->ft_w, grd_curcanv->cv_font->ft_h);
+			temp_canv = gr_create_canvas(width, grd_curcanv->cv_font->ft_h);
 			gr_set_current_canvas(temp_canv);
 			gr_clear_canvas(TRANSPARENCY_COLOR);
 			gr_set_curfont(save_canv->cv_font);
 			gr_set_fontcolor(0, -1);
 			temp_str[0] = *s;
-			gr_string(0, 0, temp_str);
+			gr_ustring(0, 0, temp_str);
 			gr_set_current_canvas(save_canv);
 			
 			// Save off first 3 bytes of the palette and set it to white
@@ -93,8 +93,8 @@ void gr_scale_string_ogles(int x, int y, fix scale_x, fix scale_y, char * s) {
 			temp_bm.bm_ogles_tex_id = grd_curcanv->cv_font->ft_ogles_texes[*s - grd_curcanv->cv_font->ft_minchar];
 			grs_point scale_pts[] = {
 				{ i2f(x), i2f(y) },
-				{ i2f(grd_curcanv->cv_font->ft_w) + i2f(x), i2f(grd_curcanv->cv_font->ft_h) + i2f(y) },
-				{ fixmul(i2f(grd_curcanv->cv_font->ft_w - 1), scale_x) + i2f(x), fixmul(i2f(grd_curcanv->cv_font->ft_h - 1), scale_y) + i2f(y) }
+				{ i2f(width) + i2f(x), i2f(grd_curcanv->cv_font->ft_h) + i2f(y) },
+				{ width * scale_x + i2f(x), grd_curcanv->cv_font->ft_h * scale_y + i2f(y) }
 			};
 			scale_bitmap(&temp_bm, scale_pts);
 		}
