@@ -1842,7 +1842,6 @@ ReadFileNames:
 				citem = i;
 		}
 	}
-	showRenderBuffer();
 	
 	while(!done)	{
 		ocitem = citem;
@@ -1997,7 +1996,6 @@ ReadFileNames:
 					items[i].w = w * f2fl(scale_factor);
 					items[i].h = h * f2fl(scale_factor);
 				}
-				showRenderBuffer();
 			}		
 		} else if ( citem != ocitem )	{
 			int w, h, aw, y;
@@ -2028,8 +2026,8 @@ ReadFileNames:
 				gr_rect(rect_x0, rect_y0, rect_x1, rect_y1);
 				gr_scale_string(string_x, y, scale_factor, scale_factor, (&filenames[i*14])+((player_mode && filenames[i*14]=='$')?1:0)  );
 			}
-			showRenderBuffer();
 		}
+		showRenderBuffer();
 	}
 
 ExitFileMenuEarly:
