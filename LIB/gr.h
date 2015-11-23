@@ -178,16 +178,17 @@ typedef struct _grs_point {
 
 #pragma pack(1)
 typedef struct _grs_font {
+	GLuint	*	ft_ogles_texes;	// Array of OpenGL ES textures
 	short		ft_w,ft_h;		// Width and height in pixels
 	short		ft_flags;		// Proportional?
 	short		ft_baseline;	//
 	ubyte		ft_minchar,		// The first and last chars defined by
 				ft_maxchar;		// This font
 	short		ft_bytewidth;	// Width in unsigned chars
-	ubyte	* 	ft_data;			// Ptr to raw data.
+	ubyte	* 	ft_data;		// Ptr to raw data.
 	ubyte	**	ft_chars;		// Ptrs to data for each char (required for prop font)
 	short	*	ft_widths;		// Array of widths (required for prop font)
-	ubyte *  ft_kerndata;	// Array of kerning triplet data
+	ubyte	*	ft_kerndata;	// Array of kerning triplet data
 } grs_font;
 
 #define BM_LINEAR   0

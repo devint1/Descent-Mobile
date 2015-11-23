@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		032AC9291C0299AD0091DA3C /* FONTOGLES.c in Sources */ = {isa = PBXBuildFile; fileRef = 032AC9271C0299AD0091DA3C /* FONTOGLES.c */; };
 		0356D7071BD4789A00B013B9 /* BITBLT.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6D81BD4789A00B013B9 /* BITBLT.C */; };
 		0356D7081BD4789A00B013B9 /* BITMAP.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6D91BD4789A00B013B9 /* BITMAP.C */; };
 		0356D7091BD4789A00B013B9 /* BOX.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D6DA1BD4789A00B013B9 /* BOX.C */; };
@@ -57,6 +58,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		032AC9271C0299AD0091DA3C /* FONTOGLES.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = FONTOGLES.c; path = OGLES/FONTOGLES.c; sourceTree = "<group>"; };
+		032AC9281C0299AD0091DA3C /* FONTOGLES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FONTOGLES.h; path = OGLES/FONTOGLES.h; sourceTree = "<group>"; };
 		0356D6CC1BD4781000B013B9 /* lib2D.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = lib2D.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0356D6D81BD4789A00B013B9 /* BITBLT.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BITBLT.C; sourceTree = SOURCE_ROOT; };
 		0356D6D91BD4789A00B013B9 /* BITMAP.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BITMAP.C; sourceTree = SOURCE_ROOT; };
@@ -194,6 +197,8 @@
 				038CF7AF1BE3F66A0073AB9B /* BITBLTOGLES.h */,
 				035B2CF41BE3FF9600334C3D /* RECTOGLES.c */,
 				035B2CF51BE3FF9600334C3D /* RECTOGLES.h */,
+				032AC9271C0299AD0091DA3C /* FONTOGLES.c */,
+				032AC9281C0299AD0091DA3C /* FONTOGLES.h */,
 			);
 			name = OGLES;
 			sourceTree = "<group>";
@@ -255,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0356D72A1BD4789A00B013B9 /* VESALIB.C in Sources */,
+				032AC9291C0299AD0091DA3C /* FONTOGLES.c in Sources */,
 				0356D7101BD4789A00B013B9 /* FONT.C in Sources */,
 				0356D70D1BD4789A00B013B9 /* DISC.C in Sources */,
 				0356D70B1BD4789A00B013B9 /* CIRCLE.C in Sources */,

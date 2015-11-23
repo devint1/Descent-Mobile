@@ -117,6 +117,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 
 #include <fcntl.h>
@@ -129,6 +130,10 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 #include "cfile.h"
 #include "mono.h"
+
+#ifdef OGLES
+#include "fontogles.h"
+#endif
 
 #define FONT        grd_curcanv->cv_font
 #define FG_COLOR    grd_curcanv->cv_font_fg_color
@@ -144,10 +149,10 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #define FWIDTHS      FONT->ft_widths
 #define FONT_HEADER_SIZE	28
 
-#if defined(__x86_64__) || defined(__arm64__)
-#define FONT_HEADER_OFFSET 16
+#if defined(__LP64__)
+#define FONT_HEADER_OFFSET 24
 #else
-#define FONT_HEADER_OFFSET 0
+#define FONT_HEADER_OFFSET 8
 #endif
 
 #define BITS_TO_BYTES(x)    (((x)+7)>>3)
@@ -226,7 +231,17 @@ int get_centered_x(unsigned char *s)
 	return ((grd_curcanv->cv_bitmap.bm_w - w) / 2);
 }
 
-
+int get_centered_x_scaled(char *s, fix scale_x)
+{
+	int w,w2,s2;
+	
+	for (w=0;*s!=0 && *s!='\n';s++) {
+		get_char_width(s[0],s[1],&w2,&s2);
+		w += s2;
+	}
+	
+	return ((grd_curcanv->cv_bitmap.bm_w - w * f2fl(scale_x)) / 2);
+}
 
 int gr_internal_string0(int x, int y, unsigned char *s )
 {
@@ -986,13 +1001,19 @@ int gr_printf( int x, int y, char * format, ... )
 }
 
 // Maybe there's a nicer way to do this instead of allocating/freeing canvases
-// TODO: Tune this for OpenGL ES; profiling shows it uses a bit too much CPU
 void gr_scale_string(int x, int y, fix scale_x, fix scale_y, char * s) {
 	int w, h, aw;
 	int scaled_w, scaled_h;
 	ubyte *fade_table = gr_bitblt_fade_table;
 	grs_canvas *temp_canvas, *prev_canvas = grd_curcanv;
 
+#ifdef OGLES
+	if (grd_curcanv->cv_bitmap.bm_type == BM_OGLES) {
+		gr_scale_string_ogles(x, y, scale_x, scale_y, s);
+		return;
+	}
+#endif
+	
 	// Create the scale points
 	gr_get_string_size(s, &w, &h, &aw);
 	h += 2;
@@ -1045,7 +1066,11 @@ void gr_close_font( grs_font * font )
 {
 	if (font)
 	{
-		if ( font->ft_chars ) 
+#ifdef OGLES
+		glDeleteTextures(font->ft_maxchar - font->ft_minchar, font->ft_ogles_texes);
+		free(font->ft_ogles_texes);
+#endif
+		if ( font->ft_chars )
 			free( font->ft_chars );
 		free( font );
 	}
@@ -1149,6 +1174,11 @@ grs_font * gr_init_font( char * fontname )
 		colormap[255] = 255;
 
 		decode_data_asm(font->ft_data, ptr-font->ft_data, colormap, freq );
+	}
+	
+	font->ft_ogles_texes = malloc(sizeof(GLuint) * (font->ft_maxchar - font->ft_minchar));
+	for (i = 0; i < font->ft_maxchar - font->ft_minchar; ++i) {
+		font->ft_ogles_texes[i] = 0;
 	}
 
 	cfclose(fontfile);

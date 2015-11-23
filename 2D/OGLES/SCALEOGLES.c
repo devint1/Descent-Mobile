@@ -13,6 +13,8 @@
 #include "scaleogles.h"
 #include "oglestex.h"
 
+extern ubyte gr_current_pal[256*3];
+
 void scale_bitmap_ogles(grs_bitmap *bp, int x0, int y0, int x1, int y1) {
 	GLfloat x0f, y0f, x1f, y1f;
 	
@@ -33,7 +35,16 @@ void scale_bitmap_ogles(grs_bitmap *bp, int x0, int y0, int x1, int y1) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	
+	// Magic value means this is a font that needs a color
+	if (bp->avg_color == 255) {
+		glColor4ub(gr_current_pal[grd_curcanv->cv_font_fg_color * 3] * 4,
+				   gr_current_pal[grd_curcanv->cv_font_fg_color * 3 + 1] * 4,
+				   gr_current_pal[grd_curcanv->cv_font_fg_color * 3 + 2] * 4, 255);
+	} else {
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+	}
+	
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
