@@ -1911,6 +1911,7 @@ void game_render_frame_mono(void)
 
 	game_draw_hud_stuff();
 	
+#ifndef OGLES
 	if ( Game_double_buffer ) {		//copy to visible screen
 		if ( Game_cockpit_copy_code==NULL )	{
 			if ( VR_use_paging )	{		
@@ -1928,11 +1929,10 @@ void game_render_frame_mono(void)
 				gr_bm_ubitblt( VR_render_sub_buffer[0].cv_w, VR_render_sub_buffer[0].cv_h, VR_render_sub_buffer[0].cv_bitmap.bm_x, VR_render_sub_buffer[0].cv_bitmap.bm_y, 0, 0, &VR_render_sub_buffer[0].cv_bitmap, &VR_screen_pages[0].cv_bitmap );
 			}
 		} else	{
-#ifndef OGLES
 			gr_ibitblt( &VR_render_buffer[0].cv_bitmap, &VR_screen_pages[0].cv_bitmap, 0 );
-#endif
 		}
 	}
+#endif
 
 	if (Cockpit_mode==CM_FULL_COCKPIT || Cockpit_mode==CM_STATUS_BAR || Cockpit_mode==CM_REAR_VIEW) {
 
