@@ -1223,7 +1223,7 @@ void show_framerate()
 	gr_set_fontcolor(gr_getcolor(0,31,0),-1 );
 
 	ftoa( temp, rate );	// Convert fixed to string
-	gr_printf(grd_curcanv->cv_w-50,grd_curcanv->cv_h-20,"FPS: %s ", temp );
+	gr_scale_printf(grd_curcanv->cv_w-50*f2fl(Scale_factor),grd_curcanv->cv_h-28*f2fl(Scale_factor),Scale_factor,Scale_factor,"FPS: %s ", temp );
 }
 #endif
 

@@ -1276,7 +1276,7 @@ void show_time()
 		Color_0_31_0 = gr_getcolor(0,31,0);
 	gr_set_fontcolor(Color_0_31_0, -1 );
 
-	gr_printf(grd_curcanv->cv_w-25,grd_curcanv->cv_h-28,"%d:%02d", mins, secs);
+	gr_scale_printf(grd_curcanv->cv_w-25*f2fl(Scale_factor),grd_curcanv->cv_h-36*f2fl(Scale_factor),Scale_factor,Scale_factor,"%d:%02d", mins, secs);
 
 #ifdef PIGGY_USE_PAGING
 	{
@@ -1284,7 +1284,7 @@ void show_time()
 		int w,h,aw;
 		sprintf( text, "%d KB", Piggy_bitmap_cache_next/1024 );
 		gr_get_string_size( text, &w, &h, &aw );	
-		gr_printf(grd_curcanv->cv_w-10-w,grd_curcanv->cv_h/2, text );
+		gr_scale_printf(grd_curcanv->cv_w-(10+w)*f2fl(Scale_factor),grd_curcanv->cv_h/2,Scale_factor,Scale_factor, text );
 	}
 #endif
 
