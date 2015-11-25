@@ -955,7 +955,10 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 	int time_stopped=0;
 	bool shifted_up = false;
 	bool mouse_clicked = false;
-
+#ifdef OGLES
+	GLuint viewWidth, viewHeight;
+#endif
+	
 	if (nitems < 1 )
 		return -1;
 
@@ -1155,11 +1158,13 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 	// Save the background of the display
 	bg.menu_canvas = gr_create_sub_canvas( &grd_curscreen->sc_canvas, x, y, w, h );
 	gr_set_current_canvas( bg.menu_canvas );
-
+	
+#ifdef OGLES
+	getRenderBufferSize(&viewWidth, &viewHeight);
+#endif
 	if ( filename == NULL )	{
 #ifdef OGLES
-		// TODO: No hard-coded 600!!!
-		bg.saved = gr_create_bitmap( 600, 600 );
+		bg.saved = gr_create_bitmap( viewWidth, viewHeight );
 		Assert( bg.saved != NULL );
 		bg.saved->bm_type = BM_OGLES;
 		bg.saved->bm_ogles_tex_id = ogles_save_screen();
@@ -1178,8 +1183,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 	} else {
 		bg.saved = NULL;
 #ifdef OGLES
-		// TODO: No hard-coded 600!!!
-		bg.background = gr_create_bitmap( 600, 600 );
+		bg.background = gr_create_bitmap( viewWidth, viewHeight );
 		Assert( bg.background != NULL );
 		bg.background->bm_type = BM_OGLES;
 		bg.background->bm_ogles_tex_id = ogles_save_screen();

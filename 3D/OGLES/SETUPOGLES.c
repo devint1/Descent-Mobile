@@ -6,7 +6,6 @@
 //  Copyright © 2015 Devin Tuchsen. All rights reserved.
 //
 
-// TODO: Should be coming from view bounds instead of hard-coded "600.0"
 #ifdef OGLES
 #include <OpenGLES/ES1/gl.h>
 #include <math.h>
@@ -18,12 +17,14 @@ void g3_ogles_start_frame() {
 	GLfloat x0, x1, y0, y1;
 	GLint x, y;
 	GLsizei width, height;
+	GLint viewWidth, viewHeight;
 	
-	x = (grd_curcanv->cv_bitmap.bm_x * 600.0) / grd_curscreen->sc_w;
-	y = (grd_curcanv->cv_bitmap.bm_y * 600.0) / grd_curscreen->sc_h;
-	width = (grd_curcanv->cv_bitmap.bm_w * 600.0) / grd_curscreen->sc_w;
-	height = (grd_curcanv->cv_bitmap.bm_h * 600.0) / grd_curscreen->sc_h;
-	y = 600 - y - height;
+	getRenderBufferSize(&viewWidth, &viewHeight);
+	x = (grd_curcanv->cv_bitmap.bm_x * viewWidth) / grd_curscreen->sc_w;
+	y = (grd_curcanv->cv_bitmap.bm_y * viewHeight) / grd_curscreen->sc_h;
+	width = (grd_curcanv->cv_bitmap.bm_w * viewWidth) / grd_curscreen->sc_w;
+	height = (grd_curcanv->cv_bitmap.bm_h * viewHeight) / grd_curscreen->sc_h;
+	y = viewHeight - y - height;
 	
 	glViewport(x, y, width, height);
 	glEnable(GL_DEPTH_TEST);
@@ -41,7 +42,10 @@ void g3_ogles_start_frame() {
 }
 
 void g3_ogles_end_frame() {
-	glViewport(0, 0, 600, 600);
+	GLint viewWidth, viewHeight;
+	
+	getRenderBufferSize(&viewWidth, &viewHeight);
+	glViewport(0, 0, viewWidth, viewHeight);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrthof(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);

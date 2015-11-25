@@ -41,6 +41,11 @@ void deactivateText() {
 	});
 }
 
+void getRenderBufferSize(GLint *width, GLint *height) {
+	glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, width);
+	glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, height);
+}
+
 #ifdef OGLES
 void showRenderBuffer() {
 	AppDelegate	*appDelegate = [[UIApplication sharedApplication] delegate];

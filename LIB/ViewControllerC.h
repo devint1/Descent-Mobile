@@ -9,10 +9,15 @@
 #ifndef ViewControllerC_h
 #define ViewControllerC_h
 
+#ifdef OGLES
+#import <OpenGLES/ES1/gl.h>
+#endif
+
 int textIsActive();
 void activateText();
 void deactivateText();
 #ifdef OGLES
+void getRenderBufferSize(GLint *width, GLint *height);
 void showRenderBuffer();
 #endif
 

@@ -211,6 +211,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "dpmi.h"
 #include "i86.h"
 #include "inferno.h"
+#include "viewcontrollerc.h"
 
 #define CLASS_NAME "DESCENT"
 
@@ -644,7 +645,6 @@ int gr_check_mode(int mode)
 	return 11;
 }
 
-// TODO: Get view bounds instead of hard-coded 600
 #ifdef OGLES
 void ogles_draw_saved_screen(GLuint saved_screen_tex) {
 	GLfloat vertices[] = { -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f };
@@ -662,20 +662,23 @@ void ogles_draw_saved_screen(GLuint saved_screen_tex) {
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
+// TODO: Use glCopyTexImage2D instead of this
 GLuint ogles_save_screen() {
 	GLubyte *saved_screen;
 	GLuint tex;
+	GLint viewWidth, viewHeight;
 	
-	saved_screen = malloc(600 * 600 * 4);
+	getRenderBufferSize(&viewWidth, &viewHeight);
+	saved_screen = malloc(viewWidth * viewHeight * 4);
 	glEnable(GL_TEXTURE_2D);
-	glReadPixels(0, 0, 600, 600, GL_RGBA, GL_UNSIGNED_BYTE, saved_screen);
+	glReadPixels(0, 0, viewWidth, viewHeight, GL_RGBA, GL_UNSIGNED_BYTE, saved_screen);
 	glGenTextures(1, &tex);
 	glBindTexture(GL_TEXTURE_2D, tex);
 	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 600, 600, 0, GL_RGBA, GL_UNSIGNED_BYTE, saved_screen);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, viewWidth, viewHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, saved_screen);
 	free(saved_screen);
 	return tex;
 }

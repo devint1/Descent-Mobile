@@ -41,10 +41,18 @@ extern unsigned char * gr_video_memory;
 	self = [super initWithCoder:aDecoder];
 #ifdef OGLES
 	GLint backingWidth, backingHeight;
+	CGFloat screenScale;
+	
+#ifdef NORETINA
+	screenScale = 1;
+#else
+	screenScale = [[UIScreen mainScreen] scale];
+#endif
 	
 	// Set up EAGL layer
 	eaglLayer = (CAEAGLLayer*) self.layer;
 	eaglLayer.opaque = YES;
+	eaglLayer.contentsScale = screenScale;
 	eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
 									[NSNumber numberWithBool:YES], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
 	
@@ -79,7 +87,7 @@ extern unsigned char * gr_video_memory;
 	glCullFace(GL_BACK);
 	
 	// Viewport is screen bounds
-	glViewport(0, 0, self.bounds.size.width, self.bounds.size.height);
+	glViewport(0, 0, self.bounds.size.width * screenScale, self.bounds.size.height * screenScale);
 	
 	// Enable blending for alphas
 	glEnable(GL_BLEND);

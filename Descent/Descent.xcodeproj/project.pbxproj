@@ -19,6 +19,7 @@
 		031232661BD4C05200BEBA87 /* lib2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0356D82F1BD4A23500B013B9 /* lib2D.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		031232C21BD4D78400BEBA87 /* libUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 031232C11BD4D78400BEBA87 /* libUI.a */; };
 		031232F01BD4DAD900BEBA87 /* libIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 031232EF1BD4DAD900BEBA87 /* libIO.a */; };
+		03376F5E1C052830009E3740 /* Main-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03376F5C1C052830009E3740 /* Main-iPad.storyboard */; };
 		033B56661BD593F300A20894 /* libMAIN.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 033B56651BD593F300A20894 /* libMAIN.a */; };
 		03A28F341BE05BC400642A6D /* DESCENT.HOG in Resources */ = {isa = PBXBuildFile; fileRef = 03A28F321BE05BC400642A6D /* DESCENT.HOG */; };
 		03A28F351BE05BC400642A6D /* DESCENT.PIG in Resources */ = {isa = PBXBuildFile; fileRef = 03A28F331BE05BC400642A6D /* DESCENT.PIG */; };
@@ -48,6 +49,7 @@
 		031232601BD4C04700BEBA87 /* libVECMAT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libVECMAT.a; path = "../../../../Library/Developer/Xcode/DerivedData/Descent-iOS-fmijdzbcfieidshjviilwfoeildt/Build/Products/Debug-iphoneos/libVECMAT.a"; sourceTree = "<group>"; };
 		031232C11BD4D78400BEBA87 /* libUI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libUI.a; path = "../../../../Library/Developer/Xcode/DerivedData/Descent-iOS-fmijdzbcfieidshjviilwfoeildt/Build/Products/Debug-iphoneos/libUI.a"; sourceTree = "<group>"; };
 		031232EF1BD4DAD900BEBA87 /* libIO.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIO.a; path = "../../../../Library/Developer/Xcode/DerivedData/Descent-iOS-fmijdzbcfieidshjviilwfoeildt/Build/Products/Debug-iphoneos/libIO.a"; sourceTree = "<group>"; };
+		03376F5D1C052830009E3740 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Main-iPad.storyboard"; sourceTree = "<group>"; };
 		033B56651BD593F300A20894 /* libMAIN.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMAIN.a; path = "../../../../Library/Developer/Xcode/DerivedData/Descent-iOS-fmijdzbcfieidshjviilwfoeildt/Build/Products/Debug-iphoneos/libMAIN.a"; sourceTree = "<group>"; };
 		0356D8151BD4A22A00B013B9 /* Descent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Descent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0356D82F1BD4A23500B013B9 /* lib2D.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib2D.a; path = "../../../../Library/Developer/Xcode/DerivedData/Descent-iOS-fmijdzbcfieidshjviilwfoeildt/Build/Products/Debug-iphoneos/lib2D.a"; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 			children = (
 				03A28F541BE05D2600642A6D /* LaunchScreen.storyboard */,
 				03A28F561BE05D2600642A6D /* Main.storyboard */,
+				03376F5C1C052830009E3740 /* Main-iPad.storyboard */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 			files = (
 				03A28F5C1BE05D6000642A6D /* Assets.xcassets in Resources */,
 				03A28F5A1BE05D4F00642A6D /* LaunchScreen.storyboard in Resources */,
+				03376F5E1C052830009E3740 /* Main-iPad.storyboard in Resources */,
 				03A28F5B1BE05D4F00642A6D /* Main.storyboard in Resources */,
 				03A28F341BE05BC400642A6D /* DESCENT.HOG in Resources */,
 				03B84A2A1BDB6E5F005D04FB /* merlin_silver.sf2 in Resources */,
@@ -300,6 +304,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		03376F5C1C052830009E3740 /* Main-iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				03376F5D1C052830009E3740 /* Base */,
+			);
+			name = "Main-iPad.storyboard";
+			sourceTree = "<group>";
+		};
 		03A28F541BE05D2600642A6D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
