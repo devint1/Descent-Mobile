@@ -573,7 +573,10 @@ extern void gr_merge_textures_3( ubyte * lower, ubyte * upper, ubyte * dest );
 
 extern void gr_sync_display();
 
+#ifdef OGLES
 extern void ogles_draw_saved_screen(GLuint saved_screen_tex);
 extern GLuint ogles_save_screen();
+void ogles_map_bitmap(unsigned char *dest, GLubyte *src, GLuint width, GLuint height);
+#endif
 
 #endif

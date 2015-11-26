@@ -677,4 +677,24 @@ GLuint ogles_save_screen() {
 	glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, 0, viewWidth, viewHeight, 0);
 	return tex;
 }
+
+void ogles_map_bitmap(unsigned char *dest, GLubyte *src, GLuint width, GLuint height) {
+	int i, j;
+	GLubyte r, g, b, *srcRow;
+	unsigned char *destRow;
+	GLuint npixels;
+	
+	npixels = width * height;
+	for (i = 0; i < height; ++i) {
+		srcRow = &src[i * width * 4];
+		destRow = &dest[npixels - i * width - 1];
+		
+		for (j = 0; j < width; ++j) {
+			r = srcRow[j * 4] / 4;
+			g = srcRow[j * 4 + 1] / 4;
+			b = srcRow[j * 4 + 2] / 4;
+			destRow[j] = gr_find_closest_color(r, g, b);
+		}
+	}
+}
 #endif

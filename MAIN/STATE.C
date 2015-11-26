@@ -255,6 +255,10 @@ static char rcsid[] = "$Id: state.c 2.14 1995/05/26 16:16:10 john Exp $";
 #include "network.h"
 #include "args.h"
 
+#ifdef OGLES
+#include "viewcontrollerc.h"
+#endif
+
 #ifndef SHAREWARE
 
 #define STATE_VERSION 7
@@ -575,6 +579,10 @@ int state_save_all_sub(char *filename, char *desc, int between_levels)
 	int i,j;
 	FILE * fp;
 	grs_canvas * cnv;
+#ifdef OGLES
+	GLubyte *screen;
+	GLint viewWidth, viewHeight;
+#endif
 	
 	if ( Game_mode & GM_MULTI )	{
 #ifdef MULTI_SAVE
@@ -600,7 +608,12 @@ int state_save_all_sub(char *filename, char *desc, int between_levels)
 	fwrite( desc, sizeof(char)*DESC_LENGTH, 1, fp );
 	
 	// Save the current screen shot...
+#ifdef OGLES
+	cnv = gr_create_sub_canvas(grd_curcanv, 0, 0, THUMBNAIL_W, THUMBNAIL_H);
+	screen = malloc(THUMBNAIL_W * THUMBNAIL_H * 4);
+#else
 	cnv = gr_create_canvas( THUMBNAIL_W, THUMBNAIL_H );
+#endif
 	if ( cnv )	{
 		gr_set_current_canvas( cnv );
 		if ( between_levels )	{
@@ -625,9 +638,19 @@ int state_save_all_sub(char *filename, char *desc, int between_levels)
 			}
 		} else {
 			render_frame(0);
+#ifdef OGLES
+			getRenderBufferSize(&viewWidth, &viewHeight);
+			glReadPixels(0, viewHeight - THUMBNAIL_H, THUMBNAIL_W, THUMBNAIL_H, GL_RGBA, GL_UNSIGNED_BYTE, screen);
+			ogles_map_bitmap(cnv->cv_bitmap.bm_data, screen, THUMBNAIL_W, THUMBNAIL_H);
+			free(screen);
+#endif
 		}
 		fwrite( cnv->cv_bitmap.bm_data, THUMBNAIL_W*THUMBNAIL_H, 1, fp );
+#ifdef OGLES
+		gr_free_sub_canvas(cnv);
+#else
 		gr_free_canvas( cnv );
+#endif
 	} else {
 		ubyte color = 0;
 		for ( i=0; i<THUMBNAIL_W*THUMBNAIL_H; i++ )
