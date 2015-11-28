@@ -888,7 +888,7 @@ char_allowed(char c)
 	char *p = Newmenu_allowed_chars;
 
 	if (!p)
-		return 1;
+		return isprint(c);
 
 	while (*p) {
 		Assert(p[1]);
