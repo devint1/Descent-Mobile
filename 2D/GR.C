@@ -687,7 +687,7 @@ void ogles_map_bitmap(unsigned char *dest, GLubyte *src, GLuint width, GLuint he
 	npixels = width * height;
 	for (i = 0; i < height; ++i) {
 		srcRow = &src[i * width * 4];
-		destRow = &dest[npixels - i * width - 1];
+		destRow = &dest[npixels - i * width - width];
 		
 		for (j = 0; j < width; ++j) {
 			r = srcRow[j * 4] / 4;
