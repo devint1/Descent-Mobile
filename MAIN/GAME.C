@@ -1029,8 +1029,12 @@ void game_init_render_buffers(int screen_mode, int render_w, int render_h, int u
 		game_init_render_sub_buffers( 0, 0, render_w, render_h );
 
 		// Initialize screen buffer
+#ifndef OGLES
 		gr_video_memory = malloc(render_w*render_h);
 		bitmap_context = CGBitmapContextCreate(NULL, render_w, render_h, 8, 0, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaNoneSkipFirst);
+#else
+		gr_video_memory = NULL;
+#endif
 		
 	}
 }

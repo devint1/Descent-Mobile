@@ -329,6 +329,7 @@ void gr_bm_ubitblt_double(int w, int h, int dx, int dy, int sx, int sy, grs_bitm
 
 // From Linear to Linear
 void gr_bm_ubitblt(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest) {
+#ifndef OGLES
 	unsigned char * dbits;
 	unsigned char * sbits;
 	//int	src_bm_rowsize_2, dest_bm_rowsize_2;
@@ -352,6 +353,7 @@ void gr_bm_ubitblt(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * sr
 		sbits += src->bm_rowsize;
 		dbits += dstep;
 	}
+#endif
 }
 
 // From Linear to Linear Masked
@@ -404,8 +406,8 @@ void gr_bm_ubitbltm(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * s
 #endif
 }
 
-
 void gr_bm_bitblt(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest) {
+#ifndef OGLES
 	int dx1 = dx, dx2 = dx + dest->bm_w - 1;
 	int dy1 = dy, dy2 = dy + dest->bm_h - 1;
 
@@ -437,6 +439,7 @@ void gr_bm_bitblt(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src
 		h = sy2 - sy1 + 1;
 
 	gr_bm_ubitblt(w, h, dx1, dy1, sx1, sy1, src, dest);
+#endif
 }
 
 
