@@ -8,15 +8,18 @@
 
 #ifdef OGLES
 #include <OpenGLES/ES1/gl.h>
+#include <math.h>
 #include <string.h>
 #include "gr.h"
 #include "scaleogles.h"
 #include "oglestex.h"
 
 extern ubyte gr_current_pal[256*3];
+extern ubyte *gr_bitblt_fade_table;
 
 void scale_bitmap_ogles(grs_bitmap *bp, int x0, int y0, int x1, int y1) {
 	GLfloat x0f, y0f, x1f, y1f;
+	GLfloat alpha = 1.0f;
 	
 	// Calculate OGLES coords
 	x0f = ((x0 * 2.0f) / grd_curscreen->sc_w) - 1.0f;
@@ -29,6 +32,9 @@ void scale_bitmap_ogles(grs_bitmap *bp, int x0, int y0, int x1, int y1) {
 	GLfloat texCoords[] = { 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f };
 	glEnable(GL_TEXTURE_2D);
 	ogles_bm_bind_teximage_2d(bp);
+	if (gr_bitblt_fade_table) {
+		alpha = (float)gr_bitblt_fade_table[(int)fmax(y0, 0)] / 31.0f;
+	}
 	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -42,7 +48,7 @@ void scale_bitmap_ogles(grs_bitmap *bp, int x0, int y0, int x1, int y1) {
 				   gr_current_pal[grd_curcanv->cv_font_fg_color * 3 + 1] * 4,
 				   gr_current_pal[grd_curcanv->cv_font_fg_color * 3 + 2] * 4, 255);
 	} else {
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		glColor4f(1.0f, 1.0f, 1.0f, alpha);
 	}
 	
 	glVertexPointer(2, GL_FLOAT, 0, vertices);

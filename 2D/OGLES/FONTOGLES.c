@@ -18,6 +18,7 @@
 // Used in hack to guarantee whiteness in font texture
 extern ubyte gr_current_pal[256*3];
 
+extern ubyte *gr_bitblt_fade_table;
 extern int get_centered_x_scaled(char *s, fix scale_x);
 extern void get_char_width(unsigned int c,unsigned int c2,int *width,int *spacing);
 
@@ -29,6 +30,7 @@ void gr_scale_string_ogles(int x, int y, fix scale_x, fix scale_y, unsigned char
 	grs_canvas *temp_canv, *save_canv = grd_curcanv;
 	grs_bitmap temp_bm;
 	ubyte pal_save[3];
+	ubyte *fade_table_save = NULL;
 	
 	// Set up temp bitmap
 	if (grd_curcanv->cv_font->ft_flags & FT_COLOR) {
@@ -71,7 +73,10 @@ void gr_scale_string_ogles(int x, int y, fix scale_x, fix scale_y, unsigned char
 			gr_set_curfont(save_canv->cv_font);
 			gr_set_fontcolor(0, -1);
 			temp_str[0] = *s;
+			fade_table_save = gr_bitblt_fade_table;
+			gr_bitblt_fade_table = NULL;
 			gr_ustring(0, 0, temp_str);
+			gr_bitblt_fade_table = fade_table_save;
 			gr_set_current_canvas(save_canv);
 			
 			// Save off first 3 bytes of the palette and set it to white

@@ -329,6 +329,17 @@ void scale_bitmap(grs_bitmap *bp, grs_point *vertbuf )
 	x0 = vertbuf[0].x; y0 = vertbuf[0].y;
 	x1 = vertbuf[2].x; y1 = vertbuf[2].y;
 
+#ifdef OGLES
+	if (dbp->bm_type == BM_OGLES) {
+		dx0 = f2i(x0) + dbp->bm_x;
+		dx1 = f2i(x1) + dbp->bm_x;
+		dy0 = f2i(y0) + dbp->bm_y;
+		dy1 = f2i(y1) + dbp->bm_y;
+		scale_bitmap_ogles(bp, dx0, dy0, dx1, dy1);
+		return;
+	}
+#endif
+	
 	xmin = 0; ymin = 0;
 	xmax = i2f(dbp->bm_w)-fl2f(.5); ymax = i2f(dbp->bm_h)-fl2f(.5);
 
@@ -395,16 +406,6 @@ void scale_bitmap(grs_bitmap *bp, grs_point *vertbuf )
 		scale_bitmap_c_rle(bp, dbp, dx0, dy0, dx1, dy1, clipped_u0, clipped_v0, clipped_u1, clipped_v1  );
 	else
 		scale_bitmap_c(bp, dbp, dx0, dy0, dx1, dy1, clipped_u0, clipped_v0, clipped_u1, clipped_v1  );
-#endif
-#ifdef OGLES
-	if (dbp->bm_type == BM_OGLES) {
-		dx0 += dbp->bm_x;
-		dx1 += dbp->bm_x;
-		dy0 += dbp->bm_y;
-		dy1 += dbp->bm_y;
-		scale_bitmap_ogles(bp, dx0, dy0, dx1, dy1);
-		return;
-	}
 #endif
 	if ( bp->bm_flags & BM_FLAG_RLE )	{
 		if ( (dtemp < (f2i(clipped_x1)-f2i(clipped_x0))) && (dtemp>0) )

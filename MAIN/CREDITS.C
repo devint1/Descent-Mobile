@@ -284,7 +284,9 @@ void credits_show()
 
 			y = first_line_offset - i;
 
+#ifndef OGLES
 			gr_set_current_canvas(VR_offscreen_buffer);
+#endif
 			scale_bitmap(&backdrop, scale_pts);
 			for (j=0; j<NUM_LINES; j++ )	{
 				char *s;
@@ -327,7 +329,11 @@ void credits_show()
 				else
 					y += ROW_SPACING;
 			}
+#ifdef OGLES
+			showRenderBuffer();
+#else
 			gr_bm_ubitblt(grd_curscreen->sc_w, grd_curscreen->sc_h, 0, 0, 0, 0, &(VR_offscreen_buffer->cv_bitmap), &(grd_curscreen->sc_canvas.cv_bitmap) );
+#endif
 
 			while( timer_get_fixed_seconds() < last_time+time_delay );
 			last_time = timer_get_fixed_seconds();
@@ -375,9 +381,6 @@ void credits_show()
 				extra_inc++;
 			}
 		}
-#ifdef OGLES
-		showRenderBuffer();
-#endif
 	}
 	free(fade_values);
 }
