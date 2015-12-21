@@ -264,6 +264,10 @@ static char rcsid[] = "$Id: scores.c 2.2 1995/06/15 12:13:54 john Exp $";
 #include "dstring.h"
 #include "cfile.h"
 
+#ifdef OGLES
+#include "viewcontrollerc.h"
+#endif
+
 #define VERSION_NUMBER 		1
 #define SCORES_FILENAME 	"DESCENT.HI"
 #define COOL_MESSAGE_LEN 	50
@@ -604,6 +608,9 @@ ReshowScores:
 			done = 1;
 			break;
 		}
+#ifdef OGLES
+		showRenderBuffer();
+#endif
 	}
 
 	// Restore background and exit
