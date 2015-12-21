@@ -375,6 +375,8 @@ static void midi_read_callback(const MIDIPacketList *pktlist, void *refCon, void
 					presetData[channel].bankMSB = kAUSampler_DefaultPercussionBankMSB;
 				}
 				osStatus = 0;
+			} else {
+				break;
 			}
 			++tries;
 		} if (!presetChange) {
