@@ -921,6 +921,7 @@ extern void vfx_set_palette_sub(ubyte *);
 void show_order_form()
 {
 	int pcx_error;
+	int x, y;
 	char title_pal[768];
 	char	exit_screen[16];
 	grs_bitmap bmp;
@@ -942,16 +943,16 @@ void show_order_form()
 #endif
 	bmp.bm_data = NULL;
 	if ((pcx_error = pcx_read_bitmap(exit_screen, &bmp, BM_LINEAR, title_pal)) == PCX_ERROR_NONE) {
+		vfx_set_palette_sub(title_pal);
 		scale_bitmap(&bmp, scale_pts);
 		free(bmp.bm_data);
-		vfx_set_palette_sub(title_pal);
 		gr_palette_fade_in(title_pal, 32, 0);
 		{
 			int done = 0;
 			fix time_out_value = timer_get_approx_seconds() + i2f(60 * 5);
 			while (!done)	{
 				if (timer_get_approx_seconds() > time_out_value) done = 1;
-				if (key_inkey()) done = 1;
+				if (mouse_button_down_count(0, &x, &y)) done = 1;
 			}
 		}
 		gr_palette_fade_out(title_pal, 32, 0);
@@ -1779,7 +1780,7 @@ int descent_main(int argc,char **argv)
 	}
 	#endif
 
-	return(0);		//presumably successful exit
+	exit(0);		//presumably successful exit
 }
 
 
