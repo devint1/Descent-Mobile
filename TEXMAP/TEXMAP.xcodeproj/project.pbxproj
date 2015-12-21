@@ -314,7 +314,6 @@
 			buildSettings = {
 				GCC_INPUT_FILETYPE = sourcecode.c.c;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					OGLES,
 					"$(inherited)",
 					NASM,
 				);
@@ -370,7 +369,6 @@
 					NASM,
 					RELEASE,
 					NDEBUG,
-					OGLES,
 				);
 				HEADER_SEARCH_PATHS = $SRCROOT/../LIB;
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";

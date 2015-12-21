@@ -1702,42 +1702,56 @@ void draw_weapon_info(int weapon_type,int weapon_num)
 	if (Newdemo_state==ND_STATE_RECORDING )
 		newdemo_record_player_weapon(weapon_type, weapon_num);
 #endif
-	gr_set_current_canvas(&VR_screen_pages[0]);
 	if (weapon_type == 0)
 		if (Cockpit_mode == CM_STATUS_BAR) {
+			gr_set_current_canvas(&VR_screen_pages[0]);
 			gb = get_gauge_box(2);
 			draw_weapon_info_sub(Primary_weapon_to_weapon_info[weapon_num],
-				&gb,
-				SB_PRIMARY_W_PIC_X, SB_PRIMARY_W_PIC_Y,
-				PRIMARY_WEAPON_NAMES_SHORT(weapon_num),
-				SB_PRIMARY_W_TEXT_X, SB_PRIMARY_W_TEXT_Y);
+								 &gb,
+								 SB_PRIMARY_W_PIC_X, SB_PRIMARY_W_PIC_Y,
+								 PRIMARY_WEAPON_NAMES_SHORT(weapon_num),
+								 SB_PRIMARY_W_TEXT_X, SB_PRIMARY_W_TEXT_Y);
+			gr_set_current_canvas(get_current_game_screen());
 		}
 		else {
+#ifdef OGLES
+			gr_set_current_canvas(&VR_screen_pages[0]);
+#endif
 			gb = get_gauge_box(0);
 			draw_weapon_info_sub(Primary_weapon_to_weapon_info[weapon_num],
-				&gb,
-				PRIMARY_W_PIC_X, PRIMARY_W_PIC_Y,
-				PRIMARY_WEAPON_NAMES_SHORT(weapon_num),
-				PRIMARY_W_TEXT_X, PRIMARY_W_TEXT_Y);
+								 &gb,
+								 PRIMARY_W_PIC_X, PRIMARY_W_PIC_Y,
+								 PRIMARY_WEAPON_NAMES_SHORT(weapon_num),
+								 PRIMARY_W_TEXT_X, PRIMARY_W_TEXT_Y);
+#ifdef OGLES
+			gr_set_current_canvas(get_current_game_screen());
+#endif
 		}
-	else
-		if (Cockpit_mode == CM_STATUS_BAR) {
-			gb = get_gauge_box(3);
-			draw_weapon_info_sub(Secondary_weapon_to_weapon_info[weapon_num],
-				&gb,
-				SB_SECONDARY_W_PIC_X, SB_SECONDARY_W_PIC_Y,
-				SECONDARY_WEAPON_NAMES_SHORT(weapon_num),
-				SB_SECONDARY_W_TEXT_X, SB_SECONDARY_W_TEXT_Y);
-		}
-		else {
-			gb = get_gauge_box(1);
-			draw_weapon_info_sub(Secondary_weapon_to_weapon_info[weapon_num],
-				&gb,
-				SECONDARY_W_PIC_X, SECONDARY_W_PIC_Y,
-				SECONDARY_WEAPON_NAMES_SHORT(weapon_num),
-				SECONDARY_W_TEXT_X, SECONDARY_W_TEXT_Y);
-		}
-	gr_set_current_canvas(get_current_game_screen());
+		else
+			if (Cockpit_mode == CM_STATUS_BAR) {
+				gr_set_current_canvas(&VR_screen_pages[0]);
+				gb = get_gauge_box(3);
+				draw_weapon_info_sub(Secondary_weapon_to_weapon_info[weapon_num],
+									 &gb,
+									 SB_SECONDARY_W_PIC_X, SB_SECONDARY_W_PIC_Y,
+									 SECONDARY_WEAPON_NAMES_SHORT(weapon_num),
+									 SB_SECONDARY_W_TEXT_X, SB_SECONDARY_W_TEXT_Y);
+				gr_set_current_canvas(get_current_game_screen());
+			}
+			else {
+#ifdef OGLES
+				gr_set_current_canvas(&VR_screen_pages[0]);
+#endif
+				gb = get_gauge_box(1);
+				draw_weapon_info_sub(Secondary_weapon_to_weapon_info[weapon_num],
+									 &gb,
+									 SECONDARY_W_PIC_X, SECONDARY_W_PIC_Y,
+									 SECONDARY_WEAPON_NAMES_SHORT(weapon_num),
+									 SECONDARY_W_TEXT_X, SECONDARY_W_TEXT_Y);
+#ifdef OGLES
+				gr_set_current_canvas(get_current_game_screen());
+#endif
+			}
 }
 
 void draw_ammo_info(int x,int y,int ammo_count,int primary)
@@ -1785,17 +1799,19 @@ int draw_weapon_box(int weapon_type,int weapon_num)
 		weapon_box_fade_values[weapon_type]=i2f(GR_FADE_LEVELS-1);
 	}
 	
-	if (force_weapon_draw[weapon_type]) {
+	if (old_weapon[weapon_type][VR_current_page] == -1 || force_weapon_draw[weapon_type]) {
 		draw_weapon_info(weapon_type,weapon_num);
-		force_weapon_draw[weapon_type] = false;
-	}
-	
-	if (old_weapon[weapon_type][VR_current_page] == -1) {
-		draw_weapon_info(weapon_type,weapon_num);
-		old_weapon[weapon_type][VR_current_page] = weapon_num;
-		old_ammo_count[weapon_type][VR_current_page]=-1;
 		drew_flag=1;
-		weapon_box_states[weapon_type] = WS_SET;
+#ifdef OGLES
+		if (old_weapon[weapon_type][VR_current_page] == -1) {
+#endif
+			old_weapon[weapon_type][VR_current_page] = weapon_num;
+			old_ammo_count[weapon_type][VR_current_page]=-1;
+			weapon_box_states[weapon_type] = WS_SET;
+#ifdef OGLES
+		}
+#endif
+		force_weapon_draw[weapon_type] = false;
 	}
 
 	if (weapon_box_states[weapon_type] == WS_FADING_OUT) {
