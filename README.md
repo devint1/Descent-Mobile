@@ -24,7 +24,7 @@ Requirements
 
 Building
 --------
-Open the Xcode workspace “Descent-iOS.xcworkspace,” select your platform, and build! You will need DESCENT.HOG and DESCENT.PIG from the full version of Descent in order to play. Copy these to the “Descent” directory before building. This was tested on an iPhone 5s running iOS 9.1. Apple now allows you to run on an iDevice for free, so long as you have an Apple ID.
+You will need DESCENT.HOG and DESCENT.PIG from the full version of Descent in order to play. Copy these to the “Descent” directory, then open the Xcode workspace “Descent-iOS.xcworkspace.” You may wish to select the renderer (OpenGL ES or software) prior to building; select a scheme from the Product → Scheme menu. Once this is done, select your platform and build! This was tested on an iPhone 5s running iOS 9.1. Apple now allows you to run on an iDevice for free, so long as you have an Apple ID.
 
 Issues and Limitations
 ----------------------
