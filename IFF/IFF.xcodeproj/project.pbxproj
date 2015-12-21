@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0356D7B41BD491AE00B013B9 /* IFF.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7B21BD491AE00B013B9 /* IFF.C */; settings = {ASSET_TAGS = (); }; };
+		0356D7B41BD491AE00B013B9 /* IFF.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7B21BD491AE00B013B9 /* IFF.C */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -127,7 +127,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		0356D7AD1BD4917F00B013B9 /* Debug */ = {
+		0356D7AD1BD4917F00B013B9 /* Debug (OpenGL ES) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -167,9 +167,9 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
-			name = Debug;
+			name = "Debug (OpenGL ES)";
 		};
-		0356D7AE1BD4917F00B013B9 /* Release */ = {
+		0356D7AE1BD4917F00B013B9 /* Release (OpenGL ES) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -203,9 +203,9 @@
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = "Release (OpenGL ES)";
 		};
-		0356D7B01BD4917F00B013B9 /* Debug */ = {
+		0356D7B01BD4917F00B013B9 /* Debug (OpenGL ES) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_INPUT_FILETYPE = sourcecode.c.c;
@@ -214,9 +214,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
-			name = Debug;
+			name = "Debug (OpenGL ES)";
 		};
-		0356D7B11BD4917F00B013B9 /* Release */ = {
+		0356D7B11BD4917F00B013B9 /* Release (OpenGL ES) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_INPUT_FILETYPE = sourcecode.c.c;
@@ -225,7 +225,107 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
-			name = Release;
+			name = "Release (OpenGL ES)";
+		};
+		03BF18FA1C27A941003BE14A /* Debug (Software) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = "Debug (Software)";
+		};
+		03BF18FB1C27A941003BE14A /* Debug (Software) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_INPUT_FILETYPE = sourcecode.c.c;
+				HEADER_SEARCH_PATHS = ../LIB;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = "Debug (Software)";
+		};
+		03BF18FC1C27A949003BE14A /* Release (Software) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release (Software)";
+		};
+		03BF18FD1C27A949003BE14A /* Release (Software) */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_INPUT_FILETYPE = sourcecode.c.c;
+				HEADER_SEARCH_PATHS = ../LIB;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = "Release (Software)";
 		};
 /* End XCBuildConfiguration section */
 
@@ -233,20 +333,24 @@
 		0356D7A11BD4917F00B013B9 /* Build configuration list for PBXProject "IFF" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0356D7AD1BD4917F00B013B9 /* Debug */,
-				0356D7AE1BD4917F00B013B9 /* Release */,
+				0356D7AD1BD4917F00B013B9 /* Debug (OpenGL ES) */,
+				03BF18FA1C27A941003BE14A /* Debug (Software) */,
+				0356D7AE1BD4917F00B013B9 /* Release (OpenGL ES) */,
+				03BF18FC1C27A949003BE14A /* Release (Software) */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release (OpenGL ES)";
 		};
 		0356D7AF1BD4917F00B013B9 /* Build configuration list for PBXNativeTarget "IFF" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0356D7B01BD4917F00B013B9 /* Debug */,
-				0356D7B11BD4917F00B013B9 /* Release */,
+				0356D7B01BD4917F00B013B9 /* Debug (OpenGL ES) */,
+				03BF18FB1C27A941003BE14A /* Debug (Software) */,
+				0356D7B11BD4917F00B013B9 /* Release (OpenGL ES) */,
+				03BF18FD1C27A949003BE14A /* Release (Software) */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release (OpenGL ES)";
 		};
 /* End XCConfigurationList section */
 	};
