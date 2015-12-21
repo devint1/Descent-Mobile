@@ -757,7 +757,11 @@ void draw_model_picture(int mn,vms_angvec *orient_angles)
 
 	Assert(mn>=0 && mn<N_polygon_models);
 
+#ifdef OGLES
 	temp_canv = gr_create_sub_canvas(save_canv, 0, 0, save_canv->cv_bitmap.bm_w,save_canv->cv_bitmap.bm_h);
+#else
+	temp_canv = gr_create_canvas(save_canv->cv_bitmap.bm_w,save_canv->cv_bitmap.bm_h);
+#endif
 	gr_set_current_canvas(temp_canv);
 	gr_clear_canvas( BM_XRGB(0,0,0) );
 
@@ -782,5 +786,9 @@ void draw_model_picture(int mn,vms_angvec *orient_angles)
 
 	gr_bitmap(0,0,&temp_canv->cv_bitmap);
 
+#ifdef OGLES
 	gr_free_sub_canvas(temp_canv);
+#else
+	gr_free_canvas(temp_canv);
+#endif
 }

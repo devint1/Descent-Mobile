@@ -1539,7 +1539,9 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 			gr_palette_fade_in( gr_palette, 32, 0 );
 		}
 
+#ifdef OGLES
 		showRenderBuffer();
+#endif
 		
 		if(mouse_clicked) {
 			if (item[choice].type == NM_TYPE_INPUT_MENU) {
@@ -2031,7 +2033,9 @@ ReadFileNames:
 				gr_scale_string(string_x, y, scale_factor, scale_factor, (&filenames[i*14])+((player_mode && filenames[i*14]=='$')?1:0)  );
 			}
 		}
+#ifdef OGLES
 		showRenderBuffer();
+#endif
 	}
 
 ExitFileMenuEarly:

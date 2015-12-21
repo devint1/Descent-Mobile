@@ -77,8 +77,10 @@ static BOOL descentIsRunning = NO;
 				screenHeight = temp;
 			}
 			
+#ifdef OGLES
 			// Set the OpenGLES context for this thread
 			[EAGLContext setCurrentContext:((RenderView*)self.view).context];
+#endif
 			
 			// HACK! HACK! HACK! Emulating command line arguments!
 			char w[6], h[6];
