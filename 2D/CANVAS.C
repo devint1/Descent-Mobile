@@ -119,9 +119,17 @@ grs_canvas *gr_create_sub_canvas(grs_canvas *canv, int x, int y, int w, int h)
 	new_canvas->cv_bitmap.bm_type = canv->cv_bitmap.bm_type;
 	new_canvas->cv_bitmap.bm_rowsize = canv->cv_bitmap.bm_rowsize;
 
+#ifdef OGLES
+	if (canv->cv_bitmap.bm_type == BM_OGLES) {
+		new_canvas->cv_bitmap.bm_data = NULL;
+	} else {
+#endif
 	new_canvas->cv_bitmap.bm_data = canv->cv_bitmap.bm_data;
 	new_canvas->cv_bitmap.bm_data += y*canv->cv_bitmap.bm_rowsize;
 	new_canvas->cv_bitmap.bm_data += x;
+#ifdef OGLES
+	}
+#endif
 
 	new_canvas->cv_color = canv->cv_color;
    new_canvas->cv_drawmode = canv->cv_drawmode;

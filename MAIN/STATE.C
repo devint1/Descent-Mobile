@@ -641,12 +641,14 @@ int state_save_all_sub(char *filename, char *desc, int between_levels)
 #ifdef OGLES
 			getRenderBufferSize(&viewWidth, &viewHeight);
 			glReadPixels(0, viewHeight - THUMBNAIL_H, THUMBNAIL_W, THUMBNAIL_H, GL_RGBA, GL_UNSIGNED_BYTE, screen);
+			cnv->cv_bitmap.bm_data = malloc(THUMBNAIL_H * THUMBNAIL_W);
 			ogles_map_bitmap(cnv->cv_bitmap.bm_data, screen, THUMBNAIL_W, THUMBNAIL_H);
 			free(screen);
 #endif
 		}
 		fwrite( cnv->cv_bitmap.bm_data, THUMBNAIL_W*THUMBNAIL_H, 1, fp );
 #ifdef OGLES
+		free(cnv->cv_bitmap.bm_data);
 		gr_free_sub_canvas(cnv);
 #else
 		gr_free_canvas( cnv );

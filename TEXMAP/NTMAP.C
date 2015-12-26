@@ -240,6 +240,12 @@ void init_interface_vars_to_assembler(void)
 
 	bp = &grd_curcanv->cv_bitmap;
 
+#ifdef OGLES
+	if (bp->bm_type == BM_OGLES) {
+		return;
+	}
+#endif
+	
 	Assert(bp!=NULL);
 	Assert(bp->bm_data!=NULL);
 	Assert(bp->bm_h <= MAX_Y_POINTERS);
