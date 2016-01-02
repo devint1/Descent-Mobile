@@ -1058,7 +1058,7 @@ int state_save_all(int between_levels)
 
 int state_restore_all(int in_game)
 {
-	char filename[128];
+	char filename[FILENAME_MAX];
 
 	if ( Game_mode & GM_MULTI )	{
 #ifdef MULTI_SAVE
