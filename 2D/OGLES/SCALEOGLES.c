@@ -34,7 +34,9 @@ void scale_bitmap_ogles(grs_bitmap *bp, int x0, int y0, int x1, int y1) {
 	ogles_bm_bind_teximage_2d(bp);
 	if (gr_bitblt_fade_table) {
 		alpha = (float)gr_bitblt_fade_table[(int)fmax(y0, 0)] / 31.0f;
-	}
+    } else {
+        alpha = (float)Gr_scanline_darkening_level / (float)GR_FADE_LEVELS;
+    }
 	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -44,9 +46,9 @@ void scale_bitmap_ogles(grs_bitmap *bp, int x0, int y0, int x1, int y1) {
 	
 	// Magic value means this is a font that needs a color
 	if (bp->avg_color == 255) {
-		glColor4ub(gr_current_pal[grd_curcanv->cv_font_fg_color * 3] * 4,
-				   gr_current_pal[grd_curcanv->cv_font_fg_color * 3 + 1] * 4,
-				   gr_current_pal[grd_curcanv->cv_font_fg_color * 3 + 2] * 4, 255);
+		glColor4f(gr_current_pal[grd_curcanv->cv_font_fg_color * 3] / 63.0f,
+				   gr_current_pal[grd_curcanv->cv_font_fg_color * 3 + 1] / 63.0f,
+				   gr_current_pal[grd_curcanv->cv_font_fg_color * 3 + 2] / 63.0f, alpha);
 	} else {
 		glColor4f(1.0f, 1.0f, 1.0f, alpha);
 	}

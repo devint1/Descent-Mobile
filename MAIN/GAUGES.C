@@ -1650,9 +1650,11 @@ void draw_weapon_info_sub(int info_index,gauge_box *box,int pic_x,int pic_y,char
 	grs_bitmap *bm;
 	char *p;
 
-	//clear the window
+#ifndef OGLES
+    //clear the window
 	gr_setcolor(BM_XRGB(0,0,0));
 	gr_rect(box->left,box->top,box->right,box->bot);
+#endif
 
 	bm=&GameBitmaps[Weapon_info[info_index].picture.index];
 	Assert(bm != NULL);
@@ -1800,7 +1802,6 @@ int draw_weapon_box(int weapon_type,int weapon_num)
 	}
 	
 	if (old_weapon[weapon_type][VR_current_page] == -1 || force_weapon_draw[weapon_type]) {
-		draw_weapon_info(weapon_type,weapon_num);
 		drew_flag=1;
 #ifdef OGLES
 		if (old_weapon[weapon_type][VR_current_page] == -1) {
@@ -1813,6 +1814,15 @@ int draw_weapon_box(int weapon_type,int weapon_num)
 #endif
 		force_weapon_draw[weapon_type] = false;
 	}
+    
+    if (weapon_box_states[weapon_type] != WS_SET) {		//fade gauge
+#ifdef OGLES
+        int fade_value = f2i(weapon_box_fade_values[weapon_type]);
+        Gr_scanline_darkening_level = fade_value;
+#endif
+    } else {
+        draw_weapon_info(weapon_type,weapon_num);
+    }
 
 	if (weapon_box_states[weapon_type] == WS_FADING_OUT) {
 		draw_weapon_info(weapon_type,old_weapon[weapon_type][VR_current_page]);
@@ -1838,17 +1848,17 @@ int draw_weapon_box(int weapon_type,int weapon_num)
 				weapon_box_states[weapon_type] = WS_SET;
 		}
 	}
-
-	if (weapon_box_states[weapon_type] != WS_SET) {		//fade gauge
-		int fade_value = f2i(weapon_box_fade_values[weapon_type]);
-		int boxofs = (Cockpit_mode==CM_STATUS_BAR)?2:0;
-		gauge_box gb = get_gauge_box(boxofs + weapon_type);
-
-		Gr_scanline_darkening_level = fade_value;
-		gr_rect(gb.left, gb.top, gb.right, gb.bot);
-		Gr_scanline_darkening_level = GR_FADE_LEVELS;
-	}
-
+    
+#ifndef OGLES
+    if (weapon_box_states[weapon_type] != WS_SET) {
+        int fade_value = f2i(weapon_box_fade_values[weapon_type]);
+        int boxofs = (Cockpit_mode==CM_STATUS_BAR)?2:0;
+        gauge_box gb = get_gauge_box(boxofs + weapon_type);
+        Gr_scanline_darkening_level = fade_value;
+        gr_rect(gb.left, gb.top, gb.right, gb.bot);
+    }
+#endif
+    Gr_scanline_darkening_level = GR_FADE_LEVELS;
 	gr_set_current_canvas(get_current_game_screen());
 
 	return drew_flag;
