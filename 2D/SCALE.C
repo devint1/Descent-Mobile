@@ -344,7 +344,7 @@ void scale_bitmap(grs_bitmap *bp, grs_point *vertbuf )
 	xmax = i2f(dbp->bm_w)-fl2f(.5); ymax = i2f(dbp->bm_h)-fl2f(.5);
 
 	u0 = i2f(0); v0 = i2f(0);
-	u1 = i2f(bp->bm_w-1); v1 = i2f(bp->bm_h-1);
+	u1 = i2f(bp->bm_w-1); v1 = i2f(bp->bm_h);
 
 	// Check for obviously offscreen bitmaps...
 	if ( (y1<=y0) || (x1<=x0) ) return;
