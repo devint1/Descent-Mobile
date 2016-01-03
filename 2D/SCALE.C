@@ -81,7 +81,7 @@ void scale_up_bitmap_rle(grs_bitmap *source_bmp, grs_bitmap *dest_bmp, int x0, i
 
 	for (y=y0; y<=y1; y++ )			{
 		if ( f2i(v) != last_row )	{
-			last_row = f2i(v);
+			last_row = f2i(v-1);
 			decode_row( source_bmp, last_row );
 		}
 		scale_source_ptr = &scale_rle_data[f2i(u0)];
