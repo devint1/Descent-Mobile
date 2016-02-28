@@ -4121,7 +4121,7 @@ void do_game_menu() {
 	items[2].text = TXT_LOAD_GAME;
 	items[3].type = NM_TYPE_MENU;
 	items[3].text = "Save game...";
-	choice=newmenu_do1(NULL, "Paused", 4, items, NULL, 0);
+	choice=newmenu_do1(NULL, "Game Menu", 4, items, NULL, 0);
 	
 	switch (choice) {
 		case 0:
