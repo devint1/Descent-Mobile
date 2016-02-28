@@ -65,6 +65,8 @@ typedef struct GameButton {
 	self.multipleTouchEnabled = YES;
 	self.backgroundColor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:0.0f];
 	touchButtons = [[NSMutableDictionary alloc] init];
+	CGFloat width = frame.size.width;
+	CGFloat height = frame.size.height;
 	
 	// Button rects
 	CGRect accelerateRect, reverseRect, slideLeftRect, slideRightRect,
@@ -74,33 +76,34 @@ typedef struct GameButton {
 	menuRect, mapRect, toggleCockpitRect, rearViewRect;
 	
 	// Movement
-	accelerateRect = CGRectMake(120, 135, 55, 55);
-	reverseRect = CGRectMake(120, 245, 55, 55);
-	slideLeftRect = CGRectMake(65, 190, 55, 55);
-	slideRightRect = CGRectMake(175, 190, 55, 55);
-	slideUpRect = CGRectMake(25, 135, 35, 80);
-	slideDownRect = CGRectMake(25, 220, 35, 80);
-	bankLeftRect = CGRectMake(65, 95, 80, 35);
-	bankRightRect = CGRectMake(150, 95, 80, 35);
+	accelerateRect = CGRectMake(120, height - 185, 55, 55);
+	reverseRect = CGRectMake(120, height - 75, 55, 55);
+	slideLeftRect = CGRectMake(65, height - 130, 55, 55);
+	slideRightRect = CGRectMake(175, height - 130, 55, 55);
+	slideUpRect = CGRectMake(25, height - 185, 35, 80);
+	slideDownRect = CGRectMake(25, height - 100, 35, 80);
+	bankLeftRect = CGRectMake(65, height - 225, 80, 35);
+	bankRightRect = CGRectMake(150, height - 225, 80, 35);
 	
 	// Combined movement
-	accelerateSlideLeftRect = CGRectMake(65, 135, 55, 55);
-	accelerateSlideRightRect = CGRectMake(175, 135, 55, 55);
-	reverseSlideLeftRect = CGRectMake(65, 245, 55, 55);
-	reverseSlideRightRect = CGRectMake(175, 245, 55, 55);
+	accelerateSlideLeftRect = CGRectMake(65, height - 185, 55, 55);
+	accelerateSlideRightRect = CGRectMake(175, height - 185, 55, 55);
+	reverseSlideLeftRect = CGRectMake(65, height - 75, 55, 55);
+	reverseSlideRightRect = CGRectMake(175, height - 75, 55, 55);
 	
 	// Weapons
-	firePrimaryRect = CGRectMake(460, 150, 70, 70);
-	fireSecondaryRect = CGRectMake(380, 230, 70, 70);
-	fireFlareRect = CGRectMake(470, 240, 50, 50);
-	togglePrimaryRect = CGRectMake(460, 95, 70, 40);
-	toggleSecondaryRect = CGRectMake(325, 230, 40, 70);
+	firePrimaryRect = CGRectMake(width - 95, height - 170, 70, 70);
+	fireSecondaryRect = CGRectMake(width - 175, height - 90, 70, 70);
+	fireFlareRect = CGRectMake(width - 85, height - 80, 50, 50);
+	togglePrimaryRect = CGRectMake(width - 95, height - 225, 70, 40);
+	toggleSecondaryRect = CGRectMake(width - 230, height - 90, 40, 70);
 	
 	// Menus
+	CGFloat menuSpacing = (width - 150) / 3;
 	menuRect = CGRectMake(25, 20, 25, 25);
-	mapRect = CGRectMake(515, 20, 25, 25);
-	toggleCockpitRect = CGRectMake(185, 20, 25, 25);
-	rearViewRect = CGRectMake(345, 20, 25, 25);
+	toggleCockpitRect = CGRectMake(50 + menuSpacing, 20, 25, 25);
+	rearViewRect = CGRectMake(75 + menuSpacing * 2, 20, 25, 25);
+	mapRect = CGRectMake(100 + menuSpacing * 3, 20, 25, 25);
 	
 	// Define buttons
 	buttons[ACCELERATE_BTN] = (struct GameButton){ accelerateRect, { KEY_A }, 1, true };

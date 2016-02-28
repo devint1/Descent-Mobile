@@ -102,7 +102,7 @@ extern unsigned char * gr_video_memory;
 #endif
 	lastInScreen = false;
 	lastGameMode = GM_UNKNOWN;
-	contolsView = [[ControlsView alloc] initWithFrame:[self frame]];
+	contolsView = [[ControlsView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	[self addSubview:contolsView];
 	return self;
 }
