@@ -355,12 +355,12 @@ grs_canvas *Canv_NumericalGauge;
 #define LEFT_ENERGY_GAUGE_X 	(grd_curscreen->sc_w * 0.21875)
 #define LEFT_ENERGY_GAUGE_Y 	(grd_curscreen->sc_h * 0.655)
 #define LEFT_ENERGY_GAUGE_W 	(grd_curscreen->sc_w * 0.2)
-#define LEFT_ENERGY_GAUGE_H 	(grd_curscreen->sc_h * 0.045)
+#define LEFT_ENERGY_GAUGE_H 	(grd_curscreen->sc_h * 0.041)
 
 #define RIGHT_ENERGY_GAUGE_X 	(grd_curscreen->sc_w * 0.59375)
 #define RIGHT_ENERGY_GAUGE_Y 	(grd_curscreen->sc_h * 0.655)
 #define RIGHT_ENERGY_GAUGE_W 	(grd_curscreen->sc_w * 0.2)
-#define RIGHT_ENERGY_GAUGE_H 	(grd_curscreen->sc_h * 0.045)
+#define RIGHT_ENERGY_GAUGE_H 	(grd_curscreen->sc_h * 0.041)
 
 #define SB_ENERGY_GAUGE_X 		(grd_curscreen->sc_w * 0.30625)
 #define SB_ENERGY_GAUGE_Y 		(grd_curscreen->sc_h * 0.775)
@@ -1423,7 +1423,11 @@ void draw_energy_bar(int energy)
 	gr_clear_canvas(255);
 	PIGGY_PAGE_IN(Gauges[GAUGE_ENERGY_LEFT]);
 	scale_bitmap(&GameBitmaps[Gauges[GAUGE_ENERGY_LEFT].index], left_energy_scale_pts);
+#ifdef OGLES
 	gr_setcolor(TRANSPARENCY_COLOR);
+#else
+	gr_setcolor(0);
+#endif
 
 	not_energy = (grd_curscreen->sc_w * 0.190625) - (energy*(grd_curscreen->sc_w * 0.190625))/100;
 
@@ -1447,7 +1451,11 @@ void draw_energy_bar(int energy)
 	gr_clear_canvas(255);
 	PIGGY_PAGE_IN(Gauges[GAUGE_ENERGY_RIGHT]);
 	scale_bitmap(&GameBitmaps[Gauges[GAUGE_ENERGY_RIGHT].index], right_energy_scale_pts);
+#ifdef OGLES
 	gr_setcolor(TRANSPARENCY_COLOR);
+#else
+	gr_setcolor(0);
+#endif
 
 	if (energy < 100)
 		for (y=0; y<LEFT_ENERGY_GAUGE_H; y++) {
