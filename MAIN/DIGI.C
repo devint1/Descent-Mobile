@@ -669,8 +669,8 @@ void digi_unlock_sound_data( int soundnum ) {
 }
 
 static int next_handle = 0;
-static ALuint SampleHandles[_MAX_VOICES] = { 0xffff };
-static ALuint SampleBuffers[_MAX_VOICES] = { 0xffff };
+static ALuint SampleHandles[_MAX_VOICES];
+static ALuint SampleBuffers[_MAX_VOICES];
 static int SoundNums[_MAX_VOICES] = { -1 };
 
 void digi_reset_digi_sounds()
@@ -688,7 +688,6 @@ void digi_reset_digi_sounds()
 				//mprintf(( 0, "Stopping sound %d.\n", next_handle ));
 				alSourceStop(SampleHandles[i]);
 				alDeleteSources(1, &SampleHandles[i]);
-				alDeleteBuffers(1, &SampleBuffers[i]);
 			}
 			SampleHandles[i] = 0xffff;
 		}
@@ -744,8 +743,13 @@ ALuint digi_start_sound(_SOS_START_SAMPLE * sampledata, short soundnum) {
 	ALfloat pan[3] = { 0.0f }, volume;
 	ALuint bufferID, sourceID;
 	
-	alGenBuffers(1, &bufferID);
-	alBufferData(bufferID, AL_FORMAT_MONO8, sampledata->lpSamplePtr, sampledata->dwSampleSize, digi_driver_rate);
+	if (SampleBuffers[soundnum] == 0xffff) {
+		alGenBuffers(1, &bufferID);
+		alBufferData(bufferID, AL_FORMAT_MONO8, sampledata->lpSamplePtr, sampledata->dwSampleSize, digi_driver_rate);
+		SampleBuffers[soundnum] = bufferID;
+	} else {
+		bufferID = SampleBuffers[soundnum];
+	}
 	alGenSources(1, &sourceID);
 	alSourcei(sourceID, AL_BUFFER, bufferID);
 	if (sampledata->wSampleFlags & _LOOPING) {
@@ -758,10 +762,6 @@ ALuint digi_start_sound(_SOS_START_SAMPLE * sampledata, short soundnum) {
 	if (SampleHandles[next_handle] != 0xffff) {
 		alDeleteSources(1, &SampleHandles[next_handle]);
 	}
-	if (SampleBuffers[next_handle] != 0xffff) {
-		alDeleteBuffers(1, &SampleBuffers[next_handle]);
-	}
-	SampleBuffers[next_handle] = bufferID;
 	SampleHandles[next_handle] = sourceID;
 	SoundNums[next_handle] = soundnum;
 	next_handle++;
@@ -1051,10 +1051,12 @@ void digi_init_sounds()
 		if (digi_sounds_initialized) {
 			if ( SoundObjects[i].flags & SOF_PLAYING && SoundObjects[i].handle != 0xffff )	{
 				alSourceStop( SoundObjects[i].handle );
-				alDeleteSources(1, &SampleHandles[i]);
-				alDeleteBuffers(1, &SampleBuffers[i]);
 			}
 		}
+		alDeleteSources(1, &SampleHandles[i]);
+		alDeleteBuffers(1, &SampleBuffers[i]);
+		SampleHandles[i] = 0xffff;
+		SampleBuffers[i] = 0xffff;
 		SoundObjects[i].flags = 0;	// Mark as dead, so some other sound can use this sound
 	}
 	digi_sounds_initialized = 1;
@@ -1248,7 +1250,7 @@ void digi_kill_sound_linked_to_segment( int segnum, int sidenum, int soundnum ) 
 				if ( SoundObjects[i].flags & SOF_PLAYING )	{
 					alSourceStop( SoundObjects[i].handle );
 					alDeleteSources(1, &SampleHandles[i]);
-					alDeleteBuffers(1, &SampleBuffers[i]);
+					SampleHandles[i] = 0xffff;
 				}
 				SoundObjects[i].flags = 0;	// Mark as dead, so some other sound can use this sound
 				killed++;
@@ -1276,7 +1278,7 @@ void digi_kill_sound_linked_to_object( int objnum ) {
 				if ( SoundObjects[i].flags & SOF_PLAYING )	{
 					alSourceStop( SoundObjects[i].handle );
 					alDeleteSources(1, &SampleHandles[i]);
-					alDeleteBuffers(1, &SampleBuffers[i]);
+					SampleHandles[i] = 0xffff;
 				}
 				SoundObjects[i].flags = 0;	// Mark as dead, so some other sound can use this sound
 				killed++;
@@ -1344,7 +1346,7 @@ void digi_sync_sounds()
 					alGetSourcei(SoundObjects[i].handle, AL_SOURCE_STATE, &state);
 					if (state == AL_PLAYING) {
 						alDeleteSources(1, &SampleHandles[i]);
-						alDeleteBuffers(1, &SampleBuffers[i]);
+						SampleHandles[i] = 0xffff;
 						SoundObjects[i].flags = 0;	// Mark as dead, so some other sound can use this sound
 						continue;		// Go on to next sound...
 					}
@@ -1434,7 +1436,7 @@ void digi_pause_all() {
 				if ( (SoundObjects[i].flags & SOF_USED) && (SoundObjects[i].flags & SOF_PLAYING)&& (SoundObjects[i].flags & SOF_PLAY_FOREVER) )	{
 					alSourceStop( SoundObjects[i].handle );
 					alDeleteSources(1, &SampleHandles[i]);
-					alDeleteBuffers(1, &SampleBuffers[i]);
+					SampleHandles[i] = 0xffff;
 					SoundObjects[i].flags &= ~SOF_PLAYING;		// Mark sound as not playing
 				}			
 			}
@@ -1500,7 +1502,7 @@ void digi_stop_all() {
 				if ( SoundObjects[i].flags & SOF_PLAYING )	{
 					alSourceStop( SoundObjects[i].handle );
 					alDeleteSources(1, &SampleHandles[i]);
-					alDeleteBuffers(1, &SampleBuffers[i]);
+					SampleHandles[i] = 0xffff;
 				}
 				SoundObjects[i].flags = 0;	// Mark as dead, so some other sound can use this sound
 			}
