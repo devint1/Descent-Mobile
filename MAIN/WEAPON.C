@@ -367,10 +367,9 @@ void do_weapon_select(int secondary_flag)
 	for (int i = 0; i < 5; ++i) {
 		++weapon_num;
 		if (weapon_num > 4) weapon_num = 0;
-		if ((player_has_weapon(weapon_num, secondary_flag) & HAS_WEAPON_FLAG) == 1) break;
+		if (player_has_weapon(weapon_num, secondary_flag) == HAS_ALL) break;
 	}
 	weapon_status = player_has_weapon(weapon_num, secondary_flag);
-
 
 	#ifdef SHAREWARE	// do special hud msg. for picking registered weapon in shareware version.
 	if (weapon_num >= NUM_SHAREWARE_WEAPONS) {
