@@ -1092,7 +1092,7 @@ void digi_start_sound_object(int i)
 	}
 
 	// start the sample playing
-	SoundObjects[i].handle = digi_start_sound(&sSOSSampleData, i);
+	SoundObjects[i].handle = digi_start_sound(&sSOSSampleData, SoundObjects[i].soundnum);
 
 
 	if (SoundObjects[i].handle != 0xffff )		{
