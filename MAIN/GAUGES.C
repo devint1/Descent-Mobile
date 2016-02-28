@@ -1423,7 +1423,7 @@ void draw_energy_bar(int energy)
 	gr_clear_canvas(255);
 	PIGGY_PAGE_IN(Gauges[GAUGE_ENERGY_LEFT]);
 	scale_bitmap(&GameBitmaps[Gauges[GAUGE_ENERGY_LEFT].index], left_energy_scale_pts);
-	gr_setcolor( 0 );
+	gr_setcolor(TRANSPARENCY_COLOR);
 
 	not_energy = (grd_curscreen->sc_w * 0.190625) - (energy*(grd_curscreen->sc_w * 0.190625))/100;
 
@@ -1447,7 +1447,7 @@ void draw_energy_bar(int energy)
 	gr_clear_canvas(255);
 	PIGGY_PAGE_IN(Gauges[GAUGE_ENERGY_RIGHT]);
 	scale_bitmap(&GameBitmaps[Gauges[GAUGE_ENERGY_RIGHT].index], right_energy_scale_pts);
-	gr_setcolor(0);
+	gr_setcolor(TRANSPARENCY_COLOR);
 
 	if (energy < 100)
 		for (y=0; y<LEFT_ENERGY_GAUGE_H; y++) {
