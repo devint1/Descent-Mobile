@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Descent/Descent.iml" filepath="$PROJECT_DIR$/Descent/Descent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Descent-iOS.iml" filepath="$PROJECT_DIR$/Descent-iOS.iml" />
+    </modules>
+  </component>
+</project>

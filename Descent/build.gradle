@@ -1,0 +1,75 @@
+apply plugin: 'com.android.model.application'
+model {
+    android {
+        compileSdkVersion 19
+        buildToolsVersion "24.0.0 rc3"
+
+        defaultConfig {
+            minSdkVersion.apiLevel = 19
+            targetSdkVersion.apiLevel = 23
+        }
+        buildTypes {
+            release {
+                minifyEnabled false
+                proguardFiles.add(file('proguard-android.txt'))
+            }
+        }
+        ndk {
+            moduleName = "Descent"
+            CFlags.addAll(["-DANDROID_NDK", "-DDISABLE_IMPORTGL", "-DOGLES", "-DNASM", "-std=c99",
+                           "-I" + file("../LIB").absolutePath,
+                           "-I" + file("../3D").absolutePath,
+                           "-I" + file("../3D/ogles").absolutePath,
+                           "-I" + file("../2D/ogles").absolutePath,
+                           "-I" + file("src/main/jni").absolutePath])
+            ldLibs.addAll(["GLESv1_CM", "EGL", "dl", "log", "android"])
+        }
+        productFlavors {
+            // for detailed abiFilter descriptions, refer to "Supported ABIs" @
+            // https://developer.android.com/ndk/guides/abis.html#sa
+            create("arm") {
+                ndk.abiFilters.add("armeabi")
+            }
+            create("arm7") {
+                ndk.abiFilters.add("armeabi-v7a")
+            }
+            create("arm8") {
+                ndk.abiFilters.add("arm64-v8a")
+            }
+            create("x86") {
+                ndk.abiFilters.add("x86")
+            }
+            create("x86-64") {
+                ndk.abiFilters.add("x86_64")
+            }
+            create("mips") {
+                ndk.abiFilters.add("mips")
+            }
+            create("mips-64") {
+                ndk.abiFilters.add("mips64")
+            }
+            // To include all cpu architectures, leaves abiFilters empty
+            create("all")
+        }
+        sources {
+            main {
+                jni {
+                    source {
+                        srcDir "../2D"
+                        srcDir "../3D"
+                        srcDir "../CFILE"
+                        srcDir "../FIX"
+                        srcDir "../IFF"
+                        srcDir "../IO"
+                        srcDir "../MAIN"
+                        srcDir "../MEM"
+                        srcDir "../MISC"
+                        srcDir "../TEXMAP"
+                        srcDir "../UI"
+                        srcDir "../VECMAT"
+                    }
+                }
+            }
+        }
+    }
+}
