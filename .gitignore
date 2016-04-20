@@ -138,4 +138,6 @@ fabric.properties
 # Descent data files
 *.hog
 *.pig
+*.HOG
+*.PIG
 
