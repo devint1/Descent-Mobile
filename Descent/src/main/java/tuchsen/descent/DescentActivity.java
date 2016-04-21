@@ -3,6 +3,7 @@ package tuchsen.descent;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -202,6 +204,20 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
         mediaPlayer.setVolume(volume, volume);
     }
 
+    @SuppressWarnings("unused")
+    public float dpToPx(float dp) {
+        Resources resources = getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        return dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+
+    @SuppressWarnings("unused")
+    public float pxToDp(float px) {
+        Resources resources = getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        return px / ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+
     private void setImmersive() {
         // Hide navigation
         getWindow().getDecorView().setSystemUiVisibility(
@@ -231,12 +247,37 @@ class DescentGLSurfaceView extends GLSurfaceView {
 
     @Override
     public boolean onTouchEvent(final MotionEvent event) {
+        int i, historySize, firstPointerIndex, numPointers;
         int action = event.getActionMasked();
-        if (action != MotionEvent.ACTION_DOWN && action != MotionEvent.ACTION_UP) {
-            return false;
+        float prevX, prevY;
+        boolean touchHandled = false;
+
+        historySize = event.getHistorySize();
+        if (action == MotionEvent.ACTION_POINTER_DOWN || action == MotionEvent.ACTION_POINTER_UP) {
+            firstPointerIndex = event.getActionIndex();
+        } else {
+            firstPointerIndex = 0;
         }
-        mouseHandler((short)event.getX(), (short)event.getY(), action == MotionEvent.ACTION_DOWN);
-        return true;
+        if (action == MotionEvent.ACTION_MOVE) {
+            numPointers = event.getPointerCount();
+        } else {
+            numPointers = 1;
+        }
+        for (i = firstPointerIndex; i < numPointers + firstPointerIndex; ++i) {
+            if (historySize > 0) {
+                prevX = event.getHistoricalX(i, 0);
+                prevY = event.getHistoricalY(i, 0);
+            } else {
+                prevX = prevY = 0;
+            }
+            touchHandled |= touchHandler(event.getActionMasked(), event.getPointerId(i),
+                    event.getX(i), event.getY(i), prevX, prevY);
+        }
+        if (!touchHandled && (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_UP)) {
+            mouseHandler((short) event.getX(), (short) event.getY(), action == MotionEvent.ACTION_DOWN);
+            return true;
+        }
+        return touchHandled;
     }
 
     @Override
@@ -250,6 +291,9 @@ class DescentGLSurfaceView extends GLSurfaceView {
     }
 
     private static native void mouseHandler(short x, short y, boolean down);
+
+    private static native boolean touchHandler(int action, int pointerId, float x, float y, float prevX,
+                                               float prevY);
 }
 
 class DescentRenderer implements GLSurfaceView.Renderer {

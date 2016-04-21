@@ -10,6 +10,7 @@ JavaVM *jvm;
 jobject Activity;
 
 extern int descent_main(int argc, char **argv);
+extern void init_buttons(jint w, jint h);
 
 void Java_tuchsen_descent_DescentRenderer_descentMain(JNIEnv *env, jobject thiz, jint w, jint h,
                                                       jobject activity, jobject asset_manager,
@@ -26,5 +27,6 @@ void Java_tuchsen_descent_DescentRenderer_descentMain(JNIEnv *env, jobject thiz,
     sprintf(ws, "%d", (int)w);
     sprintf(hs, "%d", (int)h);
     const char *args[] = { "", "-width", ws, "-height", hs };
+    init_buttons(w, h);
     descent_main(5, args);
 }

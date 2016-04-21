@@ -3,8 +3,9 @@
 //
 
 #include <EGL/egl.h>
-
 #include "gr.h"
+
+extern void draw_buttons();
 
 void getRenderBufferSize(GLint *width, GLint *height) {
     eglQuerySurface(eglGetCurrentDisplay(), eglGetCurrentSurface(EGL_DRAW), EGL_WIDTH, width);
@@ -12,5 +13,6 @@ void getRenderBufferSize(GLint *width, GLint *height) {
 }
 
 void showRenderBuffer() {
+    draw_buttons();
     eglSwapBuffers(eglGetCurrentDisplay(), eglGetCurrentSurface(EGL_READ));
 }
