@@ -36,7 +36,7 @@ void gr_rect_ogles(int left, int top, int right, int bot) {
 	} else {
 		alpha = 255 - ((float)Gr_scanline_darkening_level / (float)GR_FADE_LEVELS) * 255.0f;
 	}
-	glColor4ub(gr_current_pal[grd_curcanv->cv_color * 3], gr_current_pal[grd_curcanv->cv_color * 3 + 1], gr_current_pal[grd_curcanv->cv_color * 3 + 2], alpha);
+	glColor4ub(gr_current_pal[grd_curcanv->cv_color * 3] * (GLubyte)4, gr_current_pal[grd_curcanv->cv_color * 3 + 1] * (GLubyte)4, gr_current_pal[grd_curcanv->cv_color * 3 + 2] * (GLubyte)4, alpha);
 	glVertexPointer(2, GL_FLOAT, 0, vertices);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	glDisableClientState(GL_VERTEX_ARRAY);
