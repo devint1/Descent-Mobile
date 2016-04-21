@@ -47,6 +47,15 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 
         super.onCreate(savedInstanceState);
 
+        // Hide navigation
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
         // Set up dummy text field for text input
         dummyText = new EditText(this);
         dummyText.addTextChangedListener(this);
@@ -249,7 +258,7 @@ class DescentRenderer implements GLSurfaceView.Renderer {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
-        display.getSize(size);
+        display.getRealSize(size);
 
         // Clear to back
         gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
