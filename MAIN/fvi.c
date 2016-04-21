@@ -690,7 +690,7 @@ int check_vector_to_sphere_1(vms_vector *intp,vms_vector *p0,vms_vector *p1,vms_
 		if (int_dist > mag_d || int_dist < 0) {
 			//past one or the other end of vector, which means we're inside
 
-			*intp = *p0;		//don't move at all
+			memcpy(intp, p0, sizeof(vms_vector));		//don't move at all
 			return 1;
 		}
 
