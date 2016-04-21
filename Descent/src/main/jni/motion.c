@@ -2,9 +2,7 @@
 // Created by devin on 4/17/16.
 //
 
-#include <android/sensor.h>
 #include <jni.h>
-#include <stdlib.h>
 
 extern JavaVM *jvm;
 extern jobject Activity;

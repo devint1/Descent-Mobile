@@ -49,6 +49,6 @@ void deactivateText() {
 }
 
 void Java_tuchsen_descent_DescentActivity_keyHandler(JNIEnv *env, jobject thiz, jchar c) {
-    key_handler(c, true);
-    key_handler(c, false);
+    key_handler((unsigned char)c, true);
+    key_handler((unsigned char)c, false);
 }

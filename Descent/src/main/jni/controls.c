@@ -5,7 +5,6 @@
 #include <game.h>
 #include <jni.h>
 #include <stdlib.h>
-#include "gr.h"
 #include "key.h"
 
 #define NUM_BUTTONS 21
@@ -204,8 +203,8 @@ void handle_move(jint pointerId, jfloat x, jfloat y, jfloat prevX, jfloat prevY)
         touch_dx = touch_dy = 0;
     }
     if (trackingTouch == pointerId) {
-        touch_dx = x - prevX;
-        touch_dy = prevY - y;
+        touch_dx = (int)(x - prevX);
+        touch_dy = (int)(prevY - y);
     }
 
     // Get the button the touch is currently in
@@ -295,6 +294,8 @@ jboolean Java_tuchsen_descent_DescentGLSurfaceView_touchHandler(JNIEnv *env, job
             case ACTION_MOVE:
                 handle_move(pointerId, x, y, prevX, prevY);
                 break;
+            default:
+                return false;
         }
         return true;
     } else {

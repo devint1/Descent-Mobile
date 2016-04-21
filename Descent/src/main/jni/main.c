@@ -3,7 +3,6 @@
 //
 #include <android/asset_manager_jni.h>
 #include <EGL/egl.h>
-#include <jni.h>
 #include "cfile.h"
 
 JavaVM *jvm;
@@ -28,5 +27,5 @@ void Java_tuchsen_descent_DescentRenderer_descentMain(JNIEnv *env, jobject thiz,
     sprintf(hs, "%d", (int)h);
     const char *args[] = { "", "-width", ws, "-height", hs };
     init_buttons(w, h);
-    descent_main(5, args);
+    descent_main(5, (char**)args);
 }
