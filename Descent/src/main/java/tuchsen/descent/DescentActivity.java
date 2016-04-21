@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,7 +24,6 @@ import android.widget.EditText;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -40,15 +38,12 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
     private Handler mainHandler;
     private InputMethodManager imm;
     private MediaPlayer mediaPlayer;
-    private boolean haveGyro = false, haveOrient = false;
-    private float accelX, accelY, accelZ;
-    private float magX, magY, magZ;
-    private float gyroX, gyroY, gyroZ;
+    private float x, y, z;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SensorManager sensorManager;
-        Sensor accelerometer, magneticField, gyroscope;
+        Sensor rotationVector;
 
         super.onCreate(savedInstanceState);
 
@@ -67,19 +62,8 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 
         // Set up sensor manager for motion controls
         sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
-        gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        if (gyroscope == null) {
-            accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-            magneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-            if (accelerometer != null && magneticField != null) {
-                sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
-                sensorManager.registerListener(this, magneticField, SensorManager.SENSOR_DELAY_GAME);
-                haveOrient = true;
-            }
-        } else {
-            sensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_GAME);
-            haveGyro = true;
-        }
+        rotationVector = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        sensorManager.registerListener(this, rotationVector, SensorManager.SENSOR_DELAY_GAME);
 
         // Create OpenGL ES view
         mGLView = new DescentGLSurfaceView(this);
@@ -135,23 +119,9 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        switch (event.sensor.getType()) {
-            case Sensor.TYPE_ACCELEROMETER:
-                accelX = event.values[0];
-                accelY = event.values[1];
-                accelZ = event.values[2];
-                break;
-            case Sensor.TYPE_MAGNETIC_FIELD:
-                magX = event.values[0];
-                magY = event.values[1];
-                magZ = event.values[2];
-                break;
-            case Sensor.TYPE_GYROSCOPE:
-                gyroX = event.values[0];
-                gyroY = event.values[1];
-                gyroZ = event.values[2];
-                break;
-        }
+        x = event.values[0];
+        y = event.values[1];
+        z = event.values[2];
     }
 
     @Override
@@ -192,23 +162,11 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
     @SuppressWarnings("unused")
     public float[] getOrientation() {
         float orientation[] = new float[3];
+        float R[] = new float[9];
+        float rotationVector[] = {x, y, z};
 
-        if (haveGyro) {
-            orientation[0] = gyroX;
-            orientation[1] = gyroY;
-            orientation[2] = gyroZ;
-        } else if (haveOrient) {
-            float R[] = new float[9];
-            float gravity[] = {accelX, accelY, accelZ};
-            float geomagnetic[] = {magX, magY, magZ};
-
-            SensorManager.getRotationMatrix(R, null, gravity, geomagnetic);
-            SensorManager.getOrientation(R, orientation);
-        } else {
-            orientation[0] = 0;
-            orientation[1] = 0;
-            orientation[2] = 0;
-        }
+        SensorManager.getRotationMatrixFromVector(R, rotationVector);
+        SensorManager.getOrientation(R, orientation);
         return orientation;
     }
 

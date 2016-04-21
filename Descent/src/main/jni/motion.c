@@ -4,6 +4,7 @@
 
 #include <android/sensor.h>
 #include <jni.h>
+#include <stdlib.h>
 
 extern JavaVM *jvm;
 extern jobject Activity;
@@ -24,8 +25,8 @@ void getAttitude(double *roll, double *pitch, double *yaw) {
     method = (*env)->GetMethodID(env, clazz, "getOrientation", "()[F");
     orientation = (*env)->CallObjectMethod(env, Activity, method);
     orientationElements = (*env)->GetFloatArrayElements(env, orientation, 0);
-    *yaw = orientationElements[0];
-    *pitch = orientationElements[1];
+    *yaw = -orientationElements[0];
+    *pitch = -orientationElements[1];
     *roll = orientationElements[2];
     (*env)->ReleaseFloatArrayElements(env, orientation, orientationElements, 0);
     (*env)->DeleteLocalRef(env, clazz);
