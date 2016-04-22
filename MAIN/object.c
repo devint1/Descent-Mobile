@@ -1691,7 +1691,7 @@ void set_camera_pos(vms_vector *camera_pos, object *objp)
 			find_vector_intersection( &fq, &hit_data);
 
 			if (hit_data.hit_type == HIT_NONE) {
-				*camera_pos = closer_p1;
+				memcpy(camera_pos, &closer_p1, sizeof(vms_vector));
 			} else {
 				make_random_vector(&player_camera_vec);
 				far_scale = 3*F1_0/2;

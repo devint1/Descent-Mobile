@@ -53,7 +53,7 @@ void g3_set_view_angles(vms_vector *view_pos, vms_angvec *view_orient, fix zoom)
 //set view from x,y,z, viewer matrix, and zoom.  Must call one of g3_set_view_*() 
 void g3_set_view_matrix(vms_vector *view_pos, vms_matrix *view_matrix, fix zoom) {
 	View_zoom = zoom;
-	View_position = *view_pos;
+	memcpy(&View_position, view_pos, sizeof(vms_vector));
 
 	memcpy(&View_matrix, view_matrix, sizeof(vms_matrix));
 
