@@ -41,15 +41,23 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 	private InputMethodManager imm;
 	private MediaPlayer mediaPlayer;
 	private float x, y, z;
+	private float buttonSizeBias;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		SensorManager sensorManager;
 		Sensor rotationVector;
+		Resources resources;
+		DisplayMetrics metrics;
 
 		super.onCreate(savedInstanceState);
 
 		setImmersive();
+
+		// Calculate button size bias; want slightly bigger buttons on bigger screens
+		resources = getResources();
+		metrics = resources.getDisplayMetrics();
+		buttonSizeBias = (float) Math.min((metrics.widthPixels / metrics.xdpi + metrics.heightPixels / metrics.ydpi) / 5.5f, 1.4);
 
 		// Set up dummy text field for text input
 		dummyText = new EditText(this);
@@ -208,14 +216,14 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 	public float dpToPx(float dp) {
 		Resources resources = getResources();
 		DisplayMetrics metrics = resources.getDisplayMetrics();
-		return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+		return dp * (((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT) * buttonSizeBias);
 	}
 
 	@SuppressWarnings("unused")
 	public float pxToDp(float px) {
 		Resources resources = getResources();
 		DisplayMetrics metrics = resources.getDisplayMetrics();
-		return px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+		return px / (((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT) * buttonSizeBias);
 	}
 
 	private void setImmersive() {
