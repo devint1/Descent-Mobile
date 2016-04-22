@@ -90,6 +90,7 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 	protected void onPause() {
 		super.onPause();
 		mediaPlayer.pause();
+		mediaPlayerPosition = mediaPlayer.getCurrentPosition();
 		mGLView.onPause();
 	}
 
@@ -97,6 +98,7 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 	protected void onResume() {
 		super.onResume();
 		mGLView.onResume();
+		mediaPlayer.seekTo(mediaPlayerPosition);
 		mediaPlayer.start();
 	}
 
