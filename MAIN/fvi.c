@@ -1254,7 +1254,7 @@ quit_looking:
 	if (hit_type == HIT_NONE) {     //didn't hit anything, return end point
 		int i;
 
-		*intp = *p1;
+		memcpy(intp, p1, sizeof(vms_vector));
 		*ints = hit_none_seg;
 		//MATT: MUST FIX THIS!!!!
 		//Assert(!centermask);
@@ -1271,7 +1271,7 @@ quit_looking:
 
 	}
 	else {
-		*intp = closest_hit_point;
+		memcpy(intp, &closest_hit_point, sizeof(vms_vector));
 		if (hit_seg==-1)
 			if (fvi_hit_seg2 != -1)
 				*ints = fvi_hit_seg2;
