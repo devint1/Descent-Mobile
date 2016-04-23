@@ -158,15 +158,17 @@ grs_bitmap *gr_create_sub_bitmap(grs_bitmap *bm, int x, int y, int w, int h )
 
 void gr_free_bitmap(grs_bitmap *bm )
 {
-	if (bm->bm_data!=NULL)	
-    free(bm->bm_data);
+	if (bm && bm->bm_data!=NULL) {
+		free(bm->bm_data);
+	}
 #ifdef OGLES
 	glDeleteTextures(1, &bm->bm_ogles_tex_id);
 	bm->bm_ogles_tex_id = 0;
 #endif
 	bm->bm_data = NULL;
-	if (bm!=NULL)
-    free(bm);
+	if (bm!=NULL) {
+		free(bm);
+	}
 }
 
 void gr_free_sub_bitmap(grs_bitmap *bm )

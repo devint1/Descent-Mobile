@@ -64,7 +64,7 @@ void gr_scale_string_ogles(int x, int y, fix scale_x, fix scale_y, unsigned char
 			continue;
 		}
 		get_char_width(s[0], s[1], &width, &spacing);
-		if (!grd_curcanv->cv_font->ft_ogles_texes[*s - grd_curcanv->cv_font->ft_minchar] && INFONT(*s - grd_curcanv->cv_font->ft_minchar)) {
+		if (!glIsTexture(grd_curcanv->cv_font->ft_ogles_texes[*s - grd_curcanv->cv_font->ft_minchar]) && INFONT(*s - grd_curcanv->cv_font->ft_minchar)) {
 			
 			// Render the character to a temp canvas
 			temp_canv = gr_create_canvas(width, grd_curcanv->cv_font->ft_h);

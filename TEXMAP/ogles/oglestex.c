@@ -30,7 +30,7 @@ void ogles_bm_bind_teximage_2d(grs_bitmap *bm) {
 	ubyte *data, *sbits, *dbits;
 	int i;
 	
-	if (!bm->bm_ogles_tex_id) {
+	if (!glIsTexture(bm->bm_ogles_tex_id)) {
 		glGenTextures(1, &bm->bm_ogles_tex_id);
 		glBindTexture(GL_TEXTURE_2D, bm->bm_ogles_tex_id);
 		image_data = malloc(bm->bm_w * bm->bm_h * 4);

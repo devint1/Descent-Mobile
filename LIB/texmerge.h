@@ -40,8 +40,6 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  * 
  */
 
-
-
 #ifndef _TEXMERGE_H
 #define _TEXMERGE_H
 
@@ -52,4 +50,3 @@ void texmerge_flush();
 
 
 #endif
-

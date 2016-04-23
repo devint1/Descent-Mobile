@@ -1854,6 +1854,14 @@ ReadFileNames:
 		ofirst_item = first_item;
 		key = key_inkey();
 		if(mouse_button_down_count(0, &mouse_x, &mouse_y) > 0) {
+
+			// HACK!!!! Show the menu again when Android pauses
+			if (mouse_x == -1 && mouse_y == -1) {
+				initialized = 0;
+				first_item = -1;
+				goto ReadFileNames;
+			}
+
 			citem = get_filename_item_at_pos(mouse_x, mouse_y, NumFiles, items);
 			if(citem == -1) {
 				citem = ocitem;

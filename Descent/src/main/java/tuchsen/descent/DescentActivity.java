@@ -28,7 +28,11 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.egl.EGLContext;
+import javax.microedition.khronos.egl.EGLDisplay;
+import javax.microedition.khronos.egl.EGLSurface;
 import javax.microedition.khronos.opengles.GL10;
 
 /**
@@ -58,7 +62,8 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 		// Calculate button size bias; want slightly bigger buttons on bigger screens
 		resources = getResources();
 		metrics = resources.getDisplayMetrics();
-		buttonSizeBias = (float) Math.min(Math.max((metrics.widthPixels / metrics.xdpi + metrics.heightPixels / metrics.ydpi) / 5.5f, 1), 1.4);
+		buttonSizeBias = (float) Math.min(Math.max((metrics.widthPixels / metrics.xdpi
+				+ metrics.heightPixels / metrics.ydpi) / 5.5f, 1), 1.4);
 
 		// Set up dummy text field for text input
 		dummyText = new EditText(this);
@@ -89,14 +94,16 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 	@Override
 	protected void onPause() {
 		super.onPause();
+		descentPause();
+		mGLView.onPause();
 		mediaPlayer.pause();
 		mediaPlayerPosition = mediaPlayer.getCurrentPosition();
-		mGLView.onPause();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		setImmersive();
 		mGLView.onResume();
 		mediaPlayer.seekTo(mediaPlayerPosition);
 		mediaPlayer.start();
@@ -233,8 +240,10 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 		return px / (((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT) * buttonSizeBias);
 	}
 
+	/**
+	 * Enables immersive mode, hiding navigation controls
+	 */
 	private void setImmersive() {
-		// Hide navigation
 		getWindow().getDecorView().setSystemUiVisibility(
 				View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 						| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -245,6 +254,8 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 	}
 
 	private static native void keyHandler(char key);
+
+	private static native void descentPause();
 
 	static {
 		System.loadLibrary("Descent");
@@ -288,8 +299,10 @@ class DescentGLSurfaceView extends GLSurfaceView {
 			touchHandled |= touchHandler(event.getActionMasked(), event.getPointerId(i),
 					event.getX(i), event.getY(i), prevX, prevY);
 		}
-		if (!touchHandled && (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_UP)) {
-			mouseHandler((short) event.getX(), (short) event.getY(), action == MotionEvent.ACTION_DOWN);
+		if (!touchHandled && (action == MotionEvent.ACTION_DOWN ||
+				action == MotionEvent.ACTION_UP)) {
+			mouseHandler((short) event.getX(), (short) event.getY(),
+					action == MotionEvent.ACTION_DOWN);
 			return true;
 		}
 		return touchHandled;
@@ -307,21 +320,31 @@ class DescentGLSurfaceView extends GLSurfaceView {
 
 	private static native void mouseHandler(short x, short y, boolean down);
 
-	private static native boolean touchHandler(int action, int pointerId, float x, float y, float prevX,
-											   float prevY);
+	private static native boolean touchHandler(int action, int pointerId, float x, float y,
+											   float prevX, float prevY);
 }
 
 class DescentRenderer implements GLSurfaceView.Renderer {
+	private boolean descentRunning, paused;
 	private Context context;
+	private Point size;
+	private EGL10 egl;
+	private EGLConfig eglConfig;
+	private EGLContext eglContext;
+	private EGLSurface eglDrawSurface, eglReadSurface;
+	GLSurfaceView.Renderer thiz;
+	private final Object renderThreadObj = new Object();
 
 	public DescentRenderer(Context context) {
 		this.context = context;
+		descentRunning = false;
 	}
 
-	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+	@Override
+	public void onSurfaceCreated(GL10 gl, final EGLConfig config) {
 		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
-		Point size = new Point();
+		size = new Point();
 		display.getRealSize(size);
 
 		// Clear to back
@@ -346,18 +369,71 @@ class DescentRenderer implements GLSurfaceView.Renderer {
 		// Disable depth mask (otherwise get artifacts with 3D sprites)
 		gl.glDepthMask(false);
 
-		// Start Descent!
-		descentMain(size.x, size.y, context, context.getAssets(),
-				context.getFilesDir().getAbsolutePath(), context.getCacheDir().getAbsolutePath());
+		egl = (EGL10) EGLContext.getEGL();
+		eglDrawSurface = egl.eglGetCurrentSurface(EGL10.EGL_DRAW);
+		eglReadSurface = egl.eglGetCurrentSurface(EGL10.EGL_READ);
+		eglContext = egl.eglGetCurrentContext();
+		egl.eglMakeCurrent(egl.eglGetCurrentDisplay(), EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_SURFACE,
+				EGL10.EGL_NO_CONTEXT);
+		eglConfig = config;
+		thiz = this;
+
+		if (!descentRunning) {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					setEgl();
+					descentMain(size.x, size.y, context, thiz, context.getAssets(),
+							context.getFilesDir().getAbsolutePath(),
+							context.getCacheDir().getAbsolutePath());
+				}
+			}).start();
+			descentRunning = true;
+		} else {
+			resumeRenderThread();
+		}
 	}
 
-	public void onDrawFrame(GL10 gl) {
-	}
-
+	@Override
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 	}
 
+	@Override
+	public void onDrawFrame(GL10 gl) {
+	}
+
+	@SuppressWarnings("unused")
+	public void pauseRenderThread() {
+		synchronized (renderThreadObj) {
+			paused = true;
+			while (paused) {
+				try {
+					renderThreadObj.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	/**
+	 * Sets the EGL context for current thread
+	 */
+	public void setEgl() {
+		EGLDisplay display = egl.eglGetDisplay(EGL10.EGL_DEFAULT_DISPLAY);
+		egl.eglCreateContext(display, eglConfig, egl.eglGetCurrentContext(), null);
+		egl.eglMakeCurrent(display, eglDrawSurface, eglReadSurface, eglContext);
+	}
+
+	private void resumeRenderThread() {
+		synchronized (renderThreadObj) {
+			paused = false;
+			renderThreadObj.notifyAll();
+		}
+	}
+
 	private static native void descentMain(int w, int h, Context activity,
+										   GLSurfaceView.Renderer renderer,
 										   AssetManager assetManager, String documentPath,
 										   String cachePath);
 }

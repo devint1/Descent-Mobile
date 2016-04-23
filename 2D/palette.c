@@ -431,6 +431,9 @@ int gr_palette_fade_out(ubyte *pal, int nsteps, int allow_keys )
 	Gr_scanline_darkening_level = GR_FADE_LEVELS;
 	saved_screen_tex = ogles_save_screen();
 	for (i = 0; i < nsteps; ++i) {
+		if (!glIsTexture(saved_screen_tex)) {
+			break;
+		}
 		ogles_draw_saved_screen(saved_screen_tex);
 		Gr_scanline_darkening_level	-= darken_step;
 		gr_urect(0, 0, grd_curscreen->sc_w, grd_curscreen->sc_h);

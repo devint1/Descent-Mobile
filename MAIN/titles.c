@@ -314,8 +314,11 @@ int show_title_screen( char * filename, int allow_keys )
 		}
 		#endif
 	}
-	if (gr_palette_fade_out( New_pal, 32, allow_keys ))
-		return 1;
+#ifdef OGLES
+	if (glIsTexture(title_bm.bm_ogles_tex_id))
+#endif
+		if (gr_palette_fade_out( New_pal, 32, allow_keys ))
+			return 1;
 	free(title_bm.bm_data);
 #ifdef OGLES
 	glDeleteTextures(1, &title_bm.bm_ogles_tex_id);
