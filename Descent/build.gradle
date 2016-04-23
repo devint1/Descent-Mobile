@@ -16,8 +16,8 @@ model {
 		}
 		ndk {
 			moduleName = "Descent"
-			CFlags.addAll(["-DANDROID_NDK", "-DDISABLE_IMPORTGL", "-DOGLES", "-DNASM", "-std=c99",
-						   "-I" + file("../LIB").absolutePath,
+			CFlags.addAll(["-DANDROID_NDK", "-DDISABLE_IMPORTGL", "-DOGLES", "-DNASM", "-DNETWORK",
+						   "-std=c99", "-I" + file("../LIB").absolutePath,
 						   "-I" + file("../3D").absolutePath,
 						   "-I" + file("../3D/ogles").absolutePath,
 						   "-I" + file("../2D/ogles").absolutePath,
