@@ -351,7 +351,7 @@ static char rcsid[] = "$Id: digi.c 2.5 1996/01/05 16:51:51 john Exp $";
 #pragma unused(rcsid)
 
 #ifdef ANDROID_NDK
-#include <SLES/OpenSLES.h>
+#include <SLES/OpenSLES_Android.h>
 #else
 #include <OpenAL/OpenAL.h>
 #endif
@@ -361,6 +361,7 @@ static char rcsid[] = "$Id: digi.c 2.5 1996/01/05 16:51:51 john Exp $";
 //#include<bios.h>
 #include<string.h>
 #include<ctype.h>
+#include <math.h>
 
 #include "fix.h"
 #include "object.h"
@@ -401,14 +402,14 @@ static char rcsid[] = "$Id: digi.c 2.5 1996/01/05 16:51:51 john Exp $";
 #define _DIGI_SAMPLE_FLAGS (_VOLUME | _PANNING )
 #define _CENTER_CHANNEL 0
 
-#define _DIGI_MAX_VOLUME (16384)	//16384
+#define _DIGI_MAX_VOLUME (16384.0f)	//16384
 
 // patch files
 #define  _MELODIC_PATCH       "melodic.bnk"
 #define  _DRUM_PATCH          "drum.bnk"
 #define  _DIGDRUM_PATCH       "drum32.dig"
 
-#define _MAX_VOICES 128
+#define _MAX_VOICES 8
 #define _LOOPING 0xBADF00D
  
 static int	Digi_initialized 		= 0;
@@ -420,7 +421,7 @@ int digi_driver_dma					= 0;
 int digi_midi_type					= 0;			// Midi driver type
 int digi_midi_port					= 0;			// Midi driver port
 static int digi_max_channels		= 8;
-static int digi_driver_rate		= 11025;			// rate to use driver at
+static unsigned int digi_driver_rate		= 11025;			// rate to use driver at
 int digi_timer_rate					= 9943;			// rate for the timer to go off to handle the driver system (120 Hz)
 int digi_lomem 						= 0;
 static int digi_volume				= _DIGI_MAX_VOLUME;		// Max volume
@@ -439,6 +440,26 @@ SLint16    wSongHandle = 0xffff;
 ubyte		*SongData=NULL;
 int		SongSize;
 
+// OpenSL ES stuff
+SLObjectItf engine_obj;
+SLEngineItf engine;
+SLObjectItf output_mix_obj;
+SLDataFormat_PCM format;
+SLDataLocator_OutputMix out_loc;
+SLDataSink dst;
+
+// OpenSL ES Sound objects
+static int next_handle = 0;
+static SLObjectItf PlayerObjs[_MAX_VOICES];
+static SLPlayItf Players[_MAX_VOICES];
+static SLDataLocator_AndroidSimpleBufferQueue In_locs[_MAX_VOICES];
+static SLAndroidSimpleBufferQueueItf BufferQueues[_MAX_VOICES];
+static SLDataSource Sources[_MAX_VOICES];
+static SLVolumeItf Volumes[_MAX_VOICES];
+static bool SoundDone[_MAX_VOICES];
+static int SoundNums[_MAX_VOICES] = { -1 };
+static struct sound_object *SoundObjPtrs[_MAX_VOICES];
+
 #define SOF_USED				1 		// Set if this sample is used
 #define SOF_PLAYING			2		// Set if this sample is playing on a channel
 #define SOF_LINK_TO_OBJ		4		// Sound is linked to a moving object. If object dies, then finishes play and quits.
@@ -452,7 +473,7 @@ typedef struct sound_object {
 	fix			max_distance;	// The max distance that this sound can be heard at...
 	int			volume;			// Volume that this sound is playing at
 	int			pan;				// Pan value that this sound is playing at
-	SLuint16	handle;			// What handle this sound is playing on.  Valid only if SOF_PLAYING is set.
+	int		handle;			// What handle this sound is playing on.  Valid only if SOF_PLAYING is set.
 	short			soundnum;		// The sound number that is playing
 	union {	
 		struct {
@@ -465,6 +486,8 @@ typedef struct sound_object {
 			short			objsignature;
 		};
 	};
+	void *sample_data;
+	SLuint32 data_size;
 } sound_object;
 
 typedef struct _SOS_START_SAMPLE {
@@ -517,16 +540,23 @@ void digi_close_midi() {
 
 void digi_close_digi() {
 	int i;
-	/*ALuint id;
 	
 	for (i = 0; i < _MAX_VOICES; ++i) {
-		id = i;
-		alDeleteSources(1, &id);
-		id = i;
-		alDeleteBuffers(1, &id);
+		if (PlayerObjs[i]) {
+			(*PlayerObjs[i])->Destroy(PlayerObjs[i]);
+			PlayerObjs[i] = NULL;
+			Players[i] = NULL;
+			Volumes[i] = NULL;
+			BufferQueues[i] = NULL;
+			SoundDone[i] = false;
+		}
 	}
-	alcDestroyContext(context);
-	alcCloseDevice(device);*/
+	(*output_mix_obj)->Destroy( output_mix_obj );
+	output_mix_obj = NULL;
+
+	(*engine_obj)->Destroy( engine_obj );
+	engine_obj = NULL;
+	engine = NULL;
 	digi_driver_board = 0;
 }
 
@@ -560,13 +590,38 @@ int digi_init_midi() {
 }
 
 int digi_init_digi() {
-	/*device = alcOpenDevice(NULL);
-	if(device) {
-		context = alcCreateContext(device, NULL);
-		alcMakeContextCurrent(context);
-	}*/
+	int i;
+
+	slCreateEngine(&engine_obj, 0, NULL, 0, NULL, NULL);
+	(*engine_obj)->Realize(engine_obj, SL_BOOLEAN_FALSE);
+	(*engine_obj)->GetInterface(engine_obj, SL_IID_ENGINE, &engine);
+	(*engine)->CreateOutputMix(engine, &output_mix_obj, 0, NULL, NULL);
+	(*output_mix_obj)->Realize(output_mix_obj, SL_BOOLEAN_FALSE);
+	format.formatType = SL_DATAFORMAT_PCM;
+	format.numChannels = 1;
+	format.samplesPerSec = digi_driver_rate * 1000;
+	format.bitsPerSample = SL_PCMSAMPLEFORMAT_FIXED_8;
+	format.containerSize = 8;
+	format.channelMask = SL_SPEAKER_FRONT_CENTER;
+	format.endianness = SL_BYTEORDER_LITTLEENDIAN;
+	out_loc.locatorType = SL_DATALOCATOR_OUTPUTMIX;
+	out_loc.outputMix = output_mix_obj;
+	dst.pLocator = &out_loc;
+	dst.pFormat = NULL;
 	Digi_initialized = 1;
 	digi_driver_board = 1;
+
+	for (i = 0; i < MAX_SOUND_OBJECTS; ++i) {
+		SoundObjects[i].handle = -1;
+	}
+	for (i = 0; i < _MAX_VOICES; ++i) {
+		PlayerObjs[i] = NULL;
+		Players[i] = NULL;
+		Volumes[i] = NULL;
+		BufferQueues[i] = NULL;
+		SoundDone[i] = false;
+		SoundObjPtrs[i] = NULL;
+	}
 	return 0;
 }
 
@@ -574,81 +629,7 @@ int digi_init()
 {
 	digi_init_digi();
 	digi_init_midi();
-	
-	// TODO: May be nice to use CD audio eventually
-/*
-	int i;
-#ifdef USE_CD
-	{ 
-		FILE * fp;
-		fp = fopen( "hmimdrv.386", "rb" );	
-		if ( fp )
-			fclose(fp);
-		else
-			digi_driver_path = destsat_cdpath;
-	}
-#endif
-
-	if ( FindArg( "-nomusic" )) 
-		digi_midi_type = 0;
-
-	if ( (digi_midi_type<1) && (digi_driver_board<1) )	
-		return 0;
-
-	if ( !FindArg( "-noloadpats" ) )	{
-		if ( digi_midi_type == _MIDI_GUS )	{
-			char fname[128];
-			strcpy( fname, "DESCENTG.INI" );
-#ifdef USE_CD
-			{
-				FILE * fp = fopen( fname, "rb" );
-				if ( fp )
-					fclose(fp);
-				else {
-					strcpy( fname, destsat_cdpath );	
-					strcat( fname, "DESCENTG.INI" );
-				}
-			}
-#endif
-			loadpats(fname);
-		}
-	}
-	Digi_initialized = 1;
-
-	// initialize the DIGI system and lock down all SOS memory
-	sosDIGIInitSystem( digi_driver_path, _SOS_DEBUG_NORMAL );
-	digi_system_initialized = 1;
-
-	// Initialize timer, where we will call it from out own interrupt
-	// routine, and we will call DOS 18.2Hz ourselves.
-	sosTIMERInitSystem( 0, _SOS_DEBUG_NO_TIMER );
-	timer_set_function( sosTIMERHandler );		// New way
-	timer_system_initialized = 1;
-	
-	if ( digi_driver_board == _RAP10_8_MONO )	{
-		if (digi_init_digi()) return 1;
-		if (digi_init_midi()) return 1;
-	} else {
-		if (digi_init_midi()) return 1;
-		if (digi_init_digi()) return 1;
-	}
-
-	if (!digi_atexit_called)	{
-		atexit( digi_close );
-		digi_atexit_called = 1;
-	}
-
-	digi_init_sounds();
-	digi_set_midi_volume( midi_volume );
-
-	for (i=0; i<MAX_SOUNDS; i++ )
-		digi_sound_locks[i] = 0;
-	digi_reset_digi_sounds();
-
 	return 0;
-*/
-	return 0;//KRB Comment out...
-
 }
 
 // Toggles sound system on/off
@@ -668,28 +649,25 @@ void digi_unlock_sound_data( int soundnum ) {
 
 }
 
-static int next_handle = 0;
-static SLuint16 SampleHandles[_MAX_VOICES];
-static SLuint16 SampleBuffers[_MAX_VOICES];
-static int SoundNums[_MAX_VOICES] = { -1 };
-
 void digi_reset_digi_sounds()
 {
 	int i;
-	/*ALint state;
+	SLuint32 state;
 
 	if ( !Digi_initialized ) return;
 	if ( digi_driver_board <= 0 )	return;
 
 	for (i=0; i<_MAX_VOICES; i++ )	{
-		if (SampleHandles[i])	{
-			alGetSourcei(SampleHandles[i], AL_SOURCE_STATE, &state);
-			if ( state == AL_PLAYING ) {
-				//mprintf(( 0, "Stopping sound %d.\n", next_handle ));
-				alSourceStop(SampleHandles[i]);
-				alDeleteSources(1, &SampleHandles[i]);
+		if (PlayerObjs[i])	{
+			(*Players[i])->GetPlayState(Players[i], &state);
+			if ( state == SL_PLAYSTATE_PLAYING ) {
+				(*PlayerObjs[i])->Destroy(PlayerObjs[i]);
+				PlayerObjs[i] = NULL;
+				Players[i] = NULL;
+				Volumes[i] = NULL;
+				BufferQueues[i] = NULL;
+				SoundDone[i] = false;
 			}
-			SampleHandles[i] = 0xffff;
 		}
 		if ( SoundNums[i] != -1 )	{
 			digi_unlock_sound_data(SoundNums[i]);
@@ -698,25 +676,11 @@ void digi_reset_digi_sounds()
 	}
 	for (i=0; i<MAX_SOUNDS; i++ )	{
 		Assert( digi_sound_locks[i] == 0 );
-	}*/
+	}
 }
 
 void reset_sounds_on_channel( int channel )
 {
-	int i;
-
-	if ( !Digi_initialized ) return;
-	if ( digi_driver_board <= 0 )	return;
-
-	for (i=0; i<digi_max_channels; i++ )	{
-		if (SampleHandles[i] == channel )	{
-			SampleHandles[i] = 0xffff;
-			if ( SoundNums[i] != -1 )	{
-				digi_unlock_sound_data(SoundNums[i]);
-				SoundNums[i] = -1;
-			}
-		}
-	}
 }
 
 
@@ -739,44 +703,82 @@ int digi_get_max_channels()
 	return digi_max_channels;
 }
 
-SLuint16 digi_start_sound(_SOS_START_SAMPLE * sampledata, short soundnum) {
-	/*ALfloat pan[3] = { 0.0f }, volume;
-	ALuint bufferID, sourceID;
-	
-	if (SampleBuffers[soundnum] == 0xffff) {
-		alGenBuffers(1, &bufferID);
-		alBufferData(bufferID, AL_FORMAT_MONO8, sampledata->lpSamplePtr, sampledata->dwSampleSize, digi_driver_rate);
-		SampleBuffers[soundnum] = bufferID;
-	} else {
-		bufferID = SampleBuffers[soundnum];
+SLmillibel gain_to_attenuation( float gain ) {
+	return (SLmillibel)(gain < 0.01f ? -96.0f : 20 * log10f(gain));
+}
+
+void SLAPIENTRY loop_callback( SLPlayItf player,
+							  void *context, SLuint32 event ) {
+	bool *need_loop = context;
+
+	if(event & SL_PLAYEVENT_HEADATEND) {
+		*need_loop = true;
 	}
-	alGenSources(1, &sourceID);
-	alSourcei(sourceID, AL_BUFFER, bufferID);
-	if (sampledata->wSampleFlags & _LOOPING) {
-		alSourcei(sourceID, AL_LOOPING, AL_TRUE);
+}
+
+int digi_start_sound(_SOS_START_SAMPLE *sampledata, short soundnum) {
+	const SLInterfaceID ids[] = {SL_IID_VOLUME, SL_IID_ANDROIDSIMPLEBUFFERQUEUE};
+	const SLboolean req[] = {SL_BOOLEAN_TRUE, SL_BOOLEAN_TRUE};
+	int retval;
+	SLpermille pan;
+	SLresult result;
+
+	In_locs[next_handle].locatorType = SL_DATALOCATOR_ANDROIDSIMPLEBUFFERQUEUE;
+	In_locs[next_handle].numBuffers = 1;
+	Sources[next_handle].pLocator = &In_locs[next_handle];
+	Sources[next_handle].pFormat = &format;
+	if (PlayerObjs[next_handle] != NULL) {
+		(*PlayerObjs[next_handle])->Destroy(PlayerObjs[next_handle]);
+		PlayerObjs[next_handle] = NULL;
+		Players[next_handle] = NULL;
+		Volumes[next_handle] = NULL;
+		BufferQueues[next_handle] = NULL;
+		SoundDone[next_handle] = false;
+		if (SoundObjPtrs[next_handle] != NULL) {
+			SoundObjPtrs[next_handle]->handle = -1;
+			SoundObjPtrs[next_handle]->flags &= ~SOF_PLAYING;
+			SoundObjPtrs[next_handle] = NULL;
+		}
 	}
-	pan[0] = (((float)sampledata->wSamplePanLocation * 2.0f) / (float)0xffff) - 1.0f;
-	alSourcefv(sourceID, AL_POSITION, pan);
-	volume = ((float)sampledata->wVolume / (float)_DIGI_MAX_VOLUME);
-	alSourcef(sourceID, AL_GAIN, volume);
-	if (SampleHandles[next_handle] != 0xffff) {
-		alDeleteSources(1, &SampleHandles[next_handle]);
+	(*engine)->CreateAudioPlayer(engine, &PlayerObjs[next_handle], &Sources[next_handle], &dst,
+								 2, ids, req);
+	result = (*PlayerObjs[next_handle])->Realize(PlayerObjs[next_handle], SL_BOOLEAN_FALSE);
+	if (result != SL_RESULT_SUCCESS) {
+		--next_handle;
+		if (next_handle < 0) next_handle = 0;
+		return -1;
 	}
-	SampleHandles[next_handle] = sourceID;
-	SoundNums[next_handle] = soundnum;
-	next_handle++;
-	if ( next_handle >= digi_max_channels )
+	(*PlayerObjs[next_handle])->GetInterface(PlayerObjs[next_handle], SL_IID_PLAY,
+											 &Players[next_handle]);
+	(*PlayerObjs[next_handle])->GetInterface(PlayerObjs[next_handle], SL_IID_VOLUME,
+											 &Volumes[next_handle]);
+	(*PlayerObjs[next_handle])->GetInterface(PlayerObjs[next_handle],
+											 SL_IID_ANDROIDSIMPLEBUFFERQUEUE,
+											 &BufferQueues[next_handle]);
+	(*Volumes[next_handle])->SetVolumeLevel(Volumes[next_handle], gain_to_attenuation(
+			(digi_volume / _DIGI_MAX_VOLUME) * (sampledata->wVolume / _DIGI_MAX_VOLUME)) *
+																  (SLmillibel) 100);
+	pan = (SLpermille) (((sampledata->wSamplePanLocation * 2000) / 0xffff) - 1000);
+	(*Volumes[next_handle])->EnableStereoPosition(Volumes[next_handle], SL_BOOLEAN_TRUE);
+	(*Volumes[next_handle])->SetStereoPosition(Volumes[next_handle], pan);
+	(*BufferQueues[next_handle])->Enqueue(BufferQueues[next_handle], sampledata->lpSamplePtr,
+										  sampledata->dwSampleSize);
+	(*Players[next_handle])->RegisterCallback(Players[next_handle], loop_callback,
+											  &SoundDone[next_handle]);
+	(*Players[next_handle])->SetCallbackEventsMask(Players[next_handle],
+												   SL_PLAYEVENT_HEADATEND);
+	(*Players[next_handle])->SetPlayState(Players[next_handle], SL_PLAYSTATE_PLAYING);
+	retval = next_handle++;
+	if (next_handle >= _MAX_VOICES) {
 		next_handle = 0;
-	alSourcePlay(sourceID);
-	return sourceID;*/
-	return 0;
+	}
+	return retval;
 }
 
 int digi_is_sound_playing(int soundno)
 {
-	/*ALuint SampleHandle;
 	soundno = digi_xlat_sound(soundno);
-	ALint state;
+	SLuint32 state;
 
 	if (!Digi_initialized) return 0;
 	if (digi_driver_board<1) return 0;
@@ -787,10 +789,7 @@ int digi_is_sound_playing(int soundno)
 		return 0;
 	}
 
-	SampleHandle = SampleHandles[soundno];
-	alGetSourcei(SampleHandle, AL_SOURCE_STATE, &state);
-	return state == AL_PLAYING;*/
-	return 0;
+	return SoundDone[soundno];
 }
 
 void digi_play_sample_once( int soundno, fix max_volume )	
@@ -827,9 +826,9 @@ void digi_play_sample_once( int soundno, fix max_volume )
 
 //	if ( sosDIGISamplesPlaying(hSOSDigiDriver) >= digi_max_channels )
 //		return;
-	
+
 	// start the sample playing
-	digi_start_sound( &sSOSSampleData, soundno );
+	SoundObjPtrs[digi_start_sound( &sSOSSampleData, soundno )] = NULL;
 }
 
 void digi_play_sample(int soundno, fix max_volume) {
@@ -1049,18 +1048,20 @@ void digi_init_sounds()
 
 	digi_reset_digi_sounds();
 
-	/*for (i=0; i<MAX_SOUND_OBJECTS; i++ )	{
+	for (i=0; i<MAX_SOUND_OBJECTS; i++ ) {
 		if (digi_sounds_initialized) {
-			if ( SoundObjects[i].flags & SOF_PLAYING && SoundObjects[i].handle != 0xffff )	{
-				alSourceStop( SoundObjects[i].handle );
+			if (SoundObjects[i].flags & SOF_PLAYING && SoundObjects[i].handle != -1) {
+				(*PlayerObjs[SoundObjects[i].handle])->Destroy(PlayerObjs[SoundObjects[i].handle]);
+				PlayerObjs[SoundObjects[i].handle] = NULL;
+				Players[SoundObjects[i].handle] = NULL;
+				Volumes[SoundObjects[i].handle] = NULL;
+				BufferQueues[SoundObjects[i].handle] = NULL;
+				SoundDone[SoundObjects[i].handle] = false;
+				SoundObjects[i].handle = -1;
 			}
 		}
-		alDeleteSources(1, &SampleHandles[i]);
-		alDeleteBuffers(1, &SampleBuffers[i]);
-		SampleHandles[i] = 0xffff;
-		SampleBuffers[i] = 0xffff;
 		SoundObjects[i].flags = 0;	// Mark as dead, so some other sound can use this sound
-	}*/
+	}
 	digi_sounds_initialized = 1;
 }
 
@@ -1094,10 +1095,12 @@ void digi_start_sound_object(int i)
 	}
 
 	// start the sample playing
+	SoundObjects[i].sample_data = sSOSSampleData.lpSamplePtr;
+	SoundObjects[i].data_size = sSOSSampleData.dwSampleSize;
 	SoundObjects[i].handle = digi_start_sound(&sSOSSampleData, SoundObjects[i].soundnum);
+	SoundObjPtrs[SoundObjects[i].handle] = &SoundObjects[i];
 
-
-	if (SoundObjects[i].handle != 0xffff )		{
+	if (SoundObjects[i].handle != -1 )		{
 		SoundObjects[i].flags |= SOF_PLAYING;
 		//mprintf(( 0, "Starting sound object %d on channel %d\n", i, SoundObjects[i].handle ));
 		reset_sounds_on_channel( SoundObjects[i].handle );
@@ -1246,19 +1249,23 @@ void digi_kill_sound_linked_to_segment( int segnum, int sidenum, int soundnum ) 
 
 	killed = 0;
 
-	/*for (i=0; i<MAX_SOUND_OBJECTS; i++ )	{
+	for (i=0; i<MAX_SOUND_OBJECTS; i++ )	{
 		if ( (SoundObjects[i].flags & SOF_USED) && (SoundObjects[i].flags & SOF_LINK_TO_POS) )	{
 			if ((SoundObjects[i].segnum == segnum) && (SoundObjects[i].soundnum==soundnum ) && (SoundObjects[i].sidenum==sidenum) )	{
-				if ( SoundObjects[i].flags & SOF_PLAYING )	{
-					alSourceStop( SoundObjects[i].handle );
-					alDeleteSources(1, &SampleHandles[i]);
-					SampleHandles[i] = 0xffff;
+				if ( SoundObjects[i].flags & SOF_PLAYING && SoundObjects[i].handle != -1 )	{
+					(*PlayerObjs[SoundObjects[i].handle])->Destroy(PlayerObjs[SoundObjects[i].handle]);
+					PlayerObjs[SoundObjects[i].handle] = NULL;
+					Players[SoundObjects[i].handle] = NULL;
+					Volumes[SoundObjects[i].handle] = NULL;
+					BufferQueues[SoundObjects[i].handle] = NULL;
+					SoundDone[SoundObjects[i].handle] = false;
+					SoundObjects[i].handle = -1;
 				}
 				SoundObjects[i].flags = 0;	// Mark as dead, so some other sound can use this sound
 				killed++;
 			}
 		}
-	}*/
+	}
 	// If this assert happens, it means that there were 2 sounds
 	// that got deleted. Weird, get John.
 	if ( killed > 1 )	{
@@ -1274,19 +1281,23 @@ void digi_kill_sound_linked_to_object( int objnum ) {
 
 	killed = 0;
 
-	/*for (i=0; i<MAX_SOUND_OBJECTS; i++ )	{
+	for (i=0; i<MAX_SOUND_OBJECTS; i++ )	{
 		if ( (SoundObjects[i].flags & SOF_USED) && (SoundObjects[i].flags & SOF_LINK_TO_OBJ ) )	{
 			if (SoundObjects[i].objnum == objnum)	{
-				if ( SoundObjects[i].flags & SOF_PLAYING )	{
-					alSourceStop( SoundObjects[i].handle );
-					alDeleteSources(1, &SampleHandles[i]);
-					SampleHandles[i] = 0xffff;
+				if ( SoundObjects[i].flags & SOF_PLAYING && SoundObjects[i].handle != -1 )	{
+					(*PlayerObjs[SoundObjects[i].handle])->Destroy(PlayerObjs[SoundObjects[i].handle]);
+					PlayerObjs[SoundObjects[i].handle] = NULL;
+					Players[SoundObjects[i].handle] = NULL;
+					Volumes[SoundObjects[i].handle] = NULL;
+					BufferQueues[SoundObjects[i].handle] = NULL;
+					SoundDone[SoundObjects[i].handle] = false;
+					SoundObjects[i].handle = -1;
 				}
 				SoundObjects[i].flags = 0;	// Mark as dead, so some other sound can use this sound
 				killed++;
 			}
 		}
-	}*/
+	}
 	// If this assert happens, it means that there were 2 sounds
 	// that got deleted. Weird, get John.
 	if ( killed > 1 )	{
@@ -1316,8 +1327,8 @@ void digi_sync_sounds()
 {
 	int i;
 	int oldvolume, oldpan;
-	/*ALfloat volume, pan[3] = { 0.0f };
-	ALint state;
+	SLuint32 state;
+	SLpermille pan;
 
 	if (!Digi_initialized) return;
 	if (digi_driver_board<1) return;
@@ -1342,34 +1353,61 @@ void digi_sync_sounds()
 			oldvolume = SoundObjects[i].volume;
 			oldpan = SoundObjects[i].pan;
 
+			if (SoundDone[SoundObjects[i].handle]) {
+				SoundObjects[i].flags &= ~SOF_PLAYING;
+			}
 			if (!(SoundObjects[i].flags & SOF_PLAY_FOREVER)) {
 				// Check if its done.
-				if (SoundObjects[i].flags & SOF_PLAYING && SoundObjects[i].handle != 0xffff) {
-					alGetSourcei(SoundObjects[i].handle, AL_SOURCE_STATE, &state);
-					if (state == AL_PLAYING) {
-						alDeleteSources(1, &SampleHandles[i]);
-						SampleHandles[i] = 0xffff;
+				if (SoundObjects[i].flags & SOF_PLAYING && SoundObjects[i].handle != -1) {
+					(*Players[SoundObjects[i].handle])->GetPlayState(SoundObjects[i].handle, &state);
+					if (state == SL_PLAYSTATE_PLAYING) {
+						(*PlayerObjs[SoundObjects[i].handle])->Destroy(PlayerObjs[SoundObjects[i].handle]);
+						PlayerObjs[SoundObjects[i].handle] = NULL;
+						Players[SoundObjects[i].handle] = NULL;
+						Volumes[SoundObjects[i].handle] = NULL;
+						BufferQueues[SoundObjects[i].handle] = NULL;
+						SoundDone[SoundObjects[i].handle] = false;
 						SoundObjects[i].flags = 0;	// Mark as dead, so some other sound can use this sound
+						SoundObjects[i].handle = -1;
 						continue;		// Go on to next sound...
 					}
 				}
+			} else if (SoundObjects[i].handle != -1 && SoundDone[SoundObjects[i].handle]) {
+				(*BufferQueues[SoundObjects[i].handle])->Enqueue(
+						BufferQueues[SoundObjects[i].handle], SoundObjects[i].sample_data,
+						SoundObjects[i].data_size);
+				(*Players[SoundObjects[i].handle])->SetPlayState(
+						Players[SoundObjects[i].handle], SL_PLAYSTATE_PLAYING);
+				(*Players[SoundObjects[i].handle])->RegisterCallback(
+						Players[SoundObjects[i].handle], loop_callback,
+						&SoundDone[SoundObjects[i].handle]);
+				(*Players[SoundObjects[i].handle])->SetCallbackEventsMask(
+						Players[SoundObjects[i].handle],
+						SL_PLAYEVENT_HEADATEND);
+				SoundDone[SoundObjects[i].handle] = false;
+				SoundObjects[i].flags |= SOF_PLAYING;
 			}
 
 			if (SoundObjects[i].flags & SOF_LINK_TO_POS) {
 				digi_get_sound_loc(&Viewer->orient, &Viewer->pos, Viewer->segnum,
 					&SoundObjects[i].position, SoundObjects[i].segnum, SoundObjects[i].max_volume,
 					&SoundObjects[i].volume, &SoundObjects[i].pan, SoundObjects[i].max_distance);
-
 			}
 			else if (SoundObjects[i].flags & SOF_LINK_TO_OBJ) {
-				object * objp;
+				object *objp;
 
 				objp = &Objects[SoundObjects[i].objnum];
 
 				if ((objp->type == OBJ_NONE) || (objp->signature != SoundObjects[i].objsignature)) {
 					// The object that this is linked to is dead, so just end this sound if it is looping.
-					if ((SoundObjects[i].flags & SOF_PLAYING) && (SoundObjects[i].flags & SOF_PLAY_FOREVER) && SoundObjects[i].handle != 0xffff) {
-						alSourceStop(SoundObjects[i].handle);
+					if ((SoundObjects[i].flags & SOF_PLAYING) && (SoundObjects[i].flags & SOF_PLAY_FOREVER) && SoundObjects[i].handle != -1) {
+						(*PlayerObjs[SoundObjects[i].handle])->Destroy(PlayerObjs[SoundObjects[i].handle]);
+						PlayerObjs[SoundObjects[i].handle] = NULL;
+						Players[SoundObjects[i].handle] = NULL;
+						Volumes[SoundObjects[i].handle] = NULL;
+						BufferQueues[SoundObjects[i].handle] = NULL;
+						SoundDone[SoundObjects[i].handle] = false;
+						SoundObjects[i].handle = -1;
 					}
 					SoundObjects[i].flags = 0;	// Mark as dead, so some other sound can use this sound
 					continue;		// Go on to next sound...
@@ -1384,32 +1422,39 @@ void digi_sync_sounds()
 			if (oldvolume != SoundObjects[i].volume) {
 				if (SoundObjects[i].volume < 1) {
 					// Sound is too far away, so stop it from playing.
-					if ((SoundObjects[i].flags & SOF_PLAYING) && (SoundObjects[i].flags & SOF_PLAY_FOREVER) && SoundObjects[i].handle != 0xffff) {
-						alSourceStop(SoundObjects[i].handle);
+					if ((SoundObjects[i].flags & SOF_PLAYING) && (SoundObjects[i].flags & SOF_PLAY_FOREVER) && SoundObjects[i].handle != -1) {
+						(*PlayerObjs[SoundObjects[i].handle])->Destroy(PlayerObjs[SoundObjects[i].handle]);
+						PlayerObjs[SoundObjects[i].handle] = NULL;
+						Players[SoundObjects[i].handle] = NULL;
+						Volumes[SoundObjects[i].handle] = NULL;
+						BufferQueues[SoundObjects[i].handle] = NULL;
+						SoundDone[SoundObjects[i].handle] = false;
 						SoundObjects[i].flags &= ~SOF_PLAYING;		// Mark sound as not playing
+						SoundObjects[i].handle = -1;
 					}
 				}
 				else {
 					if (!(SoundObjects[i].flags & SOF_PLAYING)) {
 						digi_start_sound_object(i);
 					}
-					else if (SoundObjects[i].handle != 0xffff) {
-						volume = (float)SoundObjects[i].volume / (float)_DIGI_MAX_VOLUME;
-						alSourcef(SoundObjects[i].handle, AL_GAIN, volume);
+					else if (SoundObjects[i].handle != -1) {
+						(*Volumes[SoundObjects[i].handle])->SetVolumeLevel(
+								Volumes[SoundObjects[i].handle], gain_to_attenuation(
+								(digi_volume / _DIGI_MAX_VOLUME) *
+								(SoundObjects[i].volume / _DIGI_MAX_VOLUME)) * (SLmillibel) 100);
 					}
 				}
 			}
 
 			if (oldpan != SoundObjects[i].pan) {
 				if (SoundObjects[i].flags & SOF_PLAYING && SoundObjects[i].handle != 0xffff) {
-					pan[0] = (((float)SoundObjects[i].pan * 2.0f) / (float)0xffff) - 1.0f;
-					alSourcefv(SoundObjects[i].handle, AL_POSITION, pan);
+					pan = (SLpermille)(((SoundObjects[i].pan * 2000) / 0xffff) - 1000);
+					(*Volumes[SoundObjects[i].handle])->SetStereoPosition(
+							Volumes[SoundObjects[i].handle], pan);
 				}
 			}
-
-
 		}
-	}*/
+	}
 }
 
 
@@ -1433,16 +1478,14 @@ void digi_pause_all() {
 		   //}
 			hmp_setvolume(cur_hmp, 0);
 		}
-		/*if (digi_driver_board>0)	{
+		if (digi_driver_board>0)	{
 			for (i=0; i<MAX_SOUND_OBJECTS; i++ )	{
-				if ( (SoundObjects[i].flags & SOF_USED) && (SoundObjects[i].flags & SOF_PLAYING)&& (SoundObjects[i].flags & SOF_PLAY_FOREVER) )	{
-					alSourceStop( SoundObjects[i].handle );
-					alDeleteSources(1, &SampleHandles[i]);
-					SampleHandles[i] = 0xffff;
+				if ( (SoundObjects[i].flags & SOF_USED) && (SoundObjects[i].flags & SOF_PLAYING)&& (SoundObjects[i].flags & SOF_PLAY_FOREVER) && SoundObjects[i].handle != -1)	{
+					(*Players[SoundObjects[i].handle])->SetPlayState(Players[SoundObjects[i].handle], SL_PLAYSTATE_PAUSED);
 					SoundObjects[i].flags &= ~SOF_PLAYING;		// Mark sound as not playing
 				}			
 			}
-		}*/
+		}
 	}
 	sound_paused++;
 }
@@ -1466,14 +1509,14 @@ void digi_resume_all() {
 			//}
 			hmp_setvolume(cur_hmp, midi_volume);
 		}
-		/*if (digi_driver_board>0)	{
+		if (digi_driver_board>0)	{
 			for (i=0; i<MAX_SOUND_OBJECTS; i++ )	{
-				if ( (SoundObjects[i].flags & SOF_USED) && (SoundObjects[i].flags & ~SOF_PLAYING)&& (SoundObjects[i].flags & SOF_PLAY_FOREVER) )	{
-					alSourcePlay( SoundObjects[i].handle );
+				if ( (SoundObjects[i].flags & SOF_USED) && (SoundObjects[i].flags & ~SOF_PLAYING)&& (SoundObjects[i].flags & SOF_PLAY_FOREVER) && SoundObjects[i].handle != -1 )	{
+					(*Players[SoundObjects[i].handle])->SetPlayState(Players[SoundObjects[i].handle], SL_PLAYSTATE_PLAYING);
 					SoundObjects[i].flags &= SOF_PLAYING;		// Mark sound as not playing
 				}
 			}
-		}*/
+		}
 	}
 	sound_paused--;
 }
@@ -1498,18 +1541,23 @@ void digi_stop_all() {
 		}
 	}
 
-	/*if (digi_driver_board>0)	{
+	if (digi_driver_board>0)	{
 		for (i=0; i<MAX_SOUND_OBJECTS; i++ )	{
 			if ( SoundObjects[i].flags & SOF_USED )	{
-				if ( SoundObjects[i].flags & SOF_PLAYING )	{
-					alSourceStop( SoundObjects[i].handle );
-					alDeleteSources(1, &SampleHandles[i]);
-					SampleHandles[i] = 0xffff;
+				if ( SoundObjects[i].flags & SOF_PLAYING && SoundObjects[i].handle != -1)	{
+					(*PlayerObjs[SoundObjects[i].handle])->Destroy(PlayerObjs[SoundObjects[i].handle]);
+					PlayerObjs[SoundObjects[i].handle] = NULL;
+					Players[SoundObjects[i].handle] = NULL;
+					Volumes[SoundObjects[i].handle] = NULL;
+					BufferQueues[SoundObjects[i].handle] = NULL;
+					SoundDone[SoundObjects[i].handle] = false;
+					SoundObjects[i].flags = 0;	// Mark as dead, so some other sound can use this sound
+					SoundObjects[i].handle = -1;
 				}
 				SoundObjects[i].flags = 0;	// Mark as dead, so some other sound can use this sound
 			}
 		}
-	}*/
+	}
 }
 
 #ifndef NDEBUG

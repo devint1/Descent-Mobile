@@ -22,7 +22,7 @@ model {
 						   "-I" + file("../3D/ogles").absolutePath,
 						   "-I" + file("../2D/ogles").absolutePath,
 						   "-I" + file("src/main/jni").absolutePath])
-			ldLibs.addAll(["GLESv1_CM", "EGL", "dl", "log", "android"])
+			ldLibs.addAll(["GLESv1_CM", "EGL", "dl", "log", "android", "OpenSLES"])
 		}
 		productFlavors {
 			// for detailed abiFilter descriptions, refer to "Supported ABIs" @
