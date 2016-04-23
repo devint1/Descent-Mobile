@@ -110,20 +110,23 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
 		char c;
+		int i, numchars = count - before;
 
-		if (s.length() > 0) {
-			c = s.charAt(s.length() - 1);
-		} else {
-			c = '\0';
-		}
-		if (count < before) {
-			// Backspace key
-			keyHandler((char) 0x0E);
-		} else if (c == '\n') {
-			// Enter key
-			keyHandler((char) 0x1C);
-		} else if (c != '\0' && before != count) {
-			keyHandler(c);
+		if (numchars < 0) {
+			for (i = numchars; i < 0; ++i) {
+				// Backspace key
+				keyHandler((char) 0x0E);
+			}
+		} else if (s.length() > 0) {
+			for (i = numchars; i > 0; --i) {
+				c = s.charAt(s.length() - i);
+				if (c == '\n') {
+					// Enter key
+					keyHandler((char) 0x1C);
+				} else {
+					keyHandler(c);
+				}
+			}
 		}
 	}
 
@@ -146,7 +149,7 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 
 	@SuppressWarnings("unused")
 	public boolean textIsActive() {
-		return imm.isAcceptingText();
+		return dummyText.getVisibility() == View.VISIBLE;
 	}
 
 	@SuppressWarnings("unused")
@@ -154,6 +157,7 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 		mainHandler.post(new Runnable() {
 			@Override
 			public void run() {
+				dummyText.setText("");
 				dummyText.setFocusableInTouchMode(true);
 				dummyText.setVisibility(View.VISIBLE);
 				dummyText.requestFocus();
