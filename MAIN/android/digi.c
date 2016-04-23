@@ -1050,7 +1050,7 @@ void digi_init_sounds()
 
 	for (i=0; i<MAX_SOUND_OBJECTS; i++ ) {
 		if (digi_sounds_initialized) {
-			if (SoundObjects[i].flags & SOF_PLAYING && SoundObjects[i].handle != -1) {
+			if (SoundObjects[i].flags & SOF_PLAYING && SoundObjects[i].handle != -1 && PlayerObjs[SoundObjects[i].handle]) {
 				(*PlayerObjs[SoundObjects[i].handle])->Destroy(PlayerObjs[SoundObjects[i].handle]);
 				PlayerObjs[SoundObjects[i].handle] = NULL;
 				Players[SoundObjects[i].handle] = NULL;
