@@ -5,9 +5,8 @@
 #include <EGL/egl.h>
 #include <jni.h>
 #include <string.h>
-#include "gr.h"
+#include "game.h"
 #include "gamefont.h"
-#include "piggy.h"
 #include "texmerge.h"
 
 extern JavaVM *jvm;
@@ -64,8 +63,10 @@ void showRenderBuffer() {
 		nm_background.bm_ogles_tex_id = 0;
 
 		// Hack to show stuff like menus
-		mouse_handler(-1, -1, true);
-		mouse_handler(-1, -1, false);
+		if (Game_mode != GM_NORMAL || In_screen) {
+			mouse_handler(-1, -1, true);
+			mouse_handler(-1, -1, false);
+		}
 
 		Want_pause = false;
 	} else {
