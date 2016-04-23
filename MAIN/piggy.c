@@ -340,6 +340,7 @@ static char rcsid[] = "$Id: piggy.c 2.10 1995/10/07 13:17:26 john Exp $";
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
+#include <viewcontrollerc.h>
 
 #include "types.h"
 #include "inferno.h"
@@ -691,6 +692,10 @@ int piggy_init()
 	gr_set_curfont( Gamefonts[GFONT_SMALL] );	
 	gr_set_fontcolor(gr_find_closest_color_current( 20, 20, 20 ),-1 );
 	gr_scale_printf( 0x8000, y-10*f2fl(Scale_y), Scale_factor, Scale_factor, "%s...", TXT_LOADING_DATA );
+
+#ifdef OGLES
+	showRenderBuffer();
+#endif
 
 	for (i=0; i<N_bitmaps; i++ )	{
 		cfread( &bmh, sizeof(DiskBitmapHeader), 1, Piggy_fp );

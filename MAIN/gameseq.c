@@ -253,6 +253,7 @@ static char rcsid[] = "$Id: gameseq.c 2.10 1995/12/19 15:48:25 john Exp $";
 #include <errno.h>
 #include <time.h>
 #include <unistd.h>
+#include <viewcontrollerc.h>
 
 #include "inferno.h"
 #include "game.h"
@@ -944,6 +945,10 @@ void LoadLevel(int level_num)
 #endif
 
 	show_boxed_message(TXT_LOADING);
+
+#ifdef OGLES
+	showRenderBuffer();
+#endif
 
 	if (!load_level(level_name))
 		Current_level_num=level_num;
