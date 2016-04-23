@@ -409,7 +409,7 @@ static char rcsid[] = "$Id: digi.c 2.5 1996/01/05 16:51:51 john Exp $";
 #define  _DRUM_PATCH          "drum.bnk"
 #define  _DIGDRUM_PATCH       "drum32.dig"
 
-#define _MAX_VOICES 8
+#define _MAX_VOICES 24
 #define _LOOPING 0xBADF00D
  
 static int	Digi_initialized 		= 0;
