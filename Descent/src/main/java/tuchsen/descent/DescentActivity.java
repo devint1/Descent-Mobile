@@ -18,6 +18,7 @@ import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MotionEvent;
+import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -192,6 +193,9 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 		float R[] = new float[9];
 		float rotationVector[] = {x, y, z};
 
+		if (getWindowManager().getDefaultDisplay().getRotation() == Surface.ROTATION_270) {
+			rotationVector[2] *= -1;
+		}
 		SensorManager.getRotationMatrixFromVector(R, rotationVector);
 		SensorManager.getOrientation(R, orientation);
 		return orientation;
