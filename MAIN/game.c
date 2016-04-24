@@ -2360,7 +2360,7 @@ void show_boxed_message(char *msg)
 	int w,h,aw;
 	int x,y;
 
-	gr_set_current_canvas(&VR_screen_pages[VR_current_page]);
+	gr_set_current_canvas(NULL);
 	gr_set_curfont( HELP_FONT );
 
 	gr_get_string_size(msg,&w,&h,&aw);
@@ -4335,7 +4335,6 @@ void close_game()
 	restore_effect_bitmap_icons();
 
 	if (Game_cockpit_copy_code)	{
-		free(Game_cockpit_copy_code);
 		Game_cockpit_copy_code = NULL;
 	}
 

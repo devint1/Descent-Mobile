@@ -840,9 +840,9 @@ void draw_item( bkg * b, newmenu_item *item, int is_current )
 			nm_string( b, item->w, item->x, item->y, item->text );
 		} else {
 			grs_font *last_font = grd_curcanv->cv_font;
-			nm_draw_background(item->x - 10 * f2fl(Scale_factor), item->y - 3 * item->h, item->x + 10 * f2fl(Scale_factor) + item->w, item->y + 2 * item->h);
+			nm_draw_background(item->x - 10 * f2fl(Scale_factor), item->y - 2 * item->h, item->x + 10 * f2fl(Scale_factor) + item->w, item->y + 2 * item->h);
 			grd_curcanv->cv_font=SUBTITLE_FONT;
-			gr_scale_printf(0x8000, 2 * item->h, Scale_factor, Scale_factor, "Enter name:");
+			gr_scale_printf(0x8000, 7 * f2fl(Scale_factor), Scale_factor, Scale_factor, "Enter save name:");
 			grd_curcanv->cv_font=last_font;
 			nm_string_inputbox( b, item->w, item->x, item->y, item->text, is_current );
 		}
@@ -1386,7 +1386,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 			if ( (choice>-1) && (item[choice].type==NM_TYPE_INPUT_MENU) && (item[choice].group==0))	{
 				item[choice].group = 1;
 				item[choice].redraw = 1;
-				item[choice].y = y + item[choice].h;
+				item[choice].y = y - 25 * f2fl(Scale_factor);
 				item[choice].x += 5 * f2fl(Scale_factor);
 				item[choice].w -= 10 * f2fl(Scale_factor);
 				if ( !strncasecmp( item[choice].saved_text, TXT_EMPTY, strlen(TXT_EMPTY) ) )	{
