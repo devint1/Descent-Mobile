@@ -384,14 +384,15 @@ uint check_point_to_face(vms_vector *checkp,segment *sp, side *s,int facenum,int
 
 
 //check if a sphere intersects a face
-check_sphere_to_face(vms_vector *pnt,segment *sp, side *s,int facenum,int nv,fix rad,int *vertex_list)
+int check_sphere_to_face(vms_vector *pnt,segment *sp, side *s,int facenum,int nv,fix rad,int *vertex_list)
 {
-	vms_vector checkp=*pnt;
+	vms_vector checkp;
 	uint edgemask;
 
 	//now do 2d check to see if point is in side
 
 	edgemask = check_point_to_face(pnt,sp,s,facenum,nv,vertex_list);
+	memcpy(&checkp, pnt, sizeof(vms_vector));
 
 	//we've gone through all the sides, are we inside?
 
@@ -447,8 +448,6 @@ check_sphere_to_face(vms_vector *pnt,segment *sp, side *s,int facenum,int nv,fix
 		else
 			return IT_NONE;
 	}
-
-
 }
 
 //returns true if line intersects with face. fills in newp with intersection
