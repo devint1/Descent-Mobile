@@ -307,7 +307,7 @@ void state_callback(int nitems,newmenu_item * items, int * last_key, int citem)
 	last_key = last_key;
 	gr_set_current_canvas(NULL);
 	fix x = fl2f((grd_curcanv->cv_bitmap.bm_w - THUMBNAIL_W * f2fl(Scale_x)) / 2);
-	fix y = i2f(items[0].y - 5);
+	fix y = fl2f(items[0].y + 15 * f2fl(Scale_factor));
 	grs_point scale_pts[] = {
 		{ x, y },
 		{ x + i2f(THUMBNAIL_W), y + i2f(THUMBNAIL_H) },
