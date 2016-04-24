@@ -109,7 +109,7 @@ public class DescentView extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	@SuppressWarnings("unused")
-	public void pauseRenderThread() {
+	private void pauseRenderThread() {
 		synchronized (renderThreadObj) {
 			paused = true;
 			while (paused) {
