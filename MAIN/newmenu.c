@@ -839,12 +839,14 @@ void draw_item( bkg * b, newmenu_item *item, int is_current )
 		if ( item->group==0 )		{
 			nm_string( b, item->w, item->x, item->y, item->text );
 		} else {
-			grs_font *last_font = grd_curcanv->cv_font;
-			nm_draw_background(item->x - 10 * f2fl(Scale_factor), item->y - 2 * item->h, item->x + 10 * f2fl(Scale_factor) + item->w, item->y + 2 * item->h);
-			grd_curcanv->cv_font=SUBTITLE_FONT;
-			gr_scale_printf(0x8000, 7 * f2fl(Scale_factor), Scale_factor, Scale_factor, "Enter save name:");
-			grd_curcanv->cv_font=last_font;
-			nm_string_inputbox( b, item->w, item->x, item->y, item->text, is_current );
+			newmenu_item m;
+			char text[item->text_len];
+			text[0] = 0;
+			m.type = NM_TYPE_INPUT;
+			m.text_len = item->text_len;
+			m.text = text;
+			newmenu_do(NULL, "Enter save name:", 1, &m, NULL);
+			strcpy(item->text, text);
 		}
 		break;
 	case NM_TYPE_INPUT:
@@ -1386,9 +1388,6 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 			if ( (choice>-1) && (item[choice].type==NM_TYPE_INPUT_MENU) && (item[choice].group==0))	{
 				item[choice].group = 1;
 				item[choice].redraw = 1;
-				item[choice].y = y - 25 * f2fl(Scale_factor);
-				item[choice].x += 5 * f2fl(Scale_factor);
-				item[choice].w -= 10 * f2fl(Scale_factor);
 				if ( !strncasecmp( item[choice].saved_text, TXT_EMPTY, strlen(TXT_EMPTY) ) )	{
 					item[choice].text[0] = 0;
 					item[choice].value = -1;
@@ -1528,11 +1527,16 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 		// Redraw everything...
 		for (i=0; i<nitems; i++ )	{
 			if (item[i].redraw)	{
-				draw_item( &bg, &item[i], (i==choice && !all_text) );
+				draw_item(&bg, &item[i], (i == choice && !all_text));
+				if (item[i].type==NM_TYPE_INPUT_MENU && item[i].group) {
+					done = 1;
+					item[i].group = 0;
+				}
 				item[i].redraw=0;
 			}
-			else if (i==choice && (item[i].type==NM_TYPE_INPUT || (item[i].type==NM_TYPE_INPUT_MENU && item[i].group)))
-				update_cursor( &item[i]);
+			else if (i == choice && (item[i].type == NM_TYPE_INPUT)) {
+				update_cursor(&item[i]);
+			}
 		}
 
 		if ( gr_palette_faded_out )	{
