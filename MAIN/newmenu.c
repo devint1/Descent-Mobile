@@ -1726,7 +1726,6 @@ int newmenu_get_filename( char * title, char * filespec, char * filename, int al
 	int w_x, w_y, w_w, w_h;
 	int mouse_x, mouse_y;
 	filename_item items[MAX_FILES];
-	fix scale_factor;
 
 	filenames = malloc( MAX_FILES * 14 );
 	if (filenames==NULL) return 0;
@@ -1823,8 +1822,6 @@ ReadFileNames:
 
 		w_w = grd_curscreen->sc_w * 0.53125;
 		w_h = grd_curscreen->sc_h * 0.855;
-
-		scale_factor = fl2f(fmin(w_w, w_h) / 171.0f);
 	
 		if ( w_w > grd_curscreen->sc_w) w_w = grd_curscreen->sc_w;
 		if ( w_h > grd_curscreen->sc_h) w_h = grd_curscreen->sc_h;
@@ -1839,7 +1836,7 @@ ReadFileNames:
 		nm_draw_background( w_x,w_y,w_x+w_w-1,w_y+w_h-1 );
 
 		grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_3];
-		gr_scale_string(0x8000, w_y + grd_curscreen->sc_h * 0.05, scale_factor, scale_factor, title);
+		gr_scale_string(0x8000, w_y + grd_curscreen->sc_h * 0.05, Scale_factor, Scale_factor, title);
 		initialized = 1;
 	}
 
@@ -2008,11 +2005,11 @@ ReadFileNames:
 						grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_1];
 					gr_get_string_size(&filenames[i*14], &w, &h, &aw  );
 					gr_rect(rect_x0, rect_y0, rect_x1, rect_y1);
-					gr_scale_string(string_x, y, scale_factor, scale_factor, (&filenames[i*14])+((player_mode && filenames[i*14]=='$')?1:0)  );
+					gr_scale_string(string_x, y, Scale_factor, Scale_factor, (&filenames[i*14])+((player_mode && filenames[i*14]=='$')?1:0)  );
 					items[i].x = string_x;
 					items[i].y = y;
-					items[i].w = w * f2fl(scale_factor);
-					items[i].h = h * f2fl(scale_factor);
+					items[i].w = w * f2fl(Scale_factor);
+					items[i].h = h * f2fl(Scale_factor);
 				}
 			}		
 		} else if ( citem != ocitem )	{
@@ -2029,7 +2026,7 @@ ReadFileNames:
 					grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_1];
 				gr_get_string_size(&filenames[i*14], &w, &h, &aw  );
 				gr_rect(rect_x0, rect_y0, rect_x1, rect_y1);
-				gr_scale_string(string_x, y, scale_factor, scale_factor, (&filenames[i*14])+((player_mode && filenames[i*14]=='$')?1:0)  );
+				gr_scale_string(string_x, y, Scale_factor, Scale_factor, (&filenames[i*14])+((player_mode && filenames[i*14]=='$')?1:0)  );
 			}
 			i = citem;
 			if ( (i>=0) && (i<NumFiles) )	{
@@ -2042,7 +2039,7 @@ ReadFileNames:
 					grd_curcanv->cv_font = Gamefonts[GFONT_MEDIUM_1];
 				gr_get_string_size(&filenames[i*14], &w, &h, &aw  );
 				gr_rect(rect_x0, rect_y0, rect_x1, rect_y1);
-				gr_scale_string(string_x, y, scale_factor, scale_factor, (&filenames[i*14])+((player_mode && filenames[i*14]=='$')?1:0)  );
+				gr_scale_string(string_x, y, Scale_factor, Scale_factor, (&filenames[i*14])+((player_mode && filenames[i*14]=='$')?1:0)  );
 			}
 		}
 #ifdef OGLES
