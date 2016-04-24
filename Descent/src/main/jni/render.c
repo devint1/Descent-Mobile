@@ -10,7 +10,7 @@
 #include "texmerge.h"
 
 extern JavaVM *jvm;
-extern jobject Renderer;
+extern jobject Descent_view;
 extern bool Want_pause;
 extern grs_bitmap nm_background;
 
@@ -25,29 +25,13 @@ void getRenderBufferSize(GLint *width, GLint *height) {
 
 void showRenderBuffer() {
 	int i;
-	GLint width, height;
 	grs_font *font;
 	JNIEnv *env;
 	jclass clazz;
 	jmethodID method;
 
 	if (Want_pause) {
-		(*jvm)->GetEnv(jvm, (void **) &env, JNI_VERSION_1_6);
-		clazz = (*env)->FindClass(env, "tuchsen/descent/DescentRenderer");
-
-		// Pause this thread
-		method = (*env)->GetMethodID(env, clazz, "pauseRenderThread", "()V");
-		(*env)->CallVoidMethod(env, Renderer, method);
-
-		// Reset EGL context
-		method = (*env)->GetMethodID(env, clazz, "setEgl", "()V");
-		(*env)->CallVoidMethod(env, Renderer, method);
-		eglSurfaceAttrib(eglGetCurrentDisplay(), eglGetCurrentSurface(EGL_DRAW),
-						 EGL_SWAP_BEHAVIOR,
-						 EGL_BUFFER_PRESERVED);
-		(*env)->DeleteLocalRef(env, clazz);
-
-		// Purge all texture assets, since the EGL context was blown away
+		// Purge all texture assets, since the EGL context will be blown away
 		for (i = 0; i < MAX_FONTS; ++i) {
 			font = Gamefonts[i];
 			glDeleteTextures(font->ft_maxchar - font->ft_minchar, font->ft_ogles_texes);
@@ -61,6 +45,26 @@ void showRenderBuffer() {
 		texmerge_init(50);
 		glDeleteTextures(1, &nm_background.bm_ogles_tex_id);
 		nm_background.bm_ogles_tex_id = 0;
+
+		// Blow away EGL surface and context
+		eglMakeCurrent(eglGetCurrentDisplay(), EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+		eglDestroySurface(eglGetCurrentDisplay(), eglGetCurrentSurface(EGL_DRAW));
+		eglDestroyContext(eglGetCurrentDisplay(), eglGetCurrentContext());
+
+		(*jvm)->GetEnv(jvm, (void **) &env, JNI_VERSION_1_6);
+		clazz = (*env)->FindClass(env, "tuchsen/descent/DescentView");
+
+		// Pause this thread
+		method = (*env)->GetMethodID(env, clazz, "pauseRenderThread", "()V");
+		(*env)->CallVoidMethod(env, Descent_view, method);
+
+		// Reset EGL context
+		method = (*env)->GetMethodID(env, clazz, "initEgl", "()V");
+		(*env)->CallVoidMethod(env, Descent_view, method);
+		eglSurfaceAttrib(eglGetCurrentDisplay(), eglGetCurrentSurface(EGL_DRAW),
+						 EGL_SWAP_BEHAVIOR,
+						 EGL_BUFFER_PRESERVED);
+		(*env)->DeleteLocalRef(env, clazz);
 
 		// Hack to show stuff like menus
 		if (Game_mode != GM_NORMAL || In_screen) {

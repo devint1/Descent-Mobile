@@ -3,28 +3,27 @@
 //
 #include <android/asset_manager_jni.h>
 #include <EGL/egl.h>
-#include <GLES/gl.h>
 #include "gr.h"
 #include "cfile.h"
 
 JavaVM *jvm;
 jobject Activity;
-jobject Renderer;
+jobject Descent_view;
 bool Want_pause;
 
 extern int descent_main(int argc, char **argv);
 
 extern void init_buttons(jint w, jint h);
 
-void Java_tuchsen_descent_DescentRenderer_descentMain(JNIEnv *env, jobject thiz, jint w, jint h,
-													  jobject activity, jobject renderer, jobject asset_manager,
-													  jstring document_path, jstring cache_path) {
+void Java_tuchsen_descent_DescentView_descentMain(JNIEnv *env, jobject thiz, jint w, jint h,
+												  jobject activity, jobject descent_view, jobject asset_manager,
+												  jstring document_path, jstring cache_path) {
 	char ws[6], hs[6];
 
 	// Init globals
 	Want_pause = false;
 	Activity = activity;
-	Renderer = renderer;
+	Descent_view = descent_view;
 	(*env)->GetJavaVM(env, &jvm);
 
 	// Need to preserve the buffer for things to display corretly

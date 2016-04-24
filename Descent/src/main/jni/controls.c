@@ -277,10 +277,10 @@ void handle_move(jint pointerId, jfloat x, jfloat y, jfloat prevX, jfloat prevY)
 	}
 }
 
-jboolean Java_tuchsen_descent_DescentGLSurfaceView_touchHandler(JNIEnv *env, jobject thiz,
-																jint action, jint pointerId,
-																jfloat x, jfloat y, jfloat prevX,
-																jfloat prevY) {
+jboolean Java_tuchsen_descent_DescentView_touchHandler(JNIEnv *env, jobject thiz,
+													   jint action, jint pointerId,
+													   jfloat x, jfloat y, jfloat prevX,
+													   jfloat prevY) {
 	if (Game_mode == GM_NORMAL && !In_screen) {
 		switch (action) {
 			case ACTION_DOWN:
