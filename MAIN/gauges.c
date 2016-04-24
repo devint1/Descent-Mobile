@@ -1576,34 +1576,42 @@ void draw_player_ship(int cloak_state,int old_cloak_state,int x, int y)
 
 #define INV_FRAME_TIME	(f1_0/10)		//how long for each frame
 
-void draw_numerical_display(int shield, int energy)
-{
+void draw_numerical_display(int shield, int energy) {
+	char temp_shield[4], temp_energy[4];
+	int shield_w, energy_w, h, aw;
+
 	// Get scaling for font
 	grs_point scale_pts[] = {
-		{ 0, 0 },
-		{ i2f(19), i2f(22) },
-		{ NUMERICAL_GAUGE_W * 65536, NUMERICAL_GAUGE_H * 65536 }
+		{0, 0},
+		{i2f(19), i2f(22)},
+		{(fix) NUMERICAL_GAUGE_W * 65536, (fix) NUMERICAL_GAUGE_H * 65536}
 	};
 
-	gr_set_current_canvas( Canv_NumericalGauge );
+	gr_set_current_canvas(Canv_NumericalGauge);
 	gr_clear_canvas(255);
-	gr_set_curfont( GAME_FONT );
+	gr_set_curfont(GAME_FONT);
 	PIGGY_PAGE_IN(Gauges[GAUGE_NUMERICAL]);
 	scale_bitmap(&GameBitmaps[Gauges[GAUGE_NUMERICAL].index], scale_pts);
 
-	gr_set_fontcolor(gr_getcolor(14,14,23),-1 );
+	gr_set_fontcolor(gr_getcolor(14, 14, 23), -1);
 
-	gr_scale_printf((shield>99)?grd_curscreen->sc_w*0.0125:((shield>9)?grd_curscreen->sc_w*0.01875:grd_curscreen->sc_w*0.025),
-		grd_curscreen->sc_h*0.075, Scale_factor, Scale_factor,"%d",shield);
+	sprintf(temp_shield, "%d", shield);
+	gr_get_string_size(temp_shield, &shield_w, &h, &aw);
+	sprintf(temp_energy, "%d", energy);
+	gr_get_string_size(temp_energy, &energy_w, &h, &aw);
+	shield_w *= f2fl(Scale_factor);
+	energy_w *= f2fl(Scale_factor);
 
-	gr_set_fontcolor(gr_getcolor(25,18,6),-1 );
-	gr_scale_printf((energy>99)?grd_curscreen->sc_w*0.0125:((energy>9)?grd_curscreen->sc_w*0.01875:grd_curscreen->sc_w*0.025),
-		grd_curscreen->sc_h*0.01, Scale_factor, Scale_factor,"%d",energy);
-					  
-	gr_set_current_canvas( get_current_game_screen() );
-	gr_ubitmapm( NUMERICAL_GAUGE_X, NUMERICAL_GAUGE_Y, &Canv_NumericalGauge->cv_bitmap );
+	gr_scale_printf((int) ((NUMERICAL_GAUGE_W - shield_w) / 2 + f2i(Scale_x) - f2i(Scale_factor)),
+					(int) (grd_curscreen->sc_h * 0.075), Scale_factor, Scale_factor, temp_shield);
+
+	gr_set_fontcolor(gr_getcolor(25, 18, 6), -1);
+	gr_scale_printf((int) ((NUMERICAL_GAUGE_W - energy_w) / 2 + f2i(Scale_x) - f2i(Scale_factor)),
+					(int) (grd_curscreen->sc_h * 0.01), Scale_factor, Scale_factor, temp_energy);
+
+	gr_set_current_canvas(get_current_game_screen());
+	gr_ubitmapm((int) NUMERICAL_GAUGE_X, (int) NUMERICAL_GAUGE_Y, &Canv_NumericalGauge->cv_bitmap);
 }
-
 
 void draw_keys()
 {
