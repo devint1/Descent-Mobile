@@ -301,27 +301,20 @@ int state_default_item = 0;
 
 uint state_game_id;
 
-void state_callback(int nitems,newmenu_item * items, int * last_key, int citem)
-{
-	nitems = nitems;
-	last_key = last_key;
-	gr_set_current_canvas(NULL);
+void state_callback(int nitems, newmenu_item *items, int *last_key, int citem) {
 	fix x = fl2f((grd_curcanv->cv_bitmap.bm_w - THUMBNAIL_W * f2fl(Scale_x)) / 2);
-	fix y = fl2f(items[0].y + 15 * f2fl(Scale_factor));
+	fix y = fl2f(items[0].y - 5 * f2fl(Scale_factor));
 	grs_point scale_pts[] = {
-		{ x, y },
-		{ x + i2f(THUMBNAIL_W), y + i2f(THUMBNAIL_H) },
-		{ x + THUMBNAIL_W * Scale_factor, y + THUMBNAIL_H * Scale_factor }
+			{x,                              y},
+			{x + i2f(THUMBNAIL_W),           y + i2f(THUMBNAIL_H)},
+			{x + THUMBNAIL_W * Scale_factor, y + THUMBNAIL_H * Scale_factor}
 	};
-	
-//	if ( sc_last_item != citem )	{
-//		sc_last_item = citem;
-		if ( citem > 0 )	{
-			if ( sc_bmp[citem-1] )	{
-				scale_bitmap( sc_bmp[citem-1], scale_pts );
-			}
+
+	if (citem > 0) {
+		if (sc_bmp[citem - 1]) {
+			scale_bitmap(sc_bmp[citem - 1], scale_pts);
 		}
-//	}	
+	}
 }
 
 void rpad_string( char * string, int max_chars )
