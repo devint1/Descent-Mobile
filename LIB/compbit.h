@@ -46,4 +46,3 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 extern void encode_rotate_left(char *);
 
 #endif
-

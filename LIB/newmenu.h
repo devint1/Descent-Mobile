@@ -228,4 +228,3 @@ extern int newmenu_listbox1( char * title, int nitems, char * items[], int allow
 extern int newmenu_filelist( char * title, char * filespace, char * filename );
 
 #endif
-

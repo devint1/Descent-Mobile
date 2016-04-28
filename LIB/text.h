@@ -174,7 +174,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #define _TEXT_H
 
 //Array of pointers to text
-extern char *Text_string[];
+extern const char *Text_string[];
 
 //Symbolic constants for all the strings
 

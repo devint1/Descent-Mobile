@@ -137,6 +137,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #include "game.h"
 #include "piggy.h"
 
+#pragma pack(1)
 typedef struct weapon_info {
 	byte	render_type;				// How to draw 0=laser, 1=blob, 2=object
 	byte	model_num;					// Model num if rendertype==2.
@@ -165,7 +166,6 @@ typedef struct weapon_info {
 	fix	fire_wait;					//	Time until this weapon can be fired again.
 
 	bitmap_index bitmap;				// Pointer to bitmap if rendertype==0 or 1.
-
 	fix	blob_size;					// Size of blob if blob type
 	fix	flash_size;					// How big to draw the flash
 	fix	impact_size;				// How big of an impact
@@ -236,7 +236,7 @@ typedef struct weapon_info {
 
 extern weapon_info Weapon_info[];
 extern int N_weapon_types;
-extern void do_weapon_select(int weapon_num, int secondary_flag);
+extern void do_weapon_select(int secondary_flag);
 extern void show_weapon_status(void);
 
 extern byte	Primary_weapon, Secondary_weapon;
@@ -244,7 +244,7 @@ extern byte	Primary_weapon, Secondary_weapon;
 extern ubyte Primary_weapon_to_weapon_info[MAX_PRIMARY_WEAPONS];
 extern ubyte Secondary_weapon_to_weapon_info[MAX_SECONDARY_WEAPONS];
 extern void auto_select_weapon(int weapon_type);		//parm is primary or secondary
-extern select_weapon(int weapon_num, int secondary_flag, int print_message,int wait_for_rearm);
+extern void select_weapon(int weapon_num, int secondary_flag, int print_message,int wait_for_rearm);
 
 extern char	*Primary_weapon_names_short[];
 extern char	*Secondary_weapon_names_short[];
@@ -263,7 +263,7 @@ extern ubyte	Secondary_ammo_max[MAX_PRIMARY_WEAPONS];
 // Bits set:
 //		HAS_WEAPON_FLAG
 //		HAS_ENERGY_FLAG
-//		HAS_AMMO_FLAG	
+//		HAS_AMMO_FLAG
 extern int player_has_weapon(int weapon_num, int secondary_flag);
 
 //called when one of these weapons is picked up
@@ -278,4 +278,3 @@ int pick_up_primary(int weapon_index);
 pick_up_ammo(int class_flag,int weapon_index,int ammo_count);
 
 #endif
-

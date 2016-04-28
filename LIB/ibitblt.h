@@ -39,10 +39,10 @@ void		gr_ibitblt_find_hole_size ( grs_bitmap * mask_bmp, int *minx, int *miny, i
 // Creates a code mask that will copy data from a bitmap that is sw by sh starting from 
 // location sx, sy with a rowsize of srowsize onto another bitmap but only copies
 // into pixel locations that are defined as transparent in bitmap bmp.
-ubyte	*	gr_ibitblt_create_mask ( grs_bitmap * mask_bmp, int sx, int sy, int sw, int sh, int srowsize );
+void	gr_ibitblt_create_mask ( grs_bitmap * mask_bmp, int sx, int sy, int sw, int sh, int srowsize );
 
 // Copy source bitmap onto destination bitmap, not copying pixels that are defined
 // transparent by the mask
-void 		gr_ibitblt (grs_bitmap * source_bmp, grs_bitmap * dest_bmp, ubyte * mask );
+void gr_ibitblt(grs_bitmap *src_bmp, grs_bitmap *dest_bmp, ubyte pixel_double);
 
 #endif

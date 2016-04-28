@@ -310,7 +310,7 @@ typedef struct frame_info {
 typedef struct frame_info {
 	ubyte				type;						// What type of packet
 	ubyte				pad[3];					// Pad out length of frame_info packet
-	int				numpackets;			
+	int				numpackets;
 	vms_vector		obj_pos;
 	vms_matrix		obj_orient;
 	vms_vector		phys_velocity;
@@ -331,7 +331,7 @@ void network_join_game();
 void network_rejoin_game();
 void network_leave_game();
 int network_endlevel(int *secret);
-int network_endlevel_poll2( int nitems, struct newmenu_item * menus, int * key, int citem );
+void network_endlevel_poll2( int nitems, struct newmenu_item * menus, int * key, int citem );
 
 
 int network_level_sync();
@@ -356,7 +356,7 @@ extern int Network_status;
 extern fix LastPacketTime[MAX_PLAYERS];
 
 extern ushort my_segments_checksum;
-// By putting an up-to-20-char-message into Network_message and 
+// By putting an up-to-20-char-message into Network_message and
 // setting Network_message_reciever to the player num you want to
 // send it to (100 for broadcast) the next frame the player will
 // get your message.
@@ -370,4 +370,3 @@ void network_send_data( ubyte * ptr, int len, int urgent );
 
 #endif
 #endif
-

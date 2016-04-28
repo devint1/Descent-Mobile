@@ -347,7 +347,7 @@ extern grs_canvas * get_current_game_screen();
 
 extern int Cockpit_mode;		//what sort of cockpit or window is up?
 extern int Game_window_w,		//width and height of player's game window
-			  Game_window_h;
+		Game_window_h;
 
 extern int Rear_view;			//if true, looking back.
 
@@ -356,6 +356,8 @@ void select_cockpit(int mode);
 
 //force cockpit redraw next time. call this if you've trashed the screen
 void reset_cockpit(void);		//called if you've trashed the screen
+
+void init_cockpit();
 
 //functions to save, clear, and resture palette flash effects
 void palette_save(void);
@@ -366,10 +368,10 @@ void palette_restore(void);
 void do_show_help();
 
 //show a message in a nice little box
-show_boxed_message(char *msg);
+void show_boxed_message(char *msg);
 
 //erases message drawn with show_boxed_message()
-clear_boxed_message();
+void clear_boxed_message();
 
 //turns off rear view & rear view cockpit
 void reset_rear_view(void);

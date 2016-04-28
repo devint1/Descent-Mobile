@@ -151,6 +151,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 //vclip flags
 #define VF_ROD		1		//draw as a rod, not a blob
 
+#pragma pack(1)
 typedef struct {
 	fix				play_time;			//total time (in seconds) of clip
 	int				num_frames;
@@ -165,8 +166,7 @@ extern int Num_vclips;
 extern vclip Vclip[VCLIP_MAXNUM];
 
 //draw an object which renders as a vclip.
-draw_vclip_object(object *obj,fix timeleft,int lighted, int vclip_num);
+void draw_vclip_object(object *obj,fix timeleft,int lighted, int vclip_num);
 extern void draw_weapon_vclip(object *obj);
 
 #endif
-

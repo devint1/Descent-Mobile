@@ -60,4 +60,3 @@ extern void victor_read_headset( fix *yaw, fix *pitch, fix *roll );
 extern void victor_read_headset_filtered( fix *yaw, fix *pitch, fix *roll );
 
 #endif
-

@@ -77,7 +77,7 @@ typedef struct morph_data {
 	ubyte morph_save_movement_type;
 	physics_info morph_save_phys_info;
 	int Morph_sig;
- } morph_data;
+} morph_data;
 
 #define MAX_MORPH_OBJECTS 5
 
@@ -87,10 +87,10 @@ void morph_start(object *obj);
 void draw_morph_object(object *obj);
 
 //process the morphing object for one frame
-do_morph_frame(object *obj);
+void do_morph_frame(object *obj);
 
 //called at the start of a level
-init_morphs();
+void init_morphs();
 
 extern morph_data *find_morph_data(object *obj);
 

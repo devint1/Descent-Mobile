@@ -69,4 +69,3 @@ void songs_play_song( int songnum, int repeat );
 void songs_play_level_song( int levelnum );
 
 #endif
-

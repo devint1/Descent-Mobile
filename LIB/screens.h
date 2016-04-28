@@ -100,4 +100,3 @@ extern grs_canvas *Canv_editor_game;	//the game window on the editor screen
 extern int set_screen_mode(int sm);		// True = editor screen
 
 #endif
-

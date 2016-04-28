@@ -44,4 +44,3 @@ extern int serial_putc( unsigned char c );
 extern int serial_getc();
 
 #endif
-

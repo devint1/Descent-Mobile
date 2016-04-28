@@ -2,7 +2,7 @@
 #include <jni.h>
 #include <stdlib.h>
 #include "hmp.h"
-#include "../../CFILE/cfile.h"
+#include "cfile.h"
 
 extern JavaVM *jvm;
 extern jobject Activity;

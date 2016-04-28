@@ -45,4 +45,3 @@ extern int kmatrix_kills_changed;
 void kmatrix_view();
 
 #endif
-

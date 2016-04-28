@@ -519,4 +519,3 @@ void change_playernum_to(int new_pnum);
 #endif
 
 #endif
-

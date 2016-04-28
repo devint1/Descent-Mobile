@@ -62,4 +62,3 @@ extern void vfx_set_palette();		//download palette into VFX
 extern void vfx_set_palette_sub(ubyte * palette);
 
 #endif
-

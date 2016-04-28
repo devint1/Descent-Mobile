@@ -70,8 +70,13 @@ extern void gr_vesa_pixel( unsigned char color, unsigned int offset );
 
 void gr_linear_movsb( void * source, void * dest, unsigned short nbytes);
 void gr_linear_movsw( void * source, void * dest, unsigned short nbytes);
-void gr_linear_movsd( void * source, void * dest, unsigned short nbytes);
+void gr_linear_movsd(ubyte * src, ubyte * dest, uint num_pixels);
 void gr_linear_stosd( void * source, unsigned char color, unsigned short nbytes);
+
+#if !( defined(__MWERKS__) && defined(__MC68K__) && defined(USE_2D_ASM) )
+extern void gr_linear_movsd_double(ubyte *src, ubyte *dest, int num_pixels);
+#endif
+
 extern unsigned int gr_var_color;
 extern unsigned int gr_var_bwidth;
 extern unsigned char * gr_var_bitmap;

@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Descent/Descent.iml" filepath="$PROJECT_DIR$/Descent/Descent.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Descent-iOS.iml" filepath="$PROJECT_DIR$/Descent-iOS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Descent-Mobile.iml" filepath="$PROJECT_DIR$/Descent-Mobile.iml" />
     </modules>
   </component>
 </project>

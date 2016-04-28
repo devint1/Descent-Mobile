@@ -148,7 +148,7 @@ extern void player_dead_message(void);
 // extern void say_afterburner_status(void);
 
 //fills in the coords of the hostage video window
-get_hostage_window_coords(int *x,int *y,int *w,int *h);
+void get_hostage_window_coords(int *x,int *y,int *w,int *h);
 
 //from testgaug.c
 
@@ -163,4 +163,3 @@ typedef struct {
 extern rgb player_rgb[];
 
 #endif
-

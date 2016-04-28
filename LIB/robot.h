@@ -222,4 +222,3 @@ void calc_gun_point(vms_vector *gun_point,object *obj,int gun_num);
 extern int robot_get_anim_state(jointpos **jp_list_ptr,int robot_type,int gun_num,int state);
 
 #endif
-

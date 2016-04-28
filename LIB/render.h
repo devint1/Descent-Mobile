@@ -98,7 +98,7 @@ extern int	Clear_window;			//	1 = Clear whole background window, 2 = clear view 
 void render_frame(fix eye_offset);		//draws the world into the current canvas
 
 //cycle the flashing light for when mine destroyed
-flash_frame();
+void flash_frame();
 
 int find_seg_side_face(short x,short y,int *seg,int *side,int *face,int *poly);
 
@@ -156,4 +156,3 @@ void project_list(int nv,short *pointnumlist);
 
 
 #endif
-

@@ -329,6 +329,7 @@ extern int Num_rendered_objects;
  */
 
 //	A compressed form for sending crucial data about via slow devices, such as modems and buggies.
+#pragma pack(1)
 typedef struct shortpos {
 	byte	bytemat[9];
 	short	xo,yo,zo;
@@ -342,6 +343,7 @@ typedef struct shortpos {
 #define	MATRIX_MAX			0x7f		//	This is based on MATRIX_PRECISION, 9 => 0x7f
 
 //information for physics sim for an object
+#pragma pack(1)
 typedef struct physics_info {
 	vms_vector	velocity;		//velocity vector of this object
 	vms_vector	thrust;			//constant force applied to this object
@@ -356,6 +358,7 @@ typedef struct physics_info {
 
 //stuctures for different kinds of simulation
 
+#pragma pack(1)
 typedef struct laser_info {
 	short			parent_type;	 	// The type of the parent of this object
 	short			parent_num; 		// The object's parent's number
@@ -366,6 +369,7 @@ typedef struct laser_info {
 	fix			multiplier;			//	Power if this is a fusion bolt (or other super weapon to be added).
 } laser_info;
 
+#pragma pack(1)
 typedef struct explosion_info {
 	fix			spawn_time;			// when lifeleft is < this, spawn another
 	fix			delete_time;		// when to delete object
@@ -375,14 +379,17 @@ typedef struct explosion_info {
 	short			next_attach;		// next explosion in attach list
 } explosion_info;
 
+#pragma pack(1)
 typedef struct light_info {
 	fix			intensity;		//how bright the light is
 } light_info;
 
+#pragma pack(1)
 typedef struct powerup_info {
 	int			count;			//how many/much we pick up (vulcan cannon only?)
 } powerup_info;
 
+#pragma pack(1)
 typedef struct vclip_info {
 	int			vclip_num;
 	fix			frametime;
@@ -399,6 +406,7 @@ typedef struct polyobj_info {
 	int			alt_textures;					//if not -1, use these textures instead
 } polyobj_info;
 
+#pragma pack(1)
 typedef struct object {
 	int			signature;		// Every object ever has a unique signature...
 	ubyte			type;				// what type of object this is... robot, weapon, hostage, powerup, fireball
@@ -420,7 +428,7 @@ typedef struct object {
 	byte			contains_count;// number of objects of type:id this object contains
 	byte			matcen_creator;//	Materialization center that created this object, high bit set if matcen-created
 	fix			lifeleft;		// how long until goes away, or 7fff if immortal
-	
+
 
 	//movement info, determined by MOVEMENT_TYPE
 	union {
@@ -429,7 +437,7 @@ typedef struct object {
 	} mtype;
 
 	//control info, determined by CONTROL_TYPE
-	union {								
+	union {
 		laser_info 		laser_info;
 		explosion_info	expl_info;		//NOTE: debris uses this also
 		ai_static		ai_info;
@@ -449,7 +457,7 @@ typedef struct obj_position {
 	vms_vector  pos;				// absolute x,y,z coordinate of center of object
 	vms_matrix  orient;			// orientation of object in world
 	short			segnum;			// segment number containing object
-} obj_position;	
+} obj_position;
 
 /*
  *		VARIABLES
@@ -469,7 +477,7 @@ extern int Num_robot_types;
 
 extern object *ConsoleObject;			//pointer to the object that is the player
 extern object *Viewer;			//which object we are seeing from
-extern object *Dead_player_camera; 
+extern object *Dead_player_camera;
 
 extern object Follow;
 extern int Player_is_dead;				//	!0 means player is dead!
@@ -506,7 +514,7 @@ void obj_unlink(int objnum);
 //initialize a new object.  adds to the list for the given segment
 //returns the object number
 int obj_create(ubyte type,ubyte id,int segnum,vms_vector *pos,
-			vms_matrix *orient,fix size,ubyte ctype,ubyte mtype,ubyte rtype);
+			   vms_matrix *orient,fix size,ubyte ctype,ubyte mtype,ubyte rtype);
 
 //make a copy of an object. returs num of new object
 int obj_create_copy(int objnum, vms_vector *new_pos, int newsegnum);
@@ -514,7 +522,7 @@ int obj_create_copy(int objnum, vms_vector *new_pos, int newsegnum);
 //remove object from the world
 void obj_delete(int objnum);
 
-//called after load.  Takes number of objects,  and objects should be 
+//called after load.  Takes number of objects,  and objects should be
 //compressed
 void reset_objects(int n_objs);
 
@@ -553,7 +561,7 @@ void init_player_object();
 
 //check if object is in object->segnum.  if not, check the adjacent segs.
 //if not any of these, returns false, else sets obj->segnum & returns true
-//callers should really use find_vector_intersection()  
+//callers should really use find_vector_intersection()
 //Note: this function is in gameseg.c
 extern int update_object_seg(struct object *obj);
 
@@ -566,7 +574,7 @@ extern int find_object_seg(object * obj );
 
 //go through all objects and make sure they have the correct segment numbers
 //used when debugging is on
-fix_object_segs();
+void fix_object_segs();
 
 //	Drops objects contained in objp.
 int object_create_egg(object *objp);

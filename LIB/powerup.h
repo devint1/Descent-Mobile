@@ -212,6 +212,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 #define	POWERUP_NAME_LENGTH	16		//	Length of a robot or powerup name.
 extern char	Powerup_names[MAX_POWERUP_TYPES][POWERUP_NAME_LENGTH];
 
+#pragma pack(1)
 typedef struct powerup_type_info {
 	int	vclip_num;
 	int	hit_sound;
@@ -235,7 +236,6 @@ extern void diminish_towards_max(void);
 
 extern void do_megawow_powerup(int quantity);
 
-extern powerup_basic(int redadd, int greenadd, int blueadd, int score, char *format, ...);
+extern void powerup_basic(int redadd, int greenadd, int blueadd, int score, char *format, ...);
 
 #endif
-

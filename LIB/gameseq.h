@@ -206,34 +206,34 @@ RegisterPlayer();
 RegisterPlayerSub(int allow_abort_flag);
 
 //starts a new game on the given level
-StartNewGame(int start_level);
+void StartNewGame(int start_level);
 
 //starts the next level
-StartNewLevel(int level_num);
+void StartNewLevel(int level_num);
 
 // Actually does the work to start new level
-StartNewLevelSub(int level_num, int page_in_textures);
+void StartNewLevelSub(int level_num, int page_in_textures);
 
-InitPlayerObject();				//make sure player's object set up
-init_player_stats_game();		//clear all stats
+void InitPlayerObject();				//make sure player's object set up
+void init_player_stats_game();		//clear all stats
 
 //starts a resumed game loaded from disk
-ResumeSavedGame(int start_level);
+void ResumeSavedGame(int start_level);
 
 //called when the player has finished a level
 //if secret flag is true, advance to secret level, else next normal level
-PlayerFinishedLevel(int secret_flag);
+void PlayerFinishedLevel(int secret_flag);
 
 //called when the player has died
-DoPlayerDead();
+void DoPlayerDead();
 
-//load a level off disk. level numbers start at 1.  
+//load a level off disk. level numbers start at 1.
 //Secret levels are -1,-2,-3
 void LoadLevel(int level_num);
 
 extern void gameseq_remove_unused_players();
 
-extern void show_help(); 
+extern void show_help();
 extern void update_player_stats();
 
 //from scores.c
@@ -243,7 +243,7 @@ extern void draw_high_scores( int place );
 extern int add_player_to_high_scores(player *pp);
 extern void input_name ( int place );
 extern int reset_high_scores();
-extern init_player_stats_level();
+extern void init_player_stats_level();
 
 void open_message_window(void);
 void close_message_window(void);
@@ -265,4 +265,3 @@ extern int MaxNumNetPlayers;
 extern int NumNetPlayerPositions;
 
 #endif
-

@@ -66,14 +66,16 @@ void set_warn_func(void (*f)(char *s));//specifies the function to call with war
 void clear_warn_func(void (*f)(char *s));//say this function no longer valid
 void _Assert(int expr,char *expr_text,char *filename,int linenum);	//assert func
 void Error(char *fmt,...);					//exit with error code=1, print message
+
 void Assert(int expr);
 void Int3();
+
 #ifndef NDEBUG		//macros for debugging
 
 //void Int3(void);									//generate int3
-//#pragma aux Int3 = "int 3h";
+#pragma aux Int3 = "int 3h";
 
-#define Assert(expr) _Assert(expr,#expr,__FILE__,__LINE__)
+//#define Assert(expr) _Assert(expr,#expr,__FILE__,__LINE__)
 
 //make error do int3, then call func
 #pragma aux Error aborts = \
@@ -92,6 +94,7 @@ void Int3();
 
 #else					//macros for real game
 
+#pragma aux Error aborts;
 //Changed Assert and Int3 because I couldn't get the macros to compile -KRB
 //#define Assert(__ignore) ((void)0)
 void Assert(int expr);

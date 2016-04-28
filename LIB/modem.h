@@ -113,5 +113,3 @@ extern int com_speed;
 extern int com_baud_rate;
 #endif
 #endif
-
-

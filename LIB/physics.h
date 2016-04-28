@@ -78,10 +78,10 @@ extern int phys_seglist[MAX_FVI_SEGS],n_phys_segs;
 void read_flying_controls( object * obj );
 
 //Simulate a physics object for this frame
-do_physics_sim(object *obj);
+void do_physics_sim(object *obj);
 
 //tell us what the given object will do (as far as hiting walls) in
-//the given time (in seconds) t.  Igores acceleration (sorry) 
+//the given time (in seconds) t.  Igores acceleration (sorry)
 //if check_objects is set, check with objects, else just with walls
 //returns fate, fills in hit time.  If fate==HIT_NONE, hit_time undefined
 //	Stuff hit_info with fvi data as set by find_vector_intersection.
@@ -90,11 +90,11 @@ int physics_lookahead(object *obj,fix t,int fvi_flags,fix *hit_time, fvi_info *h
 
 //Applies an instantaneous force on an object, resulting in an instantaneous
 //change in velocity.
-phys_apply_force(object *obj,vms_vector *force_vec);
-phys_apply_rot(object *obj,vms_vector *force_vec);
+void phys_apply_force(object *obj,vms_vector *force_vec);
+void phys_apply_rot(object *obj,vms_vector *force_vec);
 
 //this routine will set the thrust for an object to a value that will
 //(hopefully) maintain the object's current velocity
-set_thrust_from_velocity(object *obj);
+void set_thrust_from_velocity(object *obj);
 
 #endif

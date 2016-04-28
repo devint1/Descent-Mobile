@@ -52,13 +52,13 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 
 extern int Endlevel_sequence;
 
-start_endlevel_sequence();
-render_external_scene();
+void start_endlevel_sequence();
+void render_external_scene();
 void render_endlevel_frame(fix eye_offset);
-do_endlevel_frame();
-draw_exit_model();
-init_endlevel();
-stop_endlevel_sequence();
+void do_endlevel_frame();
+void draw_exit_model();
+void init_endlevel();
+void stop_endlevel_sequence();
 
 
 extern vms_vector mine_exit_point;
@@ -69,7 +69,7 @@ extern object external_explosion;
 extern int ext_expl_playing;
 
 //called for each level to load & setup the exit sequence
-load_endlevel_data(int level_num);
+void load_endlevel_data(int level_num);
 
 extern int exit_modelnum,destroyed_exit_modelnum;
 

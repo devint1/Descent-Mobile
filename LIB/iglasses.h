@@ -45,4 +45,3 @@ void iglasses_init_tracking(int serial_port);
 int iglasses_read_headset( fix *yaw, fix *pitch, fix *roll );
 
 #endif
-

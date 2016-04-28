@@ -74,4 +74,3 @@ void joydefs_config();
 extern int joydefs_calibrate_flag;
 
 #endif
-

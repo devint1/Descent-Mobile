@@ -47,4 +47,3 @@ extern int netmisc_find_diff( void *block1, void *block2, int block_size, void *
 extern int netmisc_apply_diff(void *block1, void *diff_buffer, int diff_size );
 
 #endif
-
