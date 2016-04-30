@@ -46,7 +46,17 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 
 		super.onCreate(savedInstanceState);
 
+		// Enable immersive mode and make sure it's enabled whenever we're fullscreen
 		setImmersive();
+		getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(
+				new View.OnSystemUiVisibilityChangeListener() {
+					@Override
+					public void onSystemUiVisibilityChange(int visibility) {
+						if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+							setImmersive();
+						}
+					}
+				});
 
 		// Calculate button size bias; want slightly bigger buttons on bigger screens
 		resources = getResources();
@@ -91,7 +101,6 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 	@Override
 	protected void onResume() {
 		super.onResume();
-		setImmersive();
 		if (!descentView.getSurfaceWasDestroyed()) {
 			descentView.resumeRenderThread();
 		}
@@ -171,7 +180,6 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 				imm.hideSoftInputFromWindow(dummyText.getWindowToken(), 0);
 				dummyText.setFocusable(false);
 				dummyText.setVisibility(View.INVISIBLE);
-				setImmersive();
 			}
 		});
 	}
