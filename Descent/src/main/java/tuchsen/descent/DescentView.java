@@ -17,12 +17,9 @@ import javax.microedition.khronos.egl.EGLSurface;
 import javax.microedition.khronos.opengles.GL10;
 
 public class DescentView extends SurfaceView implements SurfaceHolder.Callback {
-	private boolean descentRunning, eglInitialized, paused;
+	private boolean descentRunning, paused, surfaceWasDestroyed;
 	private Context context;
 	private DescentView thiz;
-	private EGL10 egl;
-	private EGLConfig eglConfig;
-	private EGLDisplay eglDisplay;
 	private final Object renderThreadObj = new Object();
 	private Point size;
 	private SurfaceHolder holder;
@@ -31,7 +28,6 @@ public class DescentView extends SurfaceView implements SurfaceHolder.Callback {
 		super(context);
 		this.context = context;
 		this.descentRunning = false;
-		this.eglInitialized = false;
 		this.holder = getHolder();
 		this.thiz = this;
 		holder.addCallback(this);
@@ -94,6 +90,7 @@ public class DescentView extends SurfaceView implements SurfaceHolder.Callback {
 			}).start();
 			descentRunning = true;
 		} else {
+			this.holder = holder;
 			resumeRenderThread();
 		}
 	}
@@ -105,7 +102,20 @@ public class DescentView extends SurfaceView implements SurfaceHolder.Callback {
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
+		surfaceWasDestroyed = true;
+		surfaceWasDestroyed();
+	}
 
+	public boolean getSurfaceWasDestroyed() {
+		return surfaceWasDestroyed;
+	}
+
+	public void resumeRenderThread() {
+		synchronized (renderThreadObj) {
+			paused = false;
+			surfaceWasDestroyed = false;
+			renderThreadObj.notifyAll();
+		}
 	}
 
 	@SuppressWarnings("unused")
@@ -130,27 +140,27 @@ public class DescentView extends SurfaceView implements SurfaceHolder.Callback {
 		int[] num_config = new int[1];
 		final EGLConfig configs[] = new EGLConfig[1];
 		int[] attrib_list = {EGL_CONTEXT_CLIENT_VERSION, 1, EGL10.EGL_NONE};
+		EGL10 egl;
+		EGLConfig eglConfig;
 		EGLContext eglContext;
+		EGLDisplay eglDisplay;
 		EGLSurface eglSurface;
 		GL10 gl;
 
-		if (!eglInitialized) {
-			egl = (EGL10) EGLContext.getEGL();
-			eglDisplay = egl.eglGetDisplay(EGL10.EGL_DEFAULT_DISPLAY);
-			egl.eglInitialize(eglDisplay, new int[]{1, 0});
-			egl.eglChooseConfig(eglDisplay, new int[]{
-					EGL10.EGL_RED_SIZE, 8,
-					EGL10.EGL_GREEN_SIZE, 8,
-					EGL10.EGL_BLUE_SIZE, 8,
-					EGL10.EGL_ALPHA_SIZE, 8,
-					EGL10.EGL_DEPTH_SIZE, 16,
-					EGL10.EGL_STENCIL_SIZE, 0,
-					EGL10.EGL_NONE}, configs, 1, num_config);
-			eglConfig = configs[0];
-			eglInitialized = true;
-		}
+		egl = (EGL10) EGLContext.getEGL();
+		eglDisplay = egl.eglGetDisplay(EGL10.EGL_DEFAULT_DISPLAY);
+		egl.eglInitialize(eglDisplay, new int[]{1, 0});
+		egl.eglChooseConfig(eglDisplay, new int[]{
+				EGL10.EGL_RED_SIZE, 8,
+				EGL10.EGL_GREEN_SIZE, 8,
+				EGL10.EGL_BLUE_SIZE, 8,
+				EGL10.EGL_ALPHA_SIZE, 8,
+				EGL10.EGL_DEPTH_SIZE, 16,
+				EGL10.EGL_STENCIL_SIZE, 0,
+				EGL10.EGL_NONE}, configs, 1, num_config);
+		eglConfig = configs[0];
 		eglContext = egl.eglCreateContext(eglDisplay, eglConfig, EGL10.EGL_NO_CONTEXT, attrib_list);
-		eglSurface = egl.eglCreateWindowSurface(eglDisplay, eglConfig, thiz.holder, null);
+		eglSurface = egl.eglCreateWindowSurface(eglDisplay, eglConfig, holder, null);
 		egl.eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext);
 		gl = (GL10) eglContext.getGL();
 
@@ -177,17 +187,12 @@ public class DescentView extends SurfaceView implements SurfaceHolder.Callback {
 		gl.glDepthMask(false);
 	}
 
-	private void resumeRenderThread() {
-		synchronized (renderThreadObj) {
-			paused = false;
-			renderThreadObj.notifyAll();
-		}
-	}
-
 	private static native void mouseHandler(short x, short y, boolean down);
 
 	private static native boolean touchHandler(int action, int pointerId, float x, float y,
 											   float prevX, float prevY);
+
+	private static native void surfaceWasDestroyed();
 
 	private static native void descentMain(int w, int h, Context activity,
 										   DescentView descentView,

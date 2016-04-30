@@ -14,7 +14,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.Surface;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -33,6 +32,7 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 	private Handler mainHandler;
 	private InputMethodManager imm;
 	private MediaPlayer mediaPlayer;
+	private DescentView descentView;
 	private float x, y, z;
 	private float buttonSizeBias;
 	private int mediaPlayerPosition;
@@ -43,7 +43,6 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 		Resources resources;
 		Sensor rotationVector;
 		SensorManager sensorManager;
-		SurfaceView surfaceView;
 
 		super.onCreate(savedInstanceState);
 
@@ -74,10 +73,10 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 		sensorManager.registerListener(this, rotationVector, SensorManager.SENSOR_DELAY_GAME);
 
 		// Create OpenGL ES view
-		surfaceView = new DescentView(this);
+		descentView = new DescentView(this);
 
 		// Set views
-		setContentView(surfaceView);
+		setContentView(descentView);
 		addContentView(dummyText, new WindowManager.LayoutParams());
 	}
 
@@ -93,6 +92,9 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 	protected void onResume() {
 		super.onResume();
 		setImmersive();
+		if (!descentView.getSurfaceWasDestroyed()) {
+			descentView.resumeRenderThread();
+		}
 		mediaPlayer.seekTo(mediaPlayerPosition);
 		mediaPlayer.start();
 	}

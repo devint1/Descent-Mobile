@@ -9,13 +9,14 @@
 #include "gamefont.h"
 #include "texmerge.h"
 
+bool Surface_was_destroyed = false;
+
 extern JavaVM *jvm;
 extern jobject Descent_view;
 extern bool Want_pause;
 extern grs_bitmap nm_background;
 
 extern void draw_buttons();
-
 extern void mouse_handler(short x, short y, bool down);
 
 void getRenderBufferSize(GLint *width, GLint *height) {
@@ -25,31 +26,19 @@ void getRenderBufferSize(GLint *width, GLint *height) {
 
 void showRenderBuffer() {
 	int i;
+	EGLContext eglContext;
+	EGLDisplay eglDisplay;
+	EGLSurface eglSurface;
 	grs_font *font;
 	JNIEnv *env;
 	jclass clazz;
 	jmethodID method;
 
 	if (Want_pause) {
-		// Purge all texture assets, since the EGL context will be blown away
-		for (i = 0; i < MAX_FONTS; ++i) {
-			font = Gamefonts[i];
-			glDeleteTextures(font->ft_maxchar - font->ft_minchar, font->ft_ogles_texes);
-			memset(font->ft_ogles_texes, 0, (font->ft_maxchar - font->ft_minchar) * sizeof(GLuint));
-		}
-		for (i = 0; i < MAX_BITMAP_FILES; ++i) {
-			glDeleteTextures(1, &GameBitmaps[i].bm_ogles_tex_id);
-			GameBitmaps[i].bm_ogles_tex_id = 0;
-		}
-		texmerge_close();
-		texmerge_init(50);
-		glDeleteTextures(1, &nm_background.bm_ogles_tex_id);
-		nm_background.bm_ogles_tex_id = 0;
-
-		// Blow away EGL surface and context
-		eglMakeCurrent(eglGetCurrentDisplay(), EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
-		eglDestroySurface(eglGetCurrentDisplay(), eglGetCurrentSurface(EGL_DRAW));
-		eglDestroyContext(eglGetCurrentDisplay(), eglGetCurrentContext());
+		// Save this in case we need to destroy it later
+		eglContext = eglGetCurrentContext();
+		eglDisplay = eglGetCurrentDisplay();
+		eglSurface = eglGetCurrentSurface(EGL_DRAW);
 
 		(*jvm)->GetEnv(jvm, (void **) &env, JNI_VERSION_1_6);
 		clazz = (*env)->FindClass(env, "tuchsen/descent/DescentView");
@@ -58,18 +47,45 @@ void showRenderBuffer() {
 		method = (*env)->GetMethodID(env, clazz, "pauseRenderThread", "()V");
 		(*env)->CallVoidMethod(env, Descent_view, method);
 
-		// Reset EGL context
-		method = (*env)->GetMethodID(env, clazz, "initEgl", "()V");
-		(*env)->CallVoidMethod(env, Descent_view, method);
-		eglSurfaceAttrib(eglGetCurrentDisplay(), eglGetCurrentSurface(EGL_DRAW),
-						 EGL_SWAP_BEHAVIOR,
-						 EGL_BUFFER_PRESERVED);
-		(*env)->DeleteLocalRef(env, clazz);
+		if (Surface_was_destroyed) {
+			// Purge all texture assets, since the EGL context will be blown away
+			for (i = 0; i < MAX_FONTS; ++i) {
+				font = Gamefonts[i];
+				glDeleteTextures(font->ft_maxchar - font->ft_minchar, font->ft_ogles_texes);
+				memset(font->ft_ogles_texes, 0,
+					   (font->ft_maxchar - font->ft_minchar) * sizeof(GLuint));
+			}
+			for (i = 0; i < MAX_BITMAP_FILES; ++i) {
+				glDeleteTextures(1, &GameBitmaps[i].bm_ogles_tex_id);
+				GameBitmaps[i].bm_ogles_tex_id = 0;
+			}
+			texmerge_close();
+			texmerge_init(50);
+			glDeleteTextures(1, &nm_background.bm_ogles_tex_id);
+			nm_background.bm_ogles_tex_id = 0;
 
-		// Hack to show stuff like menus
-		if (Game_mode != GM_NORMAL || In_screen) {
-			mouse_handler(-1, -1, true);
-			mouse_handler(-1, -1, false);
+			// Blow away EGL surface and context
+			eglMakeCurrent(eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+			eglDestroySurface(eglDisplay, eglSurface);
+			eglDestroyContext(eglDisplay, eglContext);
+			eglTerminate(eglDisplay);
+
+			// Reset EGL context
+			method = (*env)->GetMethodID(env, clazz, "initEgl", "()V");
+			(*env)->CallVoidMethod(env, Descent_view, method);
+			(*env)->DeleteLocalRef(env, clazz);
+			eglSurfaceAttrib(eglGetCurrentDisplay(), eglGetCurrentSurface(EGL_DRAW),
+							 EGL_SWAP_BEHAVIOR,
+							 EGL_BUFFER_PRESERVED);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			// Hack to show stuff like menus
+			if (Game_mode != GM_NORMAL || In_screen) {
+				mouse_handler(-1, -1, true);
+				mouse_handler(-1, -1, false);
+			}
+
+			Surface_was_destroyed = false;
 		}
 
 		Want_pause = false;
@@ -77,4 +93,8 @@ void showRenderBuffer() {
 		draw_buttons();
 		eglSwapBuffers(eglGetCurrentDisplay(), eglGetCurrentSurface(EGL_READ));
 	}
+}
+
+void Java_tuchsen_descent_DescentView_surfaceWasDestroyed(JNIEnv *env) {
+	Surface_was_destroyed = true;
 }
