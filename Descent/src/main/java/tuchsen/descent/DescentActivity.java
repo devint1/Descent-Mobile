@@ -101,6 +101,7 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 	@Override
 	protected void onResume() {
 		super.onResume();
+		setImmersive();
 		if (!descentView.getSurfaceWasDestroyed()) {
 			descentView.resumeRenderThread();
 		}
