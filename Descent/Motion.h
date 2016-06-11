@@ -10,8 +10,8 @@
 #define Motion_h
 
 extern void startMotion();
-extern void getAttitude(double *roll, double *pitch, double *yaw);
-extern void getRotationRate(double *x, double *y, double *z);
-void getAcceleration(double *x, double *y, double *z);
+extern void stopMotion();
+extern void getAcceleration(double *x, double *y, double *z);
+extern int haveGyroscope();
 
 #endif /* Motion_h */

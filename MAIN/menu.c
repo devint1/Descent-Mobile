@@ -22,60 +22,38 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  *
  */
 
-#pragma off (unreferenced)
+#pragma unused(rcsid)
 static char rcsid[] = "$Id: menu.c 2.5 1995/10/07 13:19:09 john Exp $";
-#pragma on (unreferenced)
 
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <stdarg.h>
-#include <errno.h>
 
 #include "menu.h"
 #include "inferno.h"
 #include "game.h"
-#include "gr.h"
 #include "key.h"
-#include "iff.h"
-#include "mem.h"
 #include "error.h"
-#include "bm.h"
-#include "screens.h"
 #include "mono.h"
-#include "cflib.h"
-#include "joy.h"
-#include "vecmat.h"
-#include "effects.h"
-#include "slew.h"
-#include "gamemine.h"
-#include "gamesave.h"
 #include "palette.h"
-#include "args.h"
 #include "newdemo.h"
 #include "timer.h"
-#include "sounds.h"
 #include "gameseq.h"
 #include "text.h"
 #include "gamefont.h"
 #include "newmenu.h"
 #include "network.h"
 #include "scores.h"
-#include "joydefs.h"
 #include "modem.h"
 #include "playsave.h"
-#include "multi.h"
 #include "kconfig.h"
-#include "titles.h"
 #include "credits.h"
 #include "texmap.h"
 #include "polyobj.h"
 #include "state.h"
-#include "mission.h"
 #include "songs.h"
 #include "config.h"
+#include "motion.h"
 
 #ifdef EDITOR
 #include "editor\editor.h"
@@ -805,6 +783,7 @@ void do_options_menu()
 {
 	newmenu_item m[12];
 	int i = 0;
+	int have_gyroscope = haveGyroscope();
 
 	do {
 		m[0].type = NM_TYPE_SLIDER; m[0].text=TXT_FX_VOLUME; m[0].value=Config_digi_volume;m[0].min_value=0; m[0].max_value=8; 
@@ -813,23 +792,36 @@ void do_options_menu()
 		m[3].type = NM_TYPE_TEXT; m[3].text="";
 		m[4].type = NM_TYPE_SLIDER; m[4].text=TXT_BRIGHTNESS; m[4].value=gr_palette_get_gamma();m[4].min_value=0; m[4].max_value=8; 
 		m[5].type = NM_TYPE_TEXT; m[5].text="";
-		m[6].type = NM_TYPE_CHECK; m[6].text="Use Motion Sensors"; m[6].value=Config_use_sensors;
-		m[7].type = NM_TYPE_MENU; m[7].text=TXT_DETAIL_LEVELS;
-		m[8].type = NM_TYPE_TEXT; m[8].text="";
-		m[9].type = NM_TYPE_SLIDER; m[9].text="Look Sensitivity"; m[9].value=Config_joystick_sensitivity; m[9].min_value =0; m[9].max_value = 8;
-		m[10].type = NM_TYPE_TEXT; m[10].text="";
-		m[11].type = NM_TYPE_CHECK; m[11].text="Ship auto-leveling"; m[11].value=Auto_leveling_on;
-				
-		i = newmenu_do1( NULL, TXT_OPTIONS, 12, m, joydef_menuset, i );
+		if (have_gyroscope) {
+			m[6].type = NM_TYPE_CHECK;
+			m[6].text = "Use Gyroscope";
+			m[6].value = Config_use_gyroscope;
+		}
+		m[6 + have_gyroscope].type = NM_TYPE_MENU; m[6 + have_gyroscope].text=TXT_DETAIL_LEVELS;
+		m[7 + have_gyroscope].type = NM_TYPE_TEXT; m[7 + have_gyroscope].text="";
+		m[8 + have_gyroscope].type = NM_TYPE_SLIDER; m[8 + have_gyroscope].text="Look Sensitivity"; m[8 + have_gyroscope].value=Config_joystick_sensitivity; m[8 + have_gyroscope].min_value =0; m[8 + have_gyroscope].max_value = 8;
+		m[9 + have_gyroscope].type = NM_TYPE_TEXT; m[9 + have_gyroscope].text="";
+		m[10 + have_gyroscope].type = NM_TYPE_CHECK; m[10 + have_gyroscope].text="Ship auto-leveling"; m[10 + have_gyroscope].value=Auto_leveling_on;
+
+		i = newmenu_do1( NULL, TXT_OPTIONS, 11 + have_gyroscope, m, joydef_menuset, i );
 			
-		switch(i)	{
-			case 7: do_detail_level_menu();	break;
+		if (i == 6 + have_gyroscope) {
+			do_detail_level_menu();
 		}
 
 		Config_channels_reversed = m[2].value;
-		Config_use_sensors = m[6].value;
-		Config_joystick_sensitivity = m[9].value;
-		Auto_leveling_on = m[11].value;
+		if (have_gyroscope) {
+			if (Config_use_gyroscope != m[6].value) {
+				if (m[6].value) {
+					startMotion();
+				} else {
+					stopMotion();
+				}
+			}
+			Config_use_gyroscope = m[6].value;
+		}
+		Config_joystick_sensitivity = m[8 + have_gyroscope].value;
+		Auto_leveling_on = m[10 + have_gyroscope].value;
 	} while( i>-1 );
 
 	if ( Config_midi_volume < 1 )	{

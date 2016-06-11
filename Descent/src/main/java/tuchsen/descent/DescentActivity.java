@@ -2,6 +2,7 @@ package tuchsen.descent;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -33,16 +34,14 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 	private InputMethodManager imm;
 	private MediaPlayer mediaPlayer;
 	private DescentView descentView;
-	private float x, y, z;
 	private float buttonSizeBias;
+	private float acceleration[];
 	private int mediaPlayerPosition;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		DisplayMetrics metrics;
 		Resources resources;
-		Sensor rotationVector;
-		SensorManager sensorManager;
 
 		super.onCreate(savedInstanceState);
 
@@ -77,14 +76,6 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 		// Create media player for MIDI
 		mediaPlayer = new MediaPlayer();
 
-		// Set up sensor manager for motion controls
-		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-		rotationVector = sensorManager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR);
-		if (rotationVector == null) {
-			rotationVector = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
-		}
-		sensorManager.registerListener(this, rotationVector, SensorManager.SENSOR_DELAY_GAME);
-
 		// Create OpenGL ES view
 		descentView = new DescentView(this);
 
@@ -99,6 +90,7 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 		descentPause();
 		mediaPlayer.pause();
 		mediaPlayerPosition = mediaPlayer.getCurrentPosition();
+		stopMotion();
 	}
 
 	@Override
@@ -110,6 +102,9 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 		}
 		mediaPlayer.seekTo(mediaPlayerPosition);
 		mediaPlayer.start();
+		if (getUseGyroscope()) {
+			startMotion();
+		}
 	}
 
 	@Override
@@ -147,9 +142,7 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
-		x = event.values[0];
-		y = event.values[1];
-		z = event.values[2];
+		acceleration = event.values;
 	}
 
 	@Override
@@ -189,17 +182,37 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 	}
 
 	@SuppressWarnings("unused")
-	private float[] getOrientation() {
-		float orientation[] = new float[3];
-		float R[] = new float[9];
-		float rotationVector[] = {x, y, z};
-
-		SensorManager.getRotationMatrixFromVector(R, rotationVector);
-		SensorManager.getOrientation(R, orientation);
-		if (getWindowManager().getDefaultDisplay().getRotation() == Surface.ROTATION_270) {
-			orientation[2] *= -1;
+	private float[] getAcceleration() {
+		if (haveGyroscope()) {
+			if (getWindowManager().getDefaultDisplay().getRotation() == Surface.ROTATION_90) {
+				acceleration[1] *= -1;
+			}
+			return acceleration;
+		} else {
+			return new float[] {0, 0, 0};
 		}
-		return orientation;
+	}
+
+	private boolean haveGyroscope() {
+		return getPackageManager().hasSystemFeature(PackageManager.FEATURE_SENSOR_GYROSCOPE);
+	}
+
+	@SuppressWarnings("unused")
+	private void startMotion() {
+		Sensor rotationVectorSensor;
+		SensorManager sensorManager;
+
+		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+		rotationVectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+		sensorManager.registerListener(this, rotationVectorSensor, SensorManager.SENSOR_DELAY_GAME);
+	}
+
+	@SuppressWarnings("unused")
+	private void stopMotion() {
+		SensorManager sensorManager;
+
+		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+		sensorManager.unregisterListener(this);
 	}
 
 	@SuppressWarnings("unused")
@@ -261,6 +274,8 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 	private static native void keyHandler(char key);
 
 	private static native void descentPause();
+
+	private static native boolean getUseGyroscope();
 
 	static {
 		System.loadLibrary("Descent");

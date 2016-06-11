@@ -389,7 +389,7 @@ ubyte Config_midi_volume = 16;
 ubyte Config_control_type = CONTROL_MOUSE;
 ubyte Config_channels_reversed = 0;
 ubyte Config_joystick_sensitivity = 4;
-ubyte Config_use_sensors = 1;
+ubyte Config_use_gyroscope = 1;
 
 fix Cruise_speed=0;
 

@@ -19,27 +19,29 @@ void startMotion() {
 	[motionManager startDeviceMotionUpdates];
 }
 
-void getAttitude(double *roll, double *pitch, double *yaw) {
-	CMAttitude *attitude = motionManager.deviceMotion.attitude;
-	*roll = attitude.roll;
-	*pitch = attitude.pitch;
-	*yaw = attitude.yaw;
-	if ([[UIApplication sharedApplication] statusBarOrientation] == UIInterfaceOrientationLandscapeLeft) {
-		*roll *= -1;
-		*pitch *= -1;
+void startMotion() {
+	if (!motionManager) {
+		motionManager = [[CMMotionManager alloc] init];
 	}
-}
-
-void getRotationRate(double *x, double *y, double *z) {
-	CMRotationRate rotationRate = motionManager.deviceMotion.rotationRate;
-	*x = rotationRate.x;
-	*y = rotationRate.y;
-	*z = rotationRate.z;
+	[motionManager stopDeviceMotionUpdates];
 }
 
 void getAcceleration(double *x, double *y, double *z) {
-	CMAcceleration acceleration = motionManager.deviceMotion.userAcceleration;
-	*x = acceleration.x;
-	*y = acceleration.y;
-	*z = acceleration.z;
+	if (haveGyroscope()) {
+		CMAcceleration acceleration = motionManager.deviceMotion.userAcceleration;
+		*x = acceleration.x;
+		*y = acceleration.y;
+		*z = acceleration.z;
+	} else {
+		*x = 0;
+		*y = 0;
+		*z = 0;
+	}
+}
+
+int haveGyroscope() {
+	if (!motionManager) {
+		motionManager = [[CMMotionManager alloc] init];
+	}
+	return motionManager.gyroAvailable;
 }

@@ -105,7 +105,6 @@ static mouse_info Mouse;
 
 static int Mouse_installed = 0;
 
-static double last_roll, last_pitch, last_yaw;
 int touch_dx = 0, touch_dy = 0;
 
 #pragma off (check_stack)
@@ -156,14 +155,14 @@ int mouse_init()
 		printf( "Unable to lock mouse handler" );
 		exit(1);
 	}
-	
+
 	Mouse_installed = 1;
-
 	atexit( mouse_close );
-
 	mouse_flush();
-	startMotion();
-	getAttitude(&last_roll, &last_pitch, &last_yaw);
+
+	if (Config_use_gyroscope) {
+		startMotion();
+	}
 
 	return Mouse.num_buttons;
 }
@@ -181,7 +180,7 @@ void mouse_close()
 // dz was added for banking, and gives the game a nice stabilization effect
 void mouse_get_delta( int *dx, int *dy, int *dz)
 {
-	double roll, pitch, yaw;
+	double x, y, z;
 
 	if (!Mouse_installed) {
 		*dx = *dy = 0;
@@ -191,16 +190,13 @@ void mouse_get_delta( int *dx, int *dy, int *dz)
 	*dy = touch_dy * 4;
 
 	// The multipliers here are arbitrary; they just adjust the sensitivity
-	if (Config_use_sensors) {
-		getAttitude(&roll, &pitch, &yaw);
+	if (Config_use_gyroscope) {
+		getAcceleration(&x, &y, &z);
 		if (*dx == 0 && *dy == 0) {
-			*dx += ((last_yaw - yaw) * 750.0);
-			*dy += ((last_roll - roll) * 1000.0);
-			last_roll = roll;
-			last_yaw = yaw;
+			*dx = (int)(x * 10.0);
+			*dy = (int)(y * 10.0);
 		}
-		*dz = ((last_pitch - pitch) * 500.0);
-		last_pitch = pitch;
+		*dz = (int)(z * 10.0);
 	} else {
 		*dz = 0;
 	}
