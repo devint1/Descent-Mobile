@@ -386,9 +386,10 @@ control_info Controls;
 
 ubyte Config_digi_volume = 16;
 ubyte Config_midi_volume = 16;
-ubyte Config_control_type = 0;
+ubyte Config_control_type = CONTROL_MOUSE;
 ubyte Config_channels_reversed = 0;
-ubyte Config_joystick_sensitivity = 8;
+ubyte Config_joystick_sensitivity = 4;
+ubyte Config_use_sensors = 1;
 
 fix Cruise_speed=0;
 
@@ -397,7 +398,7 @@ fix Cruise_speed=0;
 #define BT_MOUSE_AXIS		2
 #define BT_JOY_BUTTON 		3
 #define BT_JOY_AXIS			4
-#define BT_INVERT				5
+#define BT_INVERT			5
 
 char *btype_text[] = { "BT_KEY", "BT_MOUSE_BUTTON", "BT_MOUSE_AXIS", "BT_JOY_BUTTON", "BT_JOY_AXIS", "BT_INVERT" };
 

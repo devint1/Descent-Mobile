@@ -803,7 +803,7 @@ void joydef_menuset(int nitems, newmenu_item * items, int *last_key, int citem )
 
 void do_options_menu()
 {
-	newmenu_item m[13];
+	newmenu_item m[12];
 	int i = 0;
 
 	do {
@@ -813,25 +813,23 @@ void do_options_menu()
 		m[3].type = NM_TYPE_TEXT; m[3].text="";
 		m[4].type = NM_TYPE_SLIDER; m[4].text=TXT_BRIGHTNESS; m[4].value=gr_palette_get_gamma();m[4].min_value=0; m[4].max_value=8; 
 		m[5].type = NM_TYPE_TEXT; m[5].text="";
-		m[6].type = NM_TYPE_MENU; m[6].text=TXT_CONTROLS_;
+		m[6].type = NM_TYPE_CHECK; m[6].text="Use Motion Sensors"; m[6].value=Config_use_sensors;
 		m[7].type = NM_TYPE_MENU; m[7].text=TXT_DETAIL_LEVELS;
-		m[8].type = NM_TYPE_MENU; m[8].text=TXT_CAL_JOYSTICK;
-		m[9].type = NM_TYPE_TEXT; m[9].text="";
-		m[10].type = NM_TYPE_SLIDER; m[10].text=TXT_JOYS_SENSITIVITY; m[10].value=Config_joystick_sensitivity; m[10].min_value =0; m[10].max_value = 8;
-		m[11].type = NM_TYPE_TEXT; m[11].text="";
-		m[12].type = NM_TYPE_CHECK; m[12].text="Ship auto-leveling"; m[12].value=Auto_leveling_on; 
+		m[8].type = NM_TYPE_TEXT; m[8].text="";
+		m[9].type = NM_TYPE_SLIDER; m[9].text="Look Sensitivity"; m[9].value=Config_joystick_sensitivity; m[9].min_value =0; m[9].max_value = 8;
+		m[10].type = NM_TYPE_TEXT; m[10].text="";
+		m[11].type = NM_TYPE_CHECK; m[11].text="Ship auto-leveling"; m[11].value=Auto_leveling_on;
 				
-		i = newmenu_do1( NULL, TXT_OPTIONS, 13, m, joydef_menuset, i );
+		i = newmenu_do1( NULL, TXT_OPTIONS, 12, m, joydef_menuset, i );
 			
 		switch(i)	{
-			case 6: joydefs_config(); 			break;
 			case 7: do_detail_level_menu();	break;
-			case 8: joydefs_calibrate();		break;
 		}
 
 		Config_channels_reversed = m[2].value;
-		Config_joystick_sensitivity = m[10].value;
-		Auto_leveling_on = m[12].value;
+		Config_use_sensors = m[6].value;
+		Config_joystick_sensitivity = m[9].value;
+		Auto_leveling_on = m[11].value;
 	} while( i>-1 );
 
 	if ( Config_midi_volume < 1 )	{

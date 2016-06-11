@@ -79,7 +79,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 // Check for mouse driver, reset driver if installed. returns number of
 // buttons if driver is present.
 
-extern int mouse_init(int enable_cyberman);
+extern int mouse_init();
 extern void mouse_set_limits( int x1, int y1, int x2, int y2 );
 extern void mouse_flush();	// clears all mice events...
 

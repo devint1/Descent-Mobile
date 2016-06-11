@@ -146,6 +146,7 @@ extern ubyte Config_midi_volume;
 extern ubyte Config_control_type;
 extern ubyte Config_channels_reversed;
 extern ubyte Config_joystick_sensitivity;
+extern ubyte Config_use_sensors;
 
 #define CONTROL_NONE 0
 #define CONTROL_JOYSTICK 1

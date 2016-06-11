@@ -469,7 +469,7 @@ int read_player_file()
 	{
 		if (fread( kconfig_settings, MAX_CONTROLS*CONTROL_MAX_TYPES, 1, file )!=1)
 			errno_ret=errno;
-		else if (fread(&Config_control_type, sizeof(ubyte), 1, file )!=1)
+		else if (fread(&Config_use_sensors, sizeof(ubyte), 1, file )!=1)
 			errno_ret=errno;
 		else if (fread(&Config_joystick_sensitivity, sizeof(ubyte), 1, file )!=1)
 			errno_ret=errno;
@@ -635,7 +635,7 @@ int write_player_file()
 	{
 		if (fwrite( kconfig_settings, MAX_CONTROLS*CONTROL_MAX_TYPES, 1, file )!=1)
 			errno_ret=errno;
-		else if (fwrite( &Config_control_type, sizeof(ubyte), 1, file )!=1)
+		else if (fwrite( &Config_use_sensors, sizeof(ubyte), 1, file )!=1)
 			errno_ret=errno;
 		else if (fwrite( &Config_joystick_sensitivity, sizeof(ubyte), 1, file )!=1)
 			errno_ret=errno;

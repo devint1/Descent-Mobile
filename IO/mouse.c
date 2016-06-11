@@ -63,42 +63,21 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
  */
 
 
-#pragma off (unreferenced)
+#pragma unused(rcsid)
 static char rcsid[] = "$Id: mouse.c 1.11 1995/02/10 18:52:17 john Exp $";
-#pragma on (unreferenced)
 
 #define near
 #define far
-#define _loadds
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
-#include "error.h"
 #include "fix.h"
 #include "dpmi.h"
 #include "mouse.h"
 #include "timer.h"
-#include "i86.h"
 #include "motion.h"
 
-#define ME_CURSOR_MOVED	(1<<0)
-#define ME_LB_P 			(1<<1)
-#define ME_LB_R 			(1<<2)
-#define ME_RB_P 			(1<<3)
-#define ME_RB_R 			(1<<4)
-#define ME_MB_P 			(1<<5)
-#define ME_MB_R 			(1<<6)
-#define ME_OB_P 			(1<<7)
-#define ME_OB_R 			(1<<8)
-#define ME_X_C 			(1<<9)
-#define ME_Y_C 			(1<<10)
-#define ME_Z_C 			(1<<11)
-#define ME_P_C 			(1<<12)
-#define ME_B_C 			(1<<13)
-#define ME_H_C 			(1<<14)
-#define ME_O_C 			(1<<15)
+#include <stdlib.h>
+#include <stdio.h>
+#include <kconfig.h>
 
 #define MOUSE_MAX_BUTTONS	11
 
@@ -108,9 +87,6 @@ typedef struct event_info {
 	short z;
 	short pitch;
 	short bank;
-	short heading;
-	ushort button_status;
-	ushort device_dependant;
 } event_info;
 
 typedef struct mouse_info {
@@ -123,21 +99,7 @@ typedef struct mouse_info {
 	uint		num_downs[MOUSE_MAX_BUTTONS];
 	uint		num_ups[MOUSE_MAX_BUTTONS];
 	event_info x_info;
-	ushort	button_status;
 } mouse_info;
-
-typedef struct cyberman_info {
-	ubyte device_type;
-	ubyte major_version;
-	ubyte minor_version;
-	ubyte x_descriptor;
-	ubyte y_descriptor;
-	ubyte z_descriptor;
-	ubyte pitch_descriptor;
-	ubyte roll_descriptor;
-	ubyte yaw_descriptor;
-	ubyte reserved;
-} cyberman_info;
 
 static mouse_info Mouse;
 
@@ -178,7 +140,7 @@ void mouse_handler_end (void)  // dummy functions
 //--------------------------------------------------------
 // returns 0 if no mouse
 //           else number of buttons
-int mouse_init(int enable_cyberman)
+int mouse_init()
 {
 	if (Mouse_installed)
 		return Mouse.num_buttons;
@@ -215,45 +177,33 @@ void mouse_close()
 	}
 }
 
-void mouse_set_limits( int x1, int y1, int x2, int y2 )
-{
-	if (!Mouse_installed) return;
-}
-
-void mouse_get_pos( int *x, int *y)
-{
-	if (!Mouse_installed) {
-		*x = *y = 0;
-		return;
-	}
-
-	*x = Mouse.x_info.x;
-	*y = Mouse.x_info.y;
-}
-
 // Uses the device's accelerometer + gyroscope and touch drags
 // dz was added for banking, and gives the game a nice stabilization effect
 void mouse_get_delta( int *dx, int *dy, int *dz)
 {
 	double roll, pitch, yaw;
-	
+
 	if (!Mouse_installed) {
 		*dx = *dy = 0;
 		return;
 	}
 	*dx = touch_dx * 3;
 	*dy = touch_dy * 4;
-	
+
 	// The multipliers here are arbitrary; they just adjust the sensitivity
-	getAttitude(&roll, &pitch, &yaw);
-	if (*dx == 0 && *dy == 0) {
-		*dx += ((last_yaw - yaw) * 750.0);
-		*dy += ((last_roll - roll) * 1000.0);
-		last_roll = roll;
-		last_yaw = yaw;
+	if (Config_use_sensors) {
+		getAttitude(&roll, &pitch, &yaw);
+		if (*dx == 0 && *dy == 0) {
+			*dx += ((last_yaw - yaw) * 750.0);
+			*dy += ((last_roll - roll) * 1000.0);
+			last_roll = roll;
+			last_yaw = yaw;
+		}
+		*dz = ((last_pitch - pitch) * 500.0);
+		last_pitch = pitch;
+	} else {
+		*dz = 0;
 	}
-	*dz = ((last_pitch - pitch) * 500.0);
-	last_pitch = pitch;
 }
 
 int mouse_get_btns()
