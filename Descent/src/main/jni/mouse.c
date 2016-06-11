@@ -10,3 +10,7 @@ void Java_tuchsen_descent_DescentView_mouseHandler(JNIEnv *env, jclass thiz, jsh
 												   jshort y, jboolean down) {
 	mouse_handler(x, y, down);
 }
+
+void Java_tuchsen_descent_DescentView_mouseSetPos(JNIEnv *env, jclass thiz, jshort x, jshort y) {
+	mouse_set_pos(x, y);
+}

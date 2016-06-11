@@ -220,21 +220,15 @@ void mouse_set_limits( int x1, int y1, int x2, int y2 )
 	if (!Mouse_installed) return;
 }
 
-// TODO: Port
 void mouse_get_pos( int *x, int *y)
 {
-	/*POINT point;
-
 	if (!Mouse_installed) {
 		*x = *y = 0;
 		return;
 	}
 
-	GetCursorPos(&point);
-	ScreenToClient(hwnd, &point);
-
-	*x = point.x; 
-	*y = point.y; */
+	*x = Mouse.x_info.x;
+	*y = Mouse.x_info.y;
 }
 
 // Uses the device's accelerometer + gyroscope and touch drags
@@ -279,15 +273,10 @@ int mouse_get_btns()
 	return status;
 }
 
-// TODO: Port
-void mouse_set_pos( int x, int y)
+void mouse_set_pos(short x, short y)
 {
-	/*union REGS inregs, outregs;
-
-	if (!Mouse_installed) 
-		return;
-
-	SetCursorPos(x, y);*/
+	Mouse.x_info.x = x;
+	Mouse.x_info.y = y;
 }
 
 void mouse_flush()
@@ -326,6 +315,27 @@ int mouse_button_down_count(int button, int *x, int *y)
 
 	count = Mouse.num_downs[button];
 	Mouse.num_downs[button]=0;
+
+	return count;
+}
+
+// Returns how many times this button has went up since last call.
+int mouse_button_up_count(int button, int *x, int *y)
+{
+	int count;
+
+	if (!Mouse_installed)
+		return 0;
+
+	if(x) {
+		*x = Mouse.x_info.x;
+	}
+	if(y) {
+		*y = Mouse.x_info.y;
+	}
+
+	count = Mouse.num_ups[button];
+	Mouse.num_ups[button]=0;
 
 	return count;
 }

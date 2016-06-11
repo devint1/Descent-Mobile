@@ -91,7 +91,7 @@ extern void mouse_close();
 extern void mouse_get_pos( int *x, int *y);
 extern void mouse_get_delta( int *dx, int *dy, int *dz );
 extern int mouse_get_btns();
-extern void mouse_set_pos( int x, int y);
+extern void mouse_set_pos( short x, short y);
 extern void mouse_get_cyberman_pos( int *x, int *y );
 
 // Returns how long this button has been down since last call. Outputs
@@ -100,6 +100,9 @@ extern fix mouse_button_down_time(int button, int *x, int *y);
 
 // Returns how many times this button has went down since last call.
 extern int mouse_button_down_count(int button, int *x, int *y);
+
+// Returns how many times this button has went up since last call.
+extern int mouse_button_up_count(int button, int *x, int *y);
 
 // Returns 1 if this button is currently down
 extern int mouse_button_state(int button);

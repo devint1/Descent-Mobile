@@ -955,8 +955,9 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 	bkg bg;
 	int all_text=0;		//set true if all text items
 	int time_stopped=0;
+	int mouse_down = 0;
+	int mouse_up = 0;
 	bool shifted_up = false;
-	bool mouse_clicked = false;
 #ifdef OGLES
 	GLuint viewWidth, viewHeight;
 #endif
@@ -1271,10 +1272,12 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 	
 	while(!done)	{
 		//network_listen();
-		
-		if (mouse_clicked) {
-			mouse_clicked = false;
-		} else {
+
+		if (mouse_up) {
+			mouse_down = 0;
+			mouse_up = 0;
+		}
+		if (!mouse_down && !mouse_up) {
 			k = key_inkey();
 		}
 		
@@ -1298,17 +1301,21 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 		old_choice = choice;
 		
 		// Get the "mouse" (AKA, touch screen)
-		if(mouse_button_down_count(0, &mouse_x, &mouse_y)>0) {
-			if(mouse_x < x || mouse_y < y || mouse_x > x + w || mouse_y > y + h) {
+		mouse_up = mouse_button_up_count(0, &mouse_x, &mouse_y);
+		if (!mouse_down) {
+			mouse_down = mouse_button_down_count(0, &mouse_x, &mouse_y);
+			mouse_up = 0;
+		}
+		if(mouse_down) {
+			if(mouse_up && (mouse_x < x || mouse_y < y || mouse_x > x + w || mouse_y > y + h)) {
 				choice = -1;
 				done = true;
 			} else {
 				choice = get_item_at_menu_pos(mouse_x - x, mouse_y - y, nitems, item);
-				if(choice == -1) {
-					choice = old_choice;
-				} else {
-					mouse_clicked = true;
+				if (choice != -1) {
+					item[choice].redraw = 1;
 				}
+				item[old_choice].redraw = 1;
 			}
 		}
 
@@ -1481,12 +1488,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 							item[choice].redraw=1;
 						}
 					} while (choice1 != choice );
-				}	
-			}
-			
-			if(mouse_clicked) {
-				item[choice].redraw = 1;
-				item[old_choice].redraw = 1;
+				}
 			}
 
 			if ( (item[choice].type==NM_TYPE_NUMBER) || (item[choice].type==NM_TYPE_SLIDER)) 	{
@@ -1547,10 +1549,10 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 		showRenderBuffer();
 #endif
 		
-		if(mouse_clicked) {
+		if(mouse_up && choice != -1) {
 			if (item[choice].type == NM_TYPE_INPUT_MENU) {
 				k = KEY_ENTER;
-			} else {
+			} else if (item[choice].type != NM_TYPE_TEXT) {
 				done = true;
 			}
 		}
@@ -1725,6 +1727,7 @@ int newmenu_get_filename( char * title, char * filespec, char * filename, int al
 	int initialized = 0;
 	int w_x, w_y, w_w, w_h;
 	int mouse_x, mouse_y;
+	int mouse_down = 0, mouse_up = 0;
 	filename_item items[MAX_FILES];
 
 	filenames = malloc( MAX_FILES * 14 );
@@ -1854,7 +1857,11 @@ ReadFileNames:
 		ocitem = citem;
 		ofirst_item = first_item;
 		key = key_inkey();
-		if(mouse_button_down_count(0, &mouse_x, &mouse_y) > 0) {
+		mouse_up = mouse_button_up_count(0, &mouse_x, &mouse_y);
+		if (!mouse_down) {
+			mouse_down = mouse_button_down_count(0, &mouse_x, &mouse_y);
+			mouse_up = 0;
+		} else {
 
 			// HACK!!!! Show the menu again when Android pauses
 			if (mouse_x == -1 && mouse_y == -1) {
@@ -1864,9 +1871,10 @@ ReadFileNames:
 			}
 
 			citem = get_filename_item_at_pos(mouse_x, mouse_y, NumFiles, items);
-			if(citem == -1) {
-				citem = ocitem;
-			} else {
+		}
+		if (mouse_up) {
+			mouse_down = 0;
+			if (citem != -1) {
 				done = true;
 			}
 		}
@@ -1961,10 +1969,6 @@ ReadFileNames:
 			}
 		}
 		if ( done ) break;
-
-
-		if (citem<0)
-			citem=0;
 
 		if (citem>=NumFiles)
 			citem = NumFiles-1;

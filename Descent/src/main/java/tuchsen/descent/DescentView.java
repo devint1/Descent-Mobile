@@ -67,6 +67,8 @@ public class DescentView extends SurfaceView implements SurfaceHolder.Callback {
 			mouseHandler((short) event.getX(), (short) event.getY(),
 					action == MotionEvent.ACTION_DOWN);
 			return true;
+		} else {
+			mouseSetPos((short) event.getX(), (short) event.getY());
 		}
 		return touchHandled;
 	}
@@ -189,6 +191,8 @@ public class DescentView extends SurfaceView implements SurfaceHolder.Callback {
 	}
 
 	private static native void mouseHandler(short x, short y, boolean down);
+
+	private static native void mouseSetPos(short x, short y);
 
 	private static native boolean touchHandler(int action, int pointerId, float x, float y,
 											   float prevX, float prevY);
