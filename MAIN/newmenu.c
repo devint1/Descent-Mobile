@@ -926,6 +926,22 @@ int get_item_at_menu_pos(int x, int y, int nitems, newmenu_item *item) {
 	return -1;
 }
 
+void set_slider_value(int x, int y, newmenu_item *item) {
+	char *p = strchr(item->saved_text, '\t') + 1;
+	int w, h, aw;
+	int slider_x;
+
+	gr_get_string_size(p, &w, &h, &aw);
+	w *= f2fl(Scale_factor);
+	h *= f2fl(Scale_factor);
+	slider_x = item->x + item->w - w;
+	if(slider_x <= x && slider_x + w >= x) {
+		item->value = (int)roundf((((float)(x - slider_x) / (float)w)
+							* (item->max_value - item->min_value)) + item->min_value);
+		item->redraw = 1;
+	}
+}
+
 int newmenu_do( char * title, char * subtitle, int nitems, newmenu_item * item, void (*subfunction)(int nitems,newmenu_item * items, int * last_key, int citem) )
 {
 	return newmenu_do3( title, subtitle, nitems, item, subfunction, 0, NULL, -1, -1 );
@@ -957,6 +973,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 	int time_stopped=0;
 	int mouse_down = 0;
 	int mouse_up = 0;
+	int slider_locked = 0;
 	bool shifted_up = false;
 #ifdef OGLES
 	GLuint viewWidth, viewHeight;
@@ -1277,9 +1294,6 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 			mouse_down = 0;
 			mouse_up = 0;
 		}
-		if (!mouse_down && !mouse_up) {
-			k = key_inkey();
-		}
 		
 		if (subfunction)
 			(*subfunction)(nitems,item,&k,choice);
@@ -1297,25 +1311,32 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 			k = -1;
 			done = 1;
 		}
-		
+
 		old_choice = choice;
-		
+
 		// Get the "mouse" (AKA, touch screen)
 		mouse_up = mouse_button_up_count(0, &mouse_x, &mouse_y);
 		if (!mouse_down) {
 			mouse_down = mouse_button_down_count(0, &mouse_x, &mouse_y);
 			mouse_up = 0;
-		}
-		if(mouse_down) {
+		} else {
 			if(mouse_up && (mouse_x < x || mouse_y < y || mouse_x > x + w || mouse_y > y + h)) {
 				choice = -1;
 				done = true;
 			} else {
-				choice = get_item_at_menu_pos(mouse_x - x, mouse_y - y, nitems, item);
-				if (choice != -1) {
-					item[choice].redraw = 1;
+				if (!slider_locked) {
+					choice = get_item_at_menu_pos(mouse_x - x, mouse_y - y, nitems, item);
 				}
-				item[old_choice].redraw = 1;
+				if (choice != -1) {
+					if (item[choice].type == NM_TYPE_SLIDER) {
+						set_slider_value(mouse_x - x, mouse_y - y, &item[choice]);
+						slider_locked |= item[choice].redraw;
+					}
+				}
+				if (choice != old_choice) {
+					item[choice].redraw = 1;
+					item[old_choice].redraw = 1;
+				}
 			}
 		}
 
@@ -1427,7 +1448,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 		#endif
 
 		}
-
+		k = 0;
 		if ( choice > -1 )	{
 			int ascii;
 
@@ -1549,12 +1570,20 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 		showRenderBuffer();
 #endif
 		
-		if(mouse_up && choice != -1) {
-			if (item[choice].type == NM_TYPE_INPUT_MENU) {
-				k = KEY_ENTER;
-			} else if (item[choice].type != NM_TYPE_TEXT) {
-				done = true;
+		if (mouse_up && choice != -1) {
+			switch (item[choice].type) {
+				case NM_TYPE_INPUT_MENU:
+					k = KEY_ENTER;
+					break;
+				case NM_TYPE_CHECK:
+				case NM_TYPE_RADIO:
+					k = KEY_SPACEBAR;
+					break;
+				case NM_TYPE_MENU:
+					done = true;
+					break;
 			}
+			slider_locked = 0;
 		}
 	}
 
