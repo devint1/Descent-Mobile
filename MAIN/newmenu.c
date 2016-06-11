@@ -1292,7 +1292,8 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 
 		if (mouse_up) {
 			mouse_down = 0;
-			mouse_up = 0;
+		} else {
+			k = key_inkey();
 		}
 		
 		if (subfunction)
@@ -1320,7 +1321,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 			mouse_down = mouse_button_down_count(0, &mouse_x, &mouse_y);
 			mouse_up = 0;
 		} else {
-			if(mouse_up && (mouse_x < x || mouse_y < y || mouse_x > x + w || mouse_y > y + h)) {
+			if (mouse_up && (mouse_x < x || mouse_y < y || mouse_x > x + w || mouse_y > y + h)) {
 				choice = -1;
 				done = true;
 			} else {
@@ -1448,7 +1449,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 		#endif
 
 		}
-		k = 0;
+
 		if ( choice > -1 )	{
 			int ascii;
 
