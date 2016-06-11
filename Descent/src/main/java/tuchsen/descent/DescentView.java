@@ -56,7 +56,8 @@ public class DescentView extends SurfaceView implements SurfaceHolder.Callback {
 				prevX = event.getHistoricalX(i, 0);
 				prevY = event.getHistoricalY(i, 0);
 			} else {
-				prevX = prevY = 0;
+				prevX = event.getX(i);
+				prevY = event.getY(i);
 			}
 			touchHandled |= touchHandler(event.getActionMasked(), event.getPointerId(i),
 					event.getX(i), event.getY(i), prevX, prevY);

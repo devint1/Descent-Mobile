@@ -79,7 +79,10 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 
 		// Set up sensor manager for motion controls
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-		rotationVector = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+		rotationVector = sensorManager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR);
+		if (rotationVector == null) {
+			rotationVector = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+		}
 		sensorManager.registerListener(this, rotationVector, SensorManager.SENSOR_DELAY_GAME);
 
 		// Create OpenGL ES view
@@ -191,11 +194,11 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 		float R[] = new float[9];
 		float rotationVector[] = {x, y, z};
 
-		if (getWindowManager().getDefaultDisplay().getRotation() == Surface.ROTATION_270) {
-			rotationVector[2] *= -1;
-		}
 		SensorManager.getRotationMatrixFromVector(R, rotationVector);
 		SensorManager.getOrientation(R, orientation);
+		if (getWindowManager().getDefaultDisplay().getRotation() == Surface.ROTATION_270) {
+			orientation[2] *= -1;
+		}
 		return orientation;
 	}
 
