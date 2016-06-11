@@ -2092,9 +2092,11 @@ ExitFileMenuEarly:
 ExitFileMenu:
 	keyd_repeat = old_keyd_repeat;
 
+#ifndef OGLES
 	if ( initialized )	{
 		gr_bm_bitblt(grd_curcanv->cv_bitmap.bm_w, grd_curcanv->cv_bitmap.bm_h, 0, 0, 0, 0, &(VR_offscreen_buffer->cv_bitmap), &(grd_curcanv->cv_bitmap) );
 	}
+#endif
 
 	if ( filenames )
 		free(filenames);

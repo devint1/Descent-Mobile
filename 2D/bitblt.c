@@ -294,6 +294,7 @@ void gr_ubitmapm(int x, int y, grs_bitmap *bm) {
 	if (grd_curcanv->cv_bitmap.bm_type == BM_OGLES) {
 		grs_bitmap src_ogles = *bm;
 		dest -= bm->bm_w * bm->bm_h;
+		src_ogles.bm_ogles_tex_id = 0;
 		src_ogles.bm_data = dest;
 		src_ogles.bm_flags = 0;
 		gr_ubitmapm_ogles(x, y, &src_ogles);
@@ -329,7 +330,6 @@ void gr_bm_ubitblt_double(int w, int h, int dx, int dy, int sx, int sy, grs_bitm
 
 // From Linear to Linear
 void gr_bm_ubitblt(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest) {
-#ifndef OGLES
 	unsigned char * dbits;
 	unsigned char * sbits;
 	//int	src_bm_rowsize_2, dest_bm_rowsize_2;
@@ -342,16 +342,43 @@ void gr_bm_ubitblt(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * sr
 		return;
 	}
 
+#ifdef OGLES
+	if (src->bm_type != BM_LINEAR) {
+		return;
+	}
+#endif
+
 	sbits = src->bm_data + (src->bm_rowsize * sy) + sx;
 	dbits = dest->bm_data + (dest->bm_rowsize * dy) + dx;
-
 	dstep = dest->bm_rowsize << gr_bitblt_dest_step_shift;
+
+#ifdef OGLES
+	if(dest->bm_type == BM_OGLES) {
+		dbits = malloc(w * h);
+		memset(dbits, 255, w*h);
+		dstep = w;
+	}
+#endif
 
 	// No interlacing, copy the whole buffer.
 	for (i = 0; i < h; i++) {
 		gr_linear_movsd(sbits, dbits, w);
 		sbits += src->bm_rowsize;
 		dbits += dstep;
+	}
+
+#ifdef OGLES
+	if (dest->bm_type == BM_OGLES) {
+		grs_bitmap src_ogles = *src;
+		dbits -= w * h;
+		src_ogles.bm_ogles_tex_id = 0;
+		src_ogles.bm_data = dbits;
+		src_ogles.bm_w = w;
+		src_ogles.bm_h = h;
+		gr_ubitmapm_ogles(dx + dest->bm_x, dy + dest->bm_y, &src_ogles);
+		glDeleteTextures(1, &src_ogles.bm_ogles_tex_id);
+		free(dbits);
+		return;
 	}
 #endif
 }
@@ -395,6 +422,7 @@ void gr_bm_ubitbltm(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * s
 	if (dest->bm_type == BM_OGLES) {
 		grs_bitmap src_ogles = *src;
 		dbits -= w * h;
+		src_ogles.bm_ogles_tex_id = 0;
 		src_ogles.bm_data = dbits;
 		src_ogles.bm_w = w;
 		src_ogles.bm_h = h;
@@ -407,7 +435,6 @@ void gr_bm_ubitbltm(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * s
 }
 
 void gr_bm_bitblt(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src, grs_bitmap * dest) {
-#ifndef OGLES
 	int dx1 = dx, dx2 = dx + dest->bm_w - 1;
 	int dy1 = dy, dy2 = dy + dest->bm_h - 1;
 
@@ -439,18 +466,12 @@ void gr_bm_bitblt(int w, int h, int dx, int dy, int sx, int sy, grs_bitmap * src
 		h = sy2 - sy1 + 1;
 
 	gr_bm_ubitblt(w, h, dx1, dy1, sx1, sy1, src, dest);
-#endif
 }
 
 
 // Clipped bitmap ... 
 
 void gr_bitmap(int x, int y, grs_bitmap *bm) {
-#ifdef OGLES
-	if (grd_curcanv->cv_bitmap.bm_type == BM_OGLES) {
-		return;
-	}
-#endif
 	int dx1 = x, dx2 = x + bm->bm_w - 1;
 	int dy1 = y, dy2 = y + bm->bm_h - 1;
 	int sx = 0, sy = 0;
