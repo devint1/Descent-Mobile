@@ -2,7 +2,6 @@ package tuchsen.descent;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -29,11 +28,13 @@ import java.io.IOException;
  * Created by devin on 4/17/16.
  */
 public class DescentActivity extends Activity implements TextWatcher, SensorEventListener {
+	private DescentView descentView;
 	private EditText dummyText;
 	private Handler mainHandler;
 	private InputMethodManager imm;
 	private MediaPlayer mediaPlayer;
-	private DescentView descentView;
+	private Sensor gyroscopeSensor;
+	private SensorManager sensorManager;
 	private float buttonSizeBias;
 	private float acceleration[];
 	private int mediaPlayerPosition;
@@ -72,6 +73,10 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 		mainHandler = new Handler(getMainLooper());
 		imm = (InputMethodManager)
 				getSystemService(Context.INPUT_METHOD_SERVICE);
+
+		// Set up gyroscope
+		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+		gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
 		// Create media player for MIDI
 		mediaPlayer = new MediaPlayer();
@@ -194,24 +199,14 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 	}
 
 	private boolean haveGyroscope() {
-		return getPackageManager().hasSystemFeature(PackageManager.FEATURE_SENSOR_GYROSCOPE);
+		return gyroscopeSensor != null;
 	}
 
-	@SuppressWarnings("unused")
 	private void startMotion() {
-		Sensor rotationVectorSensor;
-		SensorManager sensorManager;
-
-		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-		rotationVectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-		sensorManager.registerListener(this, rotationVectorSensor, SensorManager.SENSOR_DELAY_GAME);
+		sensorManager.registerListener(this, gyroscopeSensor, SensorManager.SENSOR_DELAY_GAME);
 	}
 
-	@SuppressWarnings("unused")
 	private void stopMotion() {
-		SensorManager sensorManager;
-
-		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		sensorManager.unregisterListener(this);
 	}
 
