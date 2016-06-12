@@ -187,7 +187,7 @@ public class DescentActivity extends Activity implements TextWatcher, SensorEven
 	}
 
 	@SuppressWarnings("unused")
-	private float[] getAcceleration() {
+	private float[] getRotationRate() {
 		if (haveGyroscope()) {
 			if (getWindowManager().getDefaultDisplay().getRotation() == Surface.ROTATION_90) {
 				acceleration[0] *= -1;

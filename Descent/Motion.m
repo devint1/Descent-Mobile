@@ -33,7 +33,7 @@ int haveGyroscope() {
     return motionManager.gyroAvailable;
 }
 
-void getAcceleration(double *x, double *y, double *z) {
+void getRotationRate(double *x, double *y, double *z) {
 	if (haveGyroscope()) {
         CMRotationRate rotationRate = motionManager.deviceMotion.rotationRate;
 		*x = rotationRate.x;

@@ -11,7 +11,7 @@
 
 extern void startMotion();
 extern void stopMotion();
-extern void getAcceleration(double *x, double *y, double *z);
+extern void getRotationRate(double *x, double *y, double *z);
 extern int haveGyroscope();
 
 #endif /* Motion_h */

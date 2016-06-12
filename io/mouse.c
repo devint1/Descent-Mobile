@@ -192,7 +192,7 @@ void mouse_get_delta( int *dx, int *dy, int *dz)
 
 	// The multipliers here are arbitrary; they just adjust the sensitivity
 	if (Config_use_gyroscope) {
-		getAcceleration(&x, &y, &z);
+		getRotationRate(&x, &y, &z);
 		if (*dx == 0 && *dy == 0) {
 			*dx = (int)(x * 10.0);
 			*dy = (int)(y * 10.0);

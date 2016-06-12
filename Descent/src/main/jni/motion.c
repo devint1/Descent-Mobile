@@ -33,7 +33,7 @@ void stopMotion() {
 	(*env)->DeleteLocalRef(env, clazz);
 }
 
-void getAcceleration(double *x, double *y, double *z) {
+void getRotationRate(double *x, double *y, double *z) {
 	JNIEnv *env;
 	jclass clazz;
 	jmethodID method;
@@ -42,7 +42,7 @@ void getAcceleration(double *x, double *y, double *z) {
 
 	(*jvm)->GetEnv(jvm, (void **) &env, JNI_VERSION_1_6);
 	clazz = (*env)->FindClass(env, "tuchsen/descent/DescentActivity");
-	method = (*env)->GetMethodID(env, clazz, "getAcceleration", "()[F");
+	method = (*env)->GetMethodID(env, clazz, "getRotationRate", "()[F");
 	acceleration = (*env)->CallObjectMethod(env, Activity, method);
 	accelerationElements = (*env)->GetFloatArrayElements(env, acceleration, 0);
 	*x = accelerationElements[0];
