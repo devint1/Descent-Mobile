@@ -16,14 +16,14 @@ void startMotion() {
 	if (!motionManager) {
 		motionManager = [[CMMotionManager alloc] init];
 	}
-	[motionManager startDeviceMotionUpdates];
+	[motionManager startGyroUpdates];
 }
 
 void stopMotion() {
 	if (!motionManager) {
 		motionManager = [[CMMotionManager alloc] init];
 	}
-	[motionManager stopDeviceMotionUpdates];
+	[motionManager startGyroUpdates];
 }
 
 int haveGyroscope() {
@@ -35,7 +35,7 @@ int haveGyroscope() {
 
 void getRotationRate(double *x, double *y, double *z) {
 	if (haveGyroscope()) {
-        CMRotationRate rotationRate = motionManager.deviceMotion.rotationRate;
+        CMRotationRate rotationRate = motionManager.gyroData.rotationRate;
 		*x = rotationRate.x;
 		*y = rotationRate.y;
 		*z = rotationRate.z;
