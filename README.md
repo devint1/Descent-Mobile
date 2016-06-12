@@ -29,7 +29,7 @@ Requirements
 
 Building (Android)
 ------------------
-Copy DESCENT.HOG and DESCENT.PIG to `Descent/src/main/assets`, then open the project in Android Studio. If needed, install the required build tools and NDK. From there, simply build/run the project. The Android version only supports the OpenGL ES renderer. Tested on an NVIDIA Shield Tablet K1 running Android 6.0.1 (Marshmallow) and an HP Slate 8 Pro running Android 4.4 (KitKat).
+Copy DESCENT.HOG and DESCENT.PIG to `Descent/src/main/assets`, then open the project in Android Studio. If needed, install the required build tools, SDK, and NDK. From there, simply build/run the project. The Android version only supports the OpenGL ES renderer. Tested on an NVIDIA Shield Tablet K1 running Android 6.0.1 (Marshmallow) and an HP Slate 8 Pro running Android 4.4 (KitKat).
 
 Building (iOS)
 --------------
