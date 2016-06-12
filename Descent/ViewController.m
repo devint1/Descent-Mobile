@@ -12,6 +12,7 @@
 #include "game.h"
 #include "cfile.h"
 #include "inferno.h"
+#include "mouse.h"
 
 extern void key_handler(unsigned char scancode, bool down);
 extern void mouse_handler(short x, short y, bool down);
@@ -138,6 +139,21 @@ static BOOL descentIsRunning = NO;
 		point = [touch locationInView:[self view]];
 		mouse_handler(point.x * screenScale, point.y * screenScale, false);
 	}
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    CGPoint point;
+
+#ifdef NORETINA
+    CGFloat screenScale = 1;
+#else
+    CGFloat screenScale = [[UIScreen mainScreen] scale];
+#endif
+
+    for(UITouch *touch in touches) {
+        point = [touch locationInView:[self view]];
+        mouse_set_pos(point.x * screenScale, point.y * screenScale);
+    }
 }
 
 #pragma mark IBAction methods
