@@ -214,6 +214,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 static char rcsid[] = "$Id: fvi.c 2.3 1995/03/24 14:49:04 john Exp $";
 #pragma on (unreferenced)
 
+#include <math.h>
 #include <stdlib.h>
 #include <string.h>
 

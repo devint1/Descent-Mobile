@@ -77,6 +77,7 @@ static char rcsid[] = "$Id: mouse.c 1.11 1995/02/10 18:52:17 john Exp $";
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <kconfig.h>
 
 #define MOUSE_MAX_BUTTONS	11

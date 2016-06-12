@@ -231,10 +231,10 @@ static char rcsid[] = "$Id: endlevel.c 2.2 1995/03/21 14:40:14 john Exp $";
 //#define _MARK_ON
 
 #include <stdlib.h>
-//#include <wsample.h> //This file not included in public domain release -KRB
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
+#include <math.h>
 
 #include "3d.h"
 #include "error.h"

@@ -317,6 +317,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 static char rcsid[] = "$Id: object.c 2.3 1995/06/15 12:30:51 john Exp $";
 #pragma on (unreferenced)
 
+#include <math.h>
 #include <string.h>	// for memset
 #include <stdio.h>
 

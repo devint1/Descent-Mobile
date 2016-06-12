@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		031232E71BD4D7D900BEBA87 /* DPMI.C in Sources */ = {isa = PBXBuildFile; fileRef = 031232D81BD4D7D900BEBA87 /* DPMI.C */; };
-		031232E81BD4D7D900BEBA87 /* IPX.C in Sources */ = {isa = PBXBuildFile; fileRef = 031232DA1BD4D7D900BEBA87 /* IPX.C */; };
-		031232E91BD4D7D900BEBA87 /* JOY.C in Sources */ = {isa = PBXBuildFile; fileRef = 031232DC1BD4D7D900BEBA87 /* JOY.C */; };
-		031232EA1BD4D7D900BEBA87 /* KEY.C in Sources */ = {isa = PBXBuildFile; fileRef = 031232DE1BD4D7D900BEBA87 /* KEY.C */; };
-		031232EB1BD4D7D900BEBA87 /* MONO.C in Sources */ = {isa = PBXBuildFile; fileRef = 031232E01BD4D7D900BEBA87 /* MONO.C */; };
-		031232EC1BD4D7D900BEBA87 /* MOUSE.C in Sources */ = {isa = PBXBuildFile; fileRef = 031232E21BD4D7D900BEBA87 /* MOUSE.C */; };
-		031232EE1BD4D7D900BEBA87 /* TIMER.C in Sources */ = {isa = PBXBuildFile; fileRef = 031232E51BD4D7D900BEBA87 /* TIMER.C */; };
+		03F5F8921D0DC64900BFDD4E /* dpmi.c in Sources */ = {isa = PBXBuildFile; fileRef = 03F5F88B1D0DC64900BFDD4E /* dpmi.c */; };
+		03F5F8931D0DC64900BFDD4E /* ipx.c in Sources */ = {isa = PBXBuildFile; fileRef = 03F5F88C1D0DC64900BFDD4E /* ipx.c */; };
+		03F5F8941D0DC64900BFDD4E /* joy.c in Sources */ = {isa = PBXBuildFile; fileRef = 03F5F88D1D0DC64900BFDD4E /* joy.c */; };
+		03F5F8951D0DC64900BFDD4E /* key.c in Sources */ = {isa = PBXBuildFile; fileRef = 03F5F88E1D0DC64900BFDD4E /* key.c */; };
+		03F5F8961D0DC64900BFDD4E /* mono.c in Sources */ = {isa = PBXBuildFile; fileRef = 03F5F88F1D0DC64900BFDD4E /* mono.c */; };
+		03F5F8971D0DC64900BFDD4E /* mouse.c in Sources */ = {isa = PBXBuildFile; fileRef = 03F5F8901D0DC64900BFDD4E /* mouse.c */; };
+		03F5F8981D0DC64900BFDD4E /* timer.c in Sources */ = {isa = PBXBuildFile; fileRef = 03F5F8911D0DC64900BFDD4E /* timer.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,21 +29,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		031232CC1BD4D7C000BEBA87 /* libIO.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIO.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		031232D81BD4D7D900BEBA87 /* DPMI.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DPMI.C; sourceTree = SOURCE_ROOT; };
-		031232D91BD4D7D900BEBA87 /* DPMI.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DPMI.H; sourceTree = SOURCE_ROOT; };
-		031232DA1BD4D7D900BEBA87 /* IPX.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IPX.C; sourceTree = SOURCE_ROOT; };
-		031232DB1BD4D7D900BEBA87 /* IPX.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IPX.H; sourceTree = SOURCE_ROOT; };
-		031232DC1BD4D7D900BEBA87 /* JOY.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JOY.C; sourceTree = SOURCE_ROOT; };
-		031232DD1BD4D7D900BEBA87 /* JOY.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JOY.H; sourceTree = SOURCE_ROOT; };
-		031232DE1BD4D7D900BEBA87 /* KEY.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KEY.C; sourceTree = SOURCE_ROOT; };
-		031232DF1BD4D7D900BEBA87 /* KEY.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = KEY.H; sourceTree = SOURCE_ROOT; };
-		031232E01BD4D7D900BEBA87 /* MONO.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MONO.C; sourceTree = SOURCE_ROOT; };
-		031232E11BD4D7D900BEBA87 /* MONO.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MONO.H; sourceTree = SOURCE_ROOT; };
-		031232E21BD4D7D900BEBA87 /* MOUSE.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOUSE.C; sourceTree = SOURCE_ROOT; };
-		031232E31BD4D7D900BEBA87 /* MOUSE.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MOUSE.H; sourceTree = SOURCE_ROOT; };
-		031232E51BD4D7D900BEBA87 /* TIMER.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TIMER.C; sourceTree = SOURCE_ROOT; };
-		031232E61BD4D7D900BEBA87 /* TIMER.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TIMER.H; sourceTree = SOURCE_ROOT; };
+		031232CC1BD4D7C000BEBA87 /* libio.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libio.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		03F5F88B1D0DC64900BFDD4E /* dpmi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dpmi.c; path = ../io/dpmi.c; sourceTree = "<group>"; };
+		03F5F88C1D0DC64900BFDD4E /* ipx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ipx.c; path = ../io/ipx.c; sourceTree = "<group>"; };
+		03F5F88D1D0DC64900BFDD4E /* joy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = joy.c; path = ../io/joy.c; sourceTree = "<group>"; };
+		03F5F88E1D0DC64900BFDD4E /* key.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = key.c; path = ../io/key.c; sourceTree = "<group>"; };
+		03F5F88F1D0DC64900BFDD4E /* mono.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mono.c; path = ../io/mono.c; sourceTree = "<group>"; };
+		03F5F8901D0DC64900BFDD4E /* mouse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mouse.c; path = ../io/mouse.c; sourceTree = "<group>"; };
+		03F5F8911D0DC64900BFDD4E /* timer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = timer.c; path = ../io/timer.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +53,13 @@
 		031232C31BD4D7C000BEBA87 = {
 			isa = PBXGroup;
 			children = (
-				031232CE1BD4D7C000BEBA87 /* IO */,
+				03F5F88B1D0DC64900BFDD4E /* dpmi.c */,
+				03F5F88C1D0DC64900BFDD4E /* ipx.c */,
+				03F5F88D1D0DC64900BFDD4E /* joy.c */,
+				03F5F88E1D0DC64900BFDD4E /* key.c */,
+				03F5F88F1D0DC64900BFDD4E /* mono.c */,
+				03F5F8901D0DC64900BFDD4E /* mouse.c */,
+				03F5F8911D0DC64900BFDD4E /* timer.c */,
 				031232CD1BD4D7C000BEBA87 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -68,38 +67,17 @@
 		031232CD1BD4D7C000BEBA87 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				031232CC1BD4D7C000BEBA87 /* libIO.a */,
+				031232CC1BD4D7C000BEBA87 /* libio.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		031232CE1BD4D7C000BEBA87 /* IO */ = {
-			isa = PBXGroup;
-			children = (
-				031232D81BD4D7D900BEBA87 /* DPMI.C */,
-				031232D91BD4D7D900BEBA87 /* DPMI.H */,
-				031232DA1BD4D7D900BEBA87 /* IPX.C */,
-				031232DB1BD4D7D900BEBA87 /* IPX.H */,
-				031232DC1BD4D7D900BEBA87 /* JOY.C */,
-				031232DD1BD4D7D900BEBA87 /* JOY.H */,
-				031232DE1BD4D7D900BEBA87 /* KEY.C */,
-				031232DF1BD4D7D900BEBA87 /* KEY.H */,
-				031232E01BD4D7D900BEBA87 /* MONO.C */,
-				031232E11BD4D7D900BEBA87 /* MONO.H */,
-				031232E21BD4D7D900BEBA87 /* MOUSE.C */,
-				031232E31BD4D7D900BEBA87 /* MOUSE.H */,
-				031232E51BD4D7D900BEBA87 /* TIMER.C */,
-				031232E61BD4D7D900BEBA87 /* TIMER.H */,
-			);
-			path = IO;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		031232CB1BD4D7C000BEBA87 /* IO */ = {
+		031232CB1BD4D7C000BEBA87 /* io */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 031232D51BD4D7C000BEBA87 /* Build configuration list for PBXNativeTarget "IO" */;
+			buildConfigurationList = 031232D51BD4D7C000BEBA87 /* Build configuration list for PBXNativeTarget "io" */;
 			buildPhases = (
 				031232C81BD4D7C000BEBA87 /* Sources */,
 				031232C91BD4D7C000BEBA87 /* Frameworks */,
@@ -109,9 +87,9 @@
 			);
 			dependencies = (
 			);
-			name = IO;
+			name = io;
 			productName = IO;
-			productReference = 031232CC1BD4D7C000BEBA87 /* libIO.a */;
+			productReference = 031232CC1BD4D7C000BEBA87 /* libio.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -129,7 +107,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 031232C71BD4D7C000BEBA87 /* Build configuration list for PBXProject "IO" */;
+			buildConfigurationList = 031232C71BD4D7C000BEBA87 /* Build configuration list for PBXProject "io" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -141,7 +119,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				031232CB1BD4D7C000BEBA87 /* IO */,
+				031232CB1BD4D7C000BEBA87 /* io */,
 			);
 		};
 /* End PBXProject section */
@@ -151,13 +129,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				031232EB1BD4D7D900BEBA87 /* MONO.C in Sources */,
-				031232EE1BD4D7D900BEBA87 /* TIMER.C in Sources */,
-				031232E91BD4D7D900BEBA87 /* JOY.C in Sources */,
-				031232E71BD4D7D900BEBA87 /* DPMI.C in Sources */,
-				031232EC1BD4D7D900BEBA87 /* MOUSE.C in Sources */,
-				031232E81BD4D7D900BEBA87 /* IPX.C in Sources */,
-				031232EA1BD4D7D900BEBA87 /* KEY.C in Sources */,
+				03F5F8961D0DC64900BFDD4E /* mono.c in Sources */,
+				03F5F8941D0DC64900BFDD4E /* joy.c in Sources */,
+				03F5F8981D0DC64900BFDD4E /* timer.c in Sources */,
+				03F5F8921D0DC64900BFDD4E /* dpmi.c in Sources */,
+				03F5F8971D0DC64900BFDD4E /* mouse.c in Sources */,
+				03F5F8931D0DC64900BFDD4E /* ipx.c in Sources */,
+				03F5F8951D0DC64900BFDD4E /* key.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,8 +223,8 @@
 		031232D61BD4D7C000BEBA87 /* Debug (OpenGL ES) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
-				HEADER_SEARCH_PATHS = ../LIB;
+				GCC_INPUT_FILETYPE = automatic;
+				HEADER_SEARCH_PATHS = ../lib;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -256,8 +234,8 @@
 		031232D71BD4D7C000BEBA87 /* Release (OpenGL ES) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
-				HEADER_SEARCH_PATHS = ../LIB;
+				GCC_INPUT_FILETYPE = automatic;
+				HEADER_SEARCH_PATHS = ../lib;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -309,8 +287,8 @@
 		03BF18E31C27A827003BE14A /* Debug (Software) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
-				HEADER_SEARCH_PATHS = ../LIB;
+				GCC_INPUT_FILETYPE = automatic;
+				HEADER_SEARCH_PATHS = ../lib;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -356,8 +334,8 @@
 		03BF18E51C27A82D003BE14A /* Release (Software) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
-				HEADER_SEARCH_PATHS = ../LIB;
+				GCC_INPUT_FILETYPE = automatic;
+				HEADER_SEARCH_PATHS = ../lib;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -367,7 +345,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		031232C71BD4D7C000BEBA87 /* Build configuration list for PBXProject "IO" */ = {
+		031232C71BD4D7C000BEBA87 /* Build configuration list for PBXProject "io" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				031232D31BD4D7C000BEBA87 /* Debug (OpenGL ES) */,
@@ -378,7 +356,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Release (OpenGL ES)";
 		};
-		031232D51BD4D7C000BEBA87 /* Build configuration list for PBXNativeTarget "IO" */ = {
+		031232D51BD4D7C000BEBA87 /* Build configuration list for PBXNativeTarget "io" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				031232D61BD4D7C000BEBA87 /* Debug (OpenGL ES) */,

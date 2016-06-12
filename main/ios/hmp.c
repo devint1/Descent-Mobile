@@ -31,6 +31,8 @@ static AudioUnit samplerUnit[HMP_TRACKS], mixerUnit, ioUnit;
 static AUSamplerBankPresetData presetData[HMP_TRACKS];
 static CFURLRef sf2Url;
 
+extern void hmp2mid(hmp_file *hmp, unsigned char **midbuf, unsigned int *midlen);
+
 void hmp_init() {
 	Boolean initialized, running;
 	int i;

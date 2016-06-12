@@ -351,12 +351,12 @@ static char rcsid[] = "$Id: digi.c 2.5 1996/01/05 16:51:51 john Exp $";
 #pragma unused(rcsid)
 
 #ifndef ANDROID_NDK
-#include<stdlib.h>
-#include<stdio.h>
-#include<fcntl.h>
-//#include<bios.h>
-#include<string.h>
-#include<ctype.h>
+#include <OpenAL/OpenAL.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <fcntl.h>
+#include <string.h>
+#include <ctype.h>
 
 #include "fix.h"
 #include "object.h"

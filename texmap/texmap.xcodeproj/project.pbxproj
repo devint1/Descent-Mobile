@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0312322F1BD4A60B00BEBA87 /* NTMAP.C in Sources */ = {isa = PBXBuildFile; fileRef = 031232291BD4A60B00BEBA87 /* NTMAP.C */; };
-		031232301BD4A60B00BEBA87 /* SCANLINE.C in Sources */ = {isa = PBXBuildFile; fileRef = 0312322A1BD4A60B00BEBA87 /* SCANLINE.C */; };
-		031232311BD4A60B00BEBA87 /* TMAPFLAT.C in Sources */ = {isa = PBXBuildFile; fileRef = 0312322E1BD4A60B00BEBA87 /* TMAPFLAT.C */; };
-		038CF7A81BE30EDD0073AB9B /* OGLESTEX.c in Sources */ = {isa = PBXBuildFile; fileRef = 038CF7A61BE30EDD0073AB9B /* OGLESTEX.c */; };
+		03F5F8A01D0DC72300BFDD4E /* ntmap.c in Sources */ = {isa = PBXBuildFile; fileRef = 03F5F89B1D0DC72300BFDD4E /* ntmap.c */; };
+		03F5F8A11D0DC72300BFDD4E /* oglestex.c in Sources */ = {isa = PBXBuildFile; fileRef = 03F5F89D1D0DC72300BFDD4E /* oglestex.c */; };
+		03F5F8A21D0DC72300BFDD4E /* scanline.c in Sources */ = {isa = PBXBuildFile; fileRef = 03F5F89E1D0DC72300BFDD4E /* scanline.c */; };
+		03F5F8A31D0DC72300BFDD4E /* tmapflat.c in Sources */ = {isa = PBXBuildFile; fileRef = 03F5F89F1D0DC72300BFDD4E /* tmapflat.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,15 +26,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0312321D1BD4A5ED00BEBA87 /* libTEXMAP.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTEXMAP.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		031232291BD4A60B00BEBA87 /* NTMAP.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NTMAP.C; sourceTree = SOURCE_ROOT; };
-		0312322A1BD4A60B00BEBA87 /* SCANLINE.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SCANLINE.C; sourceTree = SOURCE_ROOT; };
-		0312322B1BD4A60B00BEBA87 /* SCANLINE.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SCANLINE.H; sourceTree = SOURCE_ROOT; };
-		0312322C1BD4A60B00BEBA87 /* TEXMAP.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TEXMAP.H; sourceTree = SOURCE_ROOT; };
-		0312322D1BD4A60B00BEBA87 /* TEXMAPL.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TEXMAPL.H; sourceTree = SOURCE_ROOT; };
-		0312322E1BD4A60B00BEBA87 /* TMAPFLAT.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TMAPFLAT.C; sourceTree = SOURCE_ROOT; };
-		038CF7A61BE30EDD0073AB9B /* OGLESTEX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = OGLESTEX.c; path = OGLES/OGLESTEX.c; sourceTree = "<group>"; };
-		038CF7A71BE30EDD0073AB9B /* OGLESTEX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OGLESTEX.h; path = OGLES/OGLESTEX.h; sourceTree = "<group>"; };
+		0312321D1BD4A5ED00BEBA87 /* libtexmap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libtexmap.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		03F5F89B1D0DC72300BFDD4E /* ntmap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ntmap.c; path = ../texmap/ntmap.c; sourceTree = "<group>"; };
+		03F5F89D1D0DC72300BFDD4E /* oglestex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = oglestex.c; sourceTree = "<group>"; };
+		03F5F89E1D0DC72300BFDD4E /* scanline.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = scanline.c; path = ../texmap/scanline.c; sourceTree = "<group>"; };
+		03F5F89F1D0DC72300BFDD4E /* tmapflat.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tmapflat.c; path = ../texmap/tmapflat.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +47,10 @@
 		031232141BD4A5ED00BEBA87 = {
 			isa = PBXGroup;
 			children = (
-				038CF7A21BE30B4E0073AB9B /* OGLES */,
-				0312321F1BD4A5ED00BEBA87 /* TEXMAP */,
+				03F5F89C1D0DC72300BFDD4E /* ogles */,
+				03F5F89B1D0DC72300BFDD4E /* ntmap.c */,
+				03F5F89E1D0DC72300BFDD4E /* scanline.c */,
+				03F5F89F1D0DC72300BFDD4E /* tmapflat.c */,
 				0312321E1BD4A5ED00BEBA87 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -60,39 +58,26 @@
 		0312321E1BD4A5ED00BEBA87 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0312321D1BD4A5ED00BEBA87 /* libTEXMAP.a */,
+				0312321D1BD4A5ED00BEBA87 /* libtexmap.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0312321F1BD4A5ED00BEBA87 /* TEXMAP */ = {
+		03F5F89C1D0DC72300BFDD4E /* ogles */ = {
 			isa = PBXGroup;
 			children = (
-				031232291BD4A60B00BEBA87 /* NTMAP.C */,
-				0312322A1BD4A60B00BEBA87 /* SCANLINE.C */,
-				0312322B1BD4A60B00BEBA87 /* SCANLINE.H */,
-				0312322C1BD4A60B00BEBA87 /* TEXMAP.H */,
-				0312322D1BD4A60B00BEBA87 /* TEXMAPL.H */,
-				0312322E1BD4A60B00BEBA87 /* TMAPFLAT.C */,
+				03F5F89D1D0DC72300BFDD4E /* oglestex.c */,
 			);
-			path = TEXMAP;
-			sourceTree = "<group>";
-		};
-		038CF7A21BE30B4E0073AB9B /* OGLES */ = {
-			isa = PBXGroup;
-			children = (
-				038CF7A61BE30EDD0073AB9B /* OGLESTEX.c */,
-				038CF7A71BE30EDD0073AB9B /* OGLESTEX.h */,
-			);
-			name = OGLES;
+			name = ogles;
+			path = ../texmap/ogles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0312321C1BD4A5ED00BEBA87 /* TEXMAP */ = {
+		0312321C1BD4A5ED00BEBA87 /* texmap */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 031232261BD4A5ED00BEBA87 /* Build configuration list for PBXNativeTarget "TEXMAP" */;
+			buildConfigurationList = 031232261BD4A5ED00BEBA87 /* Build configuration list for PBXNativeTarget "texmap" */;
 			buildPhases = (
 				031232191BD4A5ED00BEBA87 /* Sources */,
 				0312321A1BD4A5ED00BEBA87 /* Frameworks */,
@@ -102,9 +87,9 @@
 			);
 			dependencies = (
 			);
-			name = TEXMAP;
+			name = texmap;
 			productName = TEXMAP;
-			productReference = 0312321D1BD4A5ED00BEBA87 /* libTEXMAP.a */;
+			productReference = 0312321D1BD4A5ED00BEBA87 /* libtexmap.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -122,7 +107,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 031232181BD4A5ED00BEBA87 /* Build configuration list for PBXProject "TEXMAP" */;
+			buildConfigurationList = 031232181BD4A5ED00BEBA87 /* Build configuration list for PBXProject "texmap" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -134,7 +119,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0312321C1BD4A5ED00BEBA87 /* TEXMAP */,
+				0312321C1BD4A5ED00BEBA87 /* texmap */,
 			);
 		};
 /* End PBXProject section */
@@ -144,10 +129,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				038CF7A81BE30EDD0073AB9B /* OGLESTEX.c in Sources */,
-				031232301BD4A60B00BEBA87 /* SCANLINE.C in Sources */,
-				031232311BD4A60B00BEBA87 /* TMAPFLAT.C in Sources */,
-				0312322F1BD4A60B00BEBA87 /* NTMAP.C in Sources */,
+				03F5F8A31D0DC72300BFDD4E /* tmapflat.c in Sources */,
+				03F5F8A11D0DC72300BFDD4E /* oglestex.c in Sources */,
+				03F5F8A01D0DC72300BFDD4E /* ntmap.c in Sources */,
+				03F5F8A21D0DC72300BFDD4E /* scanline.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,6 +174,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -225,6 +211,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -235,13 +222,12 @@
 		031232271BD4A5ED00BEBA87 /* Debug (OpenGL ES) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					OGLES,
 					"$(inherited)",
 					NASM,
 				);
-				HEADER_SEARCH_PATHS = $SRCROOT/../LIB;
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -252,14 +238,13 @@
 		031232281BD4A5ED00BEBA87 /* Release (OpenGL ES) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NASM,
 					RELEASE,
 					NDEBUG,
 					OGLES,
 				);
-				HEADER_SEARCH_PATHS = $SRCROOT/../LIB;
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -302,6 +287,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -312,12 +298,11 @@
 		03BF18D71C27A75E003BE14A /* Debug (Software) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					NASM,
 				);
-				HEADER_SEARCH_PATHS = $SRCROOT/../LIB;
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -354,6 +339,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -364,13 +350,12 @@
 		03BF18D91C27A772003BE14A /* Release (Software) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NASM,
 					RELEASE,
 					NDEBUG,
 				);
-				HEADER_SEARCH_PATHS = $SRCROOT/../LIB;
 				INFOPLIST_PREPROCESSOR_DEFINITIONS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -381,7 +366,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		031232181BD4A5ED00BEBA87 /* Build configuration list for PBXProject "TEXMAP" */ = {
+		031232181BD4A5ED00BEBA87 /* Build configuration list for PBXProject "texmap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				031232241BD4A5ED00BEBA87 /* Debug (OpenGL ES) */,
@@ -392,7 +377,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Release (OpenGL ES)";
 		};
-		031232261BD4A5ED00BEBA87 /* Build configuration list for PBXNativeTarget "TEXMAP" */ = {
+		031232261BD4A5ED00BEBA87 /* Build configuration list for PBXNativeTarget "texmap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				031232271BD4A5ED00BEBA87 /* Debug (OpenGL ES) */,

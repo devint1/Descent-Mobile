@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0356D7D41BD49DA700B013B9 /* VECMATC.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7D31BD49DA700B013B9 /* VECMATC.C */; };
+		03D9DBCB1D0DC80E00853E40 /* vecmatc.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBCA1D0DC80E00853E40 /* vecmatc.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,9 +23,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0356D7C01BD49D7600B013B9 /* libVECMAT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libVECMAT.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		0356D7D21BD49DA700B013B9 /* VECMAT.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VECMAT.H; sourceTree = SOURCE_ROOT; };
-		0356D7D31BD49DA700B013B9 /* VECMATC.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VECMATC.C; sourceTree = SOURCE_ROOT; };
+		0356D7C01BD49D7600B013B9 /* libvecmat.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libvecmat.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		03D9DBCA1D0DC80E00853E40 /* vecmatc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vecmatc.c; path = ../vecmat/vecmatc.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +41,7 @@
 		0356D7B71BD49D7600B013B9 = {
 			isa = PBXGroup;
 			children = (
-				0356D7C21BD49D7600B013B9 /* VECMAT */,
+				03D9DBCA1D0DC80E00853E40 /* vecmatc.c */,
 				0356D7C11BD49D7600B013B9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,26 +49,17 @@
 		0356D7C11BD49D7600B013B9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0356D7C01BD49D7600B013B9 /* libVECMAT.a */,
+				0356D7C01BD49D7600B013B9 /* libvecmat.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		0356D7C21BD49D7600B013B9 /* VECMAT */ = {
-			isa = PBXGroup;
-			children = (
-				0356D7D21BD49DA700B013B9 /* VECMAT.H */,
-				0356D7D31BD49DA700B013B9 /* VECMATC.C */,
-			);
-			path = VECMAT;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0356D7BF1BD49D7600B013B9 /* VECMAT */ = {
+		0356D7BF1BD49D7600B013B9 /* vecmat */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0356D7C91BD49D7600B013B9 /* Build configuration list for PBXNativeTarget "VECMAT" */;
+			buildConfigurationList = 0356D7C91BD49D7600B013B9 /* Build configuration list for PBXNativeTarget "vecmat" */;
 			buildPhases = (
 				0356D7BC1BD49D7600B013B9 /* Sources */,
 				0356D7BD1BD49D7600B013B9 /* Frameworks */,
@@ -79,9 +69,9 @@
 			);
 			dependencies = (
 			);
-			name = VECMAT;
+			name = vecmat;
 			productName = VECMAT;
-			productReference = 0356D7C01BD49D7600B013B9 /* libVECMAT.a */;
+			productReference = 0356D7C01BD49D7600B013B9 /* libvecmat.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -99,7 +89,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0356D7BB1BD49D7600B013B9 /* Build configuration list for PBXProject "VECMAT" */;
+			buildConfigurationList = 0356D7BB1BD49D7600B013B9 /* Build configuration list for PBXProject "vecmat" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -111,7 +101,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0356D7BF1BD49D7600B013B9 /* VECMAT */,
+				0356D7BF1BD49D7600B013B9 /* vecmat */,
 			);
 		};
 /* End PBXProject section */
@@ -121,7 +111,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0356D7D41BD49DA700B013B9 /* VECMATC.C in Sources */,
+				03D9DBCB1D0DC80E00853E40 /* vecmatc.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +153,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -199,6 +190,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -211,8 +203,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
-				HEADER_SEARCH_PATHS = ../LIB;
+				GCC_INPUT_FILETYPE = automatic;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -225,8 +216,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
-				HEADER_SEARCH_PATHS = ../LIB;
+				GCC_INPUT_FILETYPE = automatic;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -268,6 +258,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -280,8 +271,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
-				HEADER_SEARCH_PATHS = ../LIB;
+				GCC_INPUT_FILETYPE = automatic;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -318,6 +308,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -330,8 +321,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
-				HEADER_SEARCH_PATHS = ../LIB;
+				GCC_INPUT_FILETYPE = automatic;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -341,7 +331,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0356D7BB1BD49D7600B013B9 /* Build configuration list for PBXProject "VECMAT" */ = {
+		0356D7BB1BD49D7600B013B9 /* Build configuration list for PBXProject "vecmat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0356D7C71BD49D7600B013B9 /* Debug (OpenGL ES) */,
@@ -352,7 +342,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Release (OpenGL ES)";
 		};
-		0356D7C91BD49D7600B013B9 /* Build configuration list for PBXNativeTarget "VECMAT" */ = {
+		0356D7C91BD49D7600B013B9 /* Build configuration list for PBXNativeTarget "vecmat" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0356D7CA1BD49D7600B013B9 /* Debug (OpenGL ES) */,

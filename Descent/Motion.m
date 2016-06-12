@@ -19,29 +19,29 @@ void startMotion() {
 	[motionManager startDeviceMotionUpdates];
 }
 
-void startMotion() {
+void stopMotion() {
 	if (!motionManager) {
 		motionManager = [[CMMotionManager alloc] init];
 	}
 	[motionManager stopDeviceMotionUpdates];
 }
 
+int haveGyroscope() {
+    if (!motionManager) {
+        motionManager = [[CMMotionManager alloc] init];
+    }
+    return motionManager.gyroAvailable;
+}
+
 void getAcceleration(double *x, double *y, double *z) {
 	if (haveGyroscope()) {
-		CMAcceleration acceleration = motionManager.deviceMotion.userAcceleration;
-		*x = acceleration.x;
-		*y = acceleration.y;
-		*z = acceleration.z;
+        CMRotationRate rotationRate = motionManager.deviceMotion.rotationRate;
+		*x = rotationRate.x;
+		*y = rotationRate.y;
+		*z = rotationRate.z;
 	} else {
 		*x = 0;
 		*y = 0;
 		*z = 0;
 	}
-}
-
-int haveGyroscope() {
-	if (!motionManager) {
-		motionManager = [[CMMotionManager alloc] init];
-	}
-	return motionManager.gyroAvailable;
 }

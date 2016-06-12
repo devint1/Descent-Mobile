@@ -129,6 +129,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 static char rcsid[] = "$Id: lighting.c 2.1 1995/07/24 13:21:56 john Exp $";
 #pragma on (unreferenced)
 
+#include <math.h>
 #include <stdlib.h>
 #include <string.h>	// for memset()
 

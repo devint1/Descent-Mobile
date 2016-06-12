@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0356D7B41BD491AE00B013B9 /* IFF.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7B21BD491AE00B013B9 /* IFF.C */; };
+		03D9DBCD1D0DC83900853E40 /* iff.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBCC1D0DC83900853E40 /* iff.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,9 +23,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0356D7A61BD4917F00B013B9 /* libIFF.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIFF.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		0356D7B21BD491AE00B013B9 /* IFF.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IFF.C; sourceTree = SOURCE_ROOT; };
-		0356D7B31BD491AE00B013B9 /* IFF.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IFF.H; sourceTree = SOURCE_ROOT; };
+		0356D7A61BD4917F00B013B9 /* libiff.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiff.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		03D9DBCC1D0DC83900853E40 /* iff.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = iff.c; path = ../iff/iff.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +41,7 @@
 		0356D79D1BD4917F00B013B9 = {
 			isa = PBXGroup;
 			children = (
-				0356D7A81BD4917F00B013B9 /* IFF */,
+				03D9DBCC1D0DC83900853E40 /* iff.c */,
 				0356D7A71BD4917F00B013B9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,26 +49,17 @@
 		0356D7A71BD4917F00B013B9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0356D7A61BD4917F00B013B9 /* libIFF.a */,
+				0356D7A61BD4917F00B013B9 /* libiff.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		0356D7A81BD4917F00B013B9 /* IFF */ = {
-			isa = PBXGroup;
-			children = (
-				0356D7B21BD491AE00B013B9 /* IFF.C */,
-				0356D7B31BD491AE00B013B9 /* IFF.H */,
-			);
-			path = IFF;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0356D7A51BD4917F00B013B9 /* IFF */ = {
+		0356D7A51BD4917F00B013B9 /* iff */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0356D7AF1BD4917F00B013B9 /* Build configuration list for PBXNativeTarget "IFF" */;
+			buildConfigurationList = 0356D7AF1BD4917F00B013B9 /* Build configuration list for PBXNativeTarget "iff" */;
 			buildPhases = (
 				0356D7A21BD4917F00B013B9 /* Sources */,
 				0356D7A31BD4917F00B013B9 /* Frameworks */,
@@ -79,9 +69,9 @@
 			);
 			dependencies = (
 			);
-			name = IFF;
+			name = iff;
 			productName = IFF;
-			productReference = 0356D7A61BD4917F00B013B9 /* libIFF.a */;
+			productReference = 0356D7A61BD4917F00B013B9 /* libiff.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -98,7 +88,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0356D7A11BD4917F00B013B9 /* Build configuration list for PBXProject "IFF" */;
+			buildConfigurationList = 0356D7A11BD4917F00B013B9 /* Build configuration list for PBXProject "iff" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -110,7 +100,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0356D7A51BD4917F00B013B9 /* IFF */,
+				0356D7A51BD4917F00B013B9 /* iff */,
 			);
 		};
 /* End PBXProject section */
@@ -120,7 +110,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0356D7B41BD491AE00B013B9 /* IFF.C in Sources */,
+				03D9DBCD1D0DC83900853E40 /* iff.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,6 +152,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -198,6 +189,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -208,8 +200,7 @@
 		0356D7B01BD4917F00B013B9 /* Debug (OpenGL ES) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
-				HEADER_SEARCH_PATHS = ../LIB;
+				GCC_INPUT_FILETYPE = automatic;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -219,8 +210,7 @@
 		0356D7B11BD4917F00B013B9 /* Release (OpenGL ES) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
-				HEADER_SEARCH_PATHS = ../LIB;
+				GCC_INPUT_FILETYPE = automatic;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -262,6 +252,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -272,8 +263,7 @@
 		03BF18FB1C27A941003BE14A /* Debug (Software) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
-				HEADER_SEARCH_PATHS = ../LIB;
+				GCC_INPUT_FILETYPE = automatic;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -309,6 +299,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -319,8 +310,7 @@
 		03BF18FD1C27A949003BE14A /* Release (Software) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
-				HEADER_SEARCH_PATHS = ../LIB;
+				GCC_INPUT_FILETYPE = automatic;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -330,7 +320,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0356D7A11BD4917F00B013B9 /* Build configuration list for PBXProject "IFF" */ = {
+		0356D7A11BD4917F00B013B9 /* Build configuration list for PBXProject "iff" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0356D7AD1BD4917F00B013B9 /* Debug (OpenGL ES) */,
@@ -341,7 +331,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Release (OpenGL ES)";
 		};
-		0356D7AF1BD4917F00B013B9 /* Build configuration list for PBXNativeTarget "IFF" */ = {
+		0356D7AF1BD4917F00B013B9 /* Build configuration list for PBXNativeTarget "iff" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0356D7B01BD4917F00B013B9 /* Debug (OpenGL ES) */,

@@ -7,20 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0356D7741BD48D2C00B013B9 /* CLIPPER.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7671BD48D2C00B013B9 /* CLIPPER.C */; };
-		0356D7751BD48D2C00B013B9 /* DRAW.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7691BD48D2C00B013B9 /* DRAW.C */; };
-		0356D7761BD48D2C00B013B9 /* GLOBVARS.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D76A1BD48D2C00B013B9 /* GLOBVARS.C */; };
-		0356D7771BD48D2C00B013B9 /* INSTANCE.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D76C1BD48D2C00B013B9 /* INSTANCE.C */; };
-		0356D7781BD48D2C00B013B9 /* INTERP.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D76D1BD48D2C00B013B9 /* INTERP.C */; };
-		0356D7791BD48D2C00B013B9 /* MATRIX.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D76E1BD48D2C00B013B9 /* MATRIX.C */; };
-		0356D77A1BD48D2C00B013B9 /* POINTS.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D76F1BD48D2C00B013B9 /* POINTS.C */; };
-		0356D77B1BD48D2C00B013B9 /* ROD.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7701BD48D2C00B013B9 /* ROD.C */; };
-		0356D77C1BD48D2C00B013B9 /* SETUP.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7711BD48D2C00B013B9 /* SETUP.C */; };
-		0356D77D1BD48D2C00B013B9 /* UPVECS.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7721BD48D2C00B013B9 /* UPVECS.C */; };
-		0356D77E1BD48D2C00B013B9 /* VECVIEW.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7731BD48D2C00B013B9 /* VECVIEW.C */; };
-		0367D71E1BE711C7005192F6 /* SETUPOGLES.c in Sources */ = {isa = PBXBuildFile; fileRef = 0367D71C1BE711C7005192F6 /* SETUPOGLES.c */; };
-		03ED58841BE8465800C24B31 /* RODOGLES.c in Sources */ = {isa = PBXBuildFile; fileRef = 03ED58821BE8465800C24B31 /* RODOGLES.c */; };
-		E30579AC1BE673CD00B6C33F /* DRAWOGLES.c in Sources */ = {isa = PBXBuildFile; fileRef = E30579AA1BE673CD00B6C33F /* DRAWOGLES.c */; };
+		03D9DBE11D0DC88F00853E40 /* clipper.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBD21D0DC88F00853E40 /* clipper.c */; };
+		03D9DBE21D0DC88F00853E40 /* draw.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBD31D0DC88F00853E40 /* draw.c */; };
+		03D9DBE31D0DC88F00853E40 /* globvars.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBD41D0DC88F00853E40 /* globvars.c */; };
+		03D9DBE41D0DC88F00853E40 /* instance.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBD51D0DC88F00853E40 /* instance.c */; };
+		03D9DBE51D0DC88F00853E40 /* interp.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBD61D0DC88F00853E40 /* interp.c */; };
+		03D9DBE61D0DC88F00853E40 /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBD71D0DC88F00853E40 /* matrix.c */; };
+		03D9DBE71D0DC88F00853E40 /* drawogles.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBD91D0DC88F00853E40 /* drawogles.c */; };
+		03D9DBE81D0DC88F00853E40 /* rodogles.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBDA1D0DC88F00853E40 /* rodogles.c */; };
+		03D9DBE91D0DC88F00853E40 /* setupogles.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBDB1D0DC88F00853E40 /* setupogles.c */; };
+		03D9DBEA1D0DC88F00853E40 /* points.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBDC1D0DC88F00853E40 /* points.c */; };
+		03D9DBEB1D0DC88F00853E40 /* rod.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBDD1D0DC88F00853E40 /* rod.c */; };
+		03D9DBEC1D0DC88F00853E40 /* setup.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBDE1D0DC88F00853E40 /* setup.c */; };
+		03D9DBED1D0DC88F00853E40 /* upvecs.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBDF1D0DC88F00853E40 /* upvecs.c */; };
+		03D9DBEE1D0DC88F00853E40 /* vecview.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBE01D0DC88F00853E40 /* vecview.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,27 +36,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0356D75A1BD48CE700B013B9 /* lib3D.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = lib3D.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		0356D7661BD48D2C00B013B9 /* 3D.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = 3D.H; sourceTree = SOURCE_ROOT; };
-		0356D7671BD48D2C00B013B9 /* CLIPPER.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CLIPPER.C; sourceTree = SOURCE_ROOT; };
-		0356D7681BD48D2C00B013B9 /* CLIPPER.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CLIPPER.H; sourceTree = SOURCE_ROOT; };
-		0356D7691BD48D2C00B013B9 /* DRAW.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DRAW.C; sourceTree = SOURCE_ROOT; };
-		0356D76A1BD48D2C00B013B9 /* GLOBVARS.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLOBVARS.C; sourceTree = SOURCE_ROOT; };
-		0356D76B1BD48D2C00B013B9 /* GLOBVARS.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GLOBVARS.H; sourceTree = SOURCE_ROOT; };
-		0356D76C1BD48D2C00B013B9 /* INSTANCE.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = INSTANCE.C; sourceTree = SOURCE_ROOT; };
-		0356D76D1BD48D2C00B013B9 /* INTERP.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = INTERP.C; sourceTree = SOURCE_ROOT; };
-		0356D76E1BD48D2C00B013B9 /* MATRIX.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MATRIX.C; sourceTree = SOURCE_ROOT; };
-		0356D76F1BD48D2C00B013B9 /* POINTS.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = POINTS.C; sourceTree = SOURCE_ROOT; };
-		0356D7701BD48D2C00B013B9 /* ROD.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ROD.C; sourceTree = SOURCE_ROOT; };
-		0356D7711BD48D2C00B013B9 /* SETUP.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SETUP.C; sourceTree = SOURCE_ROOT; };
-		0356D7721BD48D2C00B013B9 /* UPVECS.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UPVECS.C; sourceTree = SOURCE_ROOT; };
-		0356D7731BD48D2C00B013B9 /* VECVIEW.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VECVIEW.C; sourceTree = SOURCE_ROOT; };
-		0367D71C1BE711C7005192F6 /* SETUPOGLES.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SETUPOGLES.c; path = OGLES/SETUPOGLES.c; sourceTree = "<group>"; };
-		0367D71D1BE711C7005192F6 /* SETUPOGLES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SETUPOGLES.h; path = OGLES/SETUPOGLES.h; sourceTree = "<group>"; };
-		03ED58821BE8465800C24B31 /* RODOGLES.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RODOGLES.c; path = OGLES/RODOGLES.c; sourceTree = "<group>"; };
-		03ED58831BE8465800C24B31 /* RODOGLES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RODOGLES.h; path = OGLES/RODOGLES.h; sourceTree = "<group>"; };
-		E30579AA1BE673CD00B6C33F /* DRAWOGLES.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = DRAWOGLES.c; path = OGLES/DRAWOGLES.c; sourceTree = "<group>"; };
-		E30579AB1BE673CD00B6C33F /* DRAWOGLES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DRAWOGLES.h; path = OGLES/DRAWOGLES.h; sourceTree = "<group>"; };
+		0356D75A1BD48CE700B013B9 /* lib3d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = lib3d.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		03D9DBD21D0DC88F00853E40 /* clipper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = clipper.c; path = ../3d/clipper.c; sourceTree = "<group>"; };
+		03D9DBD31D0DC88F00853E40 /* draw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = draw.c; path = ../3d/draw.c; sourceTree = "<group>"; };
+		03D9DBD41D0DC88F00853E40 /* globvars.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = globvars.c; path = ../3d/globvars.c; sourceTree = "<group>"; };
+		03D9DBD51D0DC88F00853E40 /* instance.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = instance.c; path = ../3d/instance.c; sourceTree = "<group>"; };
+		03D9DBD61D0DC88F00853E40 /* interp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = interp.c; path = ../3d/interp.c; sourceTree = "<group>"; };
+		03D9DBD71D0DC88F00853E40 /* matrix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = matrix.c; path = ../3d/matrix.c; sourceTree = "<group>"; };
+		03D9DBD91D0DC88F00853E40 /* drawogles.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = drawogles.c; sourceTree = "<group>"; };
+		03D9DBDA1D0DC88F00853E40 /* rodogles.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = rodogles.c; sourceTree = "<group>"; };
+		03D9DBDB1D0DC88F00853E40 /* setupogles.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = setupogles.c; sourceTree = "<group>"; };
+		03D9DBDC1D0DC88F00853E40 /* points.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = points.c; path = ../3d/points.c; sourceTree = "<group>"; };
+		03D9DBDD1D0DC88F00853E40 /* rod.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rod.c; path = ../3d/rod.c; sourceTree = "<group>"; };
+		03D9DBDE1D0DC88F00853E40 /* setup.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = setup.c; path = ../3d/setup.c; sourceTree = "<group>"; };
+		03D9DBDF1D0DC88F00853E40 /* upvecs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = upvecs.c; path = ../3d/upvecs.c; sourceTree = "<group>"; };
+		03D9DBE01D0DC88F00853E40 /* vecview.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = vecview.c; path = ../3d/vecview.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,8 +67,18 @@
 		0356D7511BD48CE700B013B9 = {
 			isa = PBXGroup;
 			children = (
-				E30579A91BE673AF00B6C33F /* OGLES */,
-				0356D75C1BD48CE700B013B9 /* 3D */,
+				03D9DBD81D0DC88F00853E40 /* ogles */,
+				03D9DBD21D0DC88F00853E40 /* clipper.c */,
+				03D9DBD31D0DC88F00853E40 /* draw.c */,
+				03D9DBD41D0DC88F00853E40 /* globvars.c */,
+				03D9DBD51D0DC88F00853E40 /* instance.c */,
+				03D9DBD61D0DC88F00853E40 /* interp.c */,
+				03D9DBD71D0DC88F00853E40 /* matrix.c */,
+				03D9DBDC1D0DC88F00853E40 /* points.c */,
+				03D9DBDD1D0DC88F00853E40 /* rod.c */,
+				03D9DBDE1D0DC88F00853E40 /* setup.c */,
+				03D9DBDF1D0DC88F00853E40 /* upvecs.c */,
+				03D9DBE01D0DC88F00853E40 /* vecview.c */,
 				0356D75B1BD48CE700B013B9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -82,51 +86,28 @@
 		0356D75B1BD48CE700B013B9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0356D75A1BD48CE700B013B9 /* lib3D.a */,
+				0356D75A1BD48CE700B013B9 /* lib3d.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0356D75C1BD48CE700B013B9 /* 3D */ = {
+		03D9DBD81D0DC88F00853E40 /* ogles */ = {
 			isa = PBXGroup;
 			children = (
-				0356D7661BD48D2C00B013B9 /* 3D.H */,
-				0356D7671BD48D2C00B013B9 /* CLIPPER.C */,
-				0356D7681BD48D2C00B013B9 /* CLIPPER.H */,
-				0356D7691BD48D2C00B013B9 /* DRAW.C */,
-				0356D76A1BD48D2C00B013B9 /* GLOBVARS.C */,
-				0356D76B1BD48D2C00B013B9 /* GLOBVARS.H */,
-				0356D76C1BD48D2C00B013B9 /* INSTANCE.C */,
-				0356D76D1BD48D2C00B013B9 /* INTERP.C */,
-				0356D76E1BD48D2C00B013B9 /* MATRIX.C */,
-				0356D76F1BD48D2C00B013B9 /* POINTS.C */,
-				0356D7701BD48D2C00B013B9 /* ROD.C */,
-				0356D7711BD48D2C00B013B9 /* SETUP.C */,
-				0356D7721BD48D2C00B013B9 /* UPVECS.C */,
-				0356D7731BD48D2C00B013B9 /* VECVIEW.C */,
+				03D9DBD91D0DC88F00853E40 /* drawogles.c */,
+				03D9DBDA1D0DC88F00853E40 /* rodogles.c */,
+				03D9DBDB1D0DC88F00853E40 /* setupogles.c */,
 			);
-			path = 3D;
-			sourceTree = "<group>";
-		};
-		E30579A91BE673AF00B6C33F /* OGLES */ = {
-			isa = PBXGroup;
-			children = (
-				E30579AA1BE673CD00B6C33F /* DRAWOGLES.c */,
-				E30579AB1BE673CD00B6C33F /* DRAWOGLES.h */,
-				0367D71C1BE711C7005192F6 /* SETUPOGLES.c */,
-				0367D71D1BE711C7005192F6 /* SETUPOGLES.h */,
-				03ED58821BE8465800C24B31 /* RODOGLES.c */,
-				03ED58831BE8465800C24B31 /* RODOGLES.h */,
-			);
-			name = OGLES;
+			name = ogles;
+			path = ../3d/ogles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0356D7591BD48CE700B013B9 /* 3D */ = {
+		0356D7591BD48CE700B013B9 /* 3d */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0356D7631BD48CE700B013B9 /* Build configuration list for PBXNativeTarget "3D" */;
+			buildConfigurationList = 0356D7631BD48CE700B013B9 /* Build configuration list for PBXNativeTarget "3d" */;
 			buildPhases = (
 				0356D7561BD48CE700B013B9 /* Sources */,
 				0356D7571BD48CE700B013B9 /* Frameworks */,
@@ -136,9 +117,9 @@
 			);
 			dependencies = (
 			);
-			name = 3D;
+			name = 3d;
 			productName = 3D;
-			productReference = 0356D75A1BD48CE700B013B9 /* lib3D.a */;
+			productReference = 0356D75A1BD48CE700B013B9 /* lib3d.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -155,7 +136,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0356D7551BD48CE700B013B9 /* Build configuration list for PBXProject "3D" */;
+			buildConfigurationList = 0356D7551BD48CE700B013B9 /* Build configuration list for PBXProject "3d" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -167,7 +148,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0356D7591BD48CE700B013B9 /* 3D */,
+				0356D7591BD48CE700B013B9 /* 3d */,
 			);
 		};
 /* End PBXProject section */
@@ -177,20 +158,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0356D77C1BD48D2C00B013B9 /* SETUP.C in Sources */,
-				0356D7771BD48D2C00B013B9 /* INSTANCE.C in Sources */,
-				0356D7741BD48D2C00B013B9 /* CLIPPER.C in Sources */,
-				0356D77D1BD48D2C00B013B9 /* UPVECS.C in Sources */,
-				03ED58841BE8465800C24B31 /* RODOGLES.c in Sources */,
-				E30579AC1BE673CD00B6C33F /* DRAWOGLES.c in Sources */,
-				0356D7791BD48D2C00B013B9 /* MATRIX.C in Sources */,
-				0356D77E1BD48D2C00B013B9 /* VECVIEW.C in Sources */,
-				0356D77B1BD48D2C00B013B9 /* ROD.C in Sources */,
-				0356D7761BD48D2C00B013B9 /* GLOBVARS.C in Sources */,
-				0367D71E1BE711C7005192F6 /* SETUPOGLES.c in Sources */,
-				0356D7751BD48D2C00B013B9 /* DRAW.C in Sources */,
-				0356D7781BD48D2C00B013B9 /* INTERP.C in Sources */,
-				0356D77A1BD48D2C00B013B9 /* POINTS.C in Sources */,
+				03D9DBEB1D0DC88F00853E40 /* rod.c in Sources */,
+				03D9DBE51D0DC88F00853E40 /* interp.c in Sources */,
+				03D9DBE41D0DC88F00853E40 /* instance.c in Sources */,
+				03D9DBEE1D0DC88F00853E40 /* vecview.c in Sources */,
+				03D9DBE81D0DC88F00853E40 /* rodogles.c in Sources */,
+				03D9DBE61D0DC88F00853E40 /* matrix.c in Sources */,
+				03D9DBE31D0DC88F00853E40 /* globvars.c in Sources */,
+				03D9DBED1D0DC88F00853E40 /* upvecs.c in Sources */,
+				03D9DBE11D0DC88F00853E40 /* clipper.c in Sources */,
+				03D9DBEA1D0DC88F00853E40 /* points.c in Sources */,
+				03D9DBE71D0DC88F00853E40 /* drawogles.c in Sources */,
+				03D9DBEC1D0DC88F00853E40 /* setup.c in Sources */,
+				03D9DBE91D0DC88F00853E40 /* setupogles.c in Sources */,
+				03D9DBE21D0DC88F00853E40 /* draw.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,7 +215,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = ../LIB;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -273,7 +254,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = ../LIB;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -284,6 +265,7 @@
 		0356D7641BD48CE700B013B9 /* Debug (OpenGL ES) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_INPUT_FILETYPE = automatic;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -293,6 +275,7 @@
 		0356D7651BD48CE700B013B9 /* Release (OpenGL ES) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_INPUT_FILETYPE = automatic;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -336,7 +319,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = ../LIB;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -347,6 +330,7 @@
 		03BF18DB1C27A7A2003BE14A /* Debug (Software) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -385,7 +369,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = ../LIB;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -396,6 +380,7 @@
 		03BF18DD1C27A7A8003BE14A /* Release (Software) */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -406,7 +391,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0356D7551BD48CE700B013B9 /* Build configuration list for PBXProject "3D" */ = {
+		0356D7551BD48CE700B013B9 /* Build configuration list for PBXProject "3d" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0356D7611BD48CE700B013B9 /* Debug (OpenGL ES) */,
@@ -417,7 +402,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Release (OpenGL ES)";
 		};
-		0356D7631BD48CE700B013B9 /* Build configuration list for PBXNativeTarget "3D" */ = {
+		0356D7631BD48CE700B013B9 /* Build configuration list for PBXNativeTarget "3d" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0356D7641BD48CE700B013B9 /* Debug (OpenGL ES) */,

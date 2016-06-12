@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0356D7991BD490D500B013B9 /* FIX.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7961BD490D500B013B9 /* FIX.C */; };
-		0356D79A1BD490D500B013B9 /* TABLES.C in Sources */ = {isa = PBXBuildFile; fileRef = 0356D7981BD490D500B013B9 /* TABLES.C */; };
+		03D9DBD01D0DC86200853E40 /* fix.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBCE1D0DC86200853E40 /* fix.c */; };
+		03D9DBD11D0DC86200853E40 /* tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 03D9DBCF1D0DC86200853E40 /* tables.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,10 +24,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0356D78A1BD490A700B013B9 /* libFIX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFIX.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		0356D7961BD490D500B013B9 /* FIX.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FIX.C; sourceTree = SOURCE_ROOT; };
-		0356D7971BD490D500B013B9 /* FIX.H */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FIX.H; sourceTree = SOURCE_ROOT; };
-		0356D7981BD490D500B013B9 /* TABLES.C */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TABLES.C; sourceTree = SOURCE_ROOT; };
+		0356D78A1BD490A700B013B9 /* libfix.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libfix.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		03D9DBCE1D0DC86200853E40 /* fix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = fix.c; path = ../fix/fix.c; sourceTree = "<group>"; };
+		03D9DBCF1D0DC86200853E40 /* tables.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tables.c; path = ../fix/tables.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,7 +43,8 @@
 		0356D7811BD490A700B013B9 = {
 			isa = PBXGroup;
 			children = (
-				0356D78C1BD490A700B013B9 /* FIX */,
+				03D9DBCE1D0DC86200853E40 /* fix.c */,
+				03D9DBCF1D0DC86200853E40 /* tables.c */,
 				0356D78B1BD490A700B013B9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,27 +52,17 @@
 		0356D78B1BD490A700B013B9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0356D78A1BD490A700B013B9 /* libFIX.a */,
+				0356D78A1BD490A700B013B9 /* libfix.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		0356D78C1BD490A700B013B9 /* FIX */ = {
-			isa = PBXGroup;
-			children = (
-				0356D7961BD490D500B013B9 /* FIX.C */,
-				0356D7971BD490D500B013B9 /* FIX.H */,
-				0356D7981BD490D500B013B9 /* TABLES.C */,
-			);
-			path = FIX;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0356D7891BD490A700B013B9 /* FIX */ = {
+		0356D7891BD490A700B013B9 /* fix */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0356D7931BD490A700B013B9 /* Build configuration list for PBXNativeTarget "FIX" */;
+			buildConfigurationList = 0356D7931BD490A700B013B9 /* Build configuration list for PBXNativeTarget "fix" */;
 			buildPhases = (
 				0356D7861BD490A700B013B9 /* Sources */,
 				0356D7871BD490A700B013B9 /* Frameworks */,
@@ -82,9 +72,9 @@
 			);
 			dependencies = (
 			);
-			name = FIX;
+			name = fix;
 			productName = FIX;
-			productReference = 0356D78A1BD490A700B013B9 /* libFIX.a */;
+			productReference = 0356D78A1BD490A700B013B9 /* libfix.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -101,7 +91,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0356D7851BD490A700B013B9 /* Build configuration list for PBXProject "FIX" */;
+			buildConfigurationList = 0356D7851BD490A700B013B9 /* Build configuration list for PBXProject "fix" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -113,7 +103,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0356D7891BD490A700B013B9 /* FIX */,
+				0356D7891BD490A700B013B9 /* fix */,
 			);
 		};
 /* End PBXProject section */
@@ -123,8 +113,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0356D79A1BD490D500B013B9 /* TABLES.C in Sources */,
-				0356D7991BD490D500B013B9 /* FIX.C in Sources */,
+				03D9DBD11D0DC86200853E40 /* tables.c in Sources */,
+				03D9DBD01D0DC86200853E40 /* fix.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +156,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -202,6 +193,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -213,8 +205,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
-				HEADER_SEARCH_PATHS = ../LIB;
+				GCC_INPUT_FILETYPE = automatic;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -225,8 +216,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
-				HEADER_SEARCH_PATHS = ../LIB;
+				GCC_INPUT_FILETYPE = automatic;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -268,6 +258,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -279,8 +270,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
-				HEADER_SEARCH_PATHS = ../LIB;
+				GCC_INPUT_FILETYPE = automatic;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -316,6 +306,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -327,8 +318,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
-				GCC_INPUT_FILETYPE = sourcecode.c.c;
-				HEADER_SEARCH_PATHS = ../LIB;
+				GCC_INPUT_FILETYPE = automatic;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -338,7 +328,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0356D7851BD490A700B013B9 /* Build configuration list for PBXProject "FIX" */ = {
+		0356D7851BD490A700B013B9 /* Build configuration list for PBXProject "fix" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0356D7911BD490A700B013B9 /* Debug (OpenGL ES) */,
@@ -349,7 +339,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Release (OpenGL ES)";
 		};
-		0356D7931BD490A700B013B9 /* Build configuration list for PBXNativeTarget "FIX" */ = {
+		0356D7931BD490A700B013B9 /* Build configuration list for PBXNativeTarget "fix" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0356D7941BD490A700B013B9 /* Debug (OpenGL ES) */,

@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:2d/2d.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:3d/3d.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:cfile/cfile.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Descent/Descent.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:fix/fix.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:iff/iff.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:io/io.xcodeproj">
+   </FileRef>
+   <Group
+      location = "group:2D"
+      name = "lib">
+      <FileRef
+         location = "group:../lib/3d.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/ai.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/aistruct.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/arcade.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/args.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/automap.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/bitbltogles.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/bm.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/byteswap.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/cdrom.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/centers.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/cfile.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/cflib.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/cfmain.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/clip.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/clipper.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/cntrlcen.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/coindev.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/collide.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/compbit.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/config.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/controls.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/convert1.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/credits.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/dcflib.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/delta.cfg">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/demo.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/desc_id.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/digi.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/digicomp.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/div0.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/dosxptrs.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/dpmi.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/drawogles.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/dstring.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/editor.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/effect2d.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/effects.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/ehostage.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/endlevel.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/eobject.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/error.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/eswitch.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/fireball.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/fix.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/fontogles.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/fuelcen.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/func.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/fvi.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/game.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/gamefont.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/gamemine.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/gamesave.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/gameseg.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/gameseq.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/gauges.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/globvars.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/gr.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/grdef.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/hash.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/hmp.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/hostage.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/i86.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/ibitblt.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/iff.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/iglasses.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/imath1.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/inferno.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/info.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/ipx.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/joy.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/joycal.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/joydefs.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/kconfig.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/kdefs.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/key.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/kfuncs.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/kmatrix.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/l.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/laser.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/library.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/lighting.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/lzw.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/macro.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/mcockpit.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/meddraw.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/medlisp.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/medmisc.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/medrobot.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/medsel.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/medwall.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/mem.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/menu.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/mission.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/modem.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/mono.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/morph.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/motion.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/mouse.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/multi.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/multibot.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/music.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/netmisc.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/netseq.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/network.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/newdemo.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/newmenu.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/nfile.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/no_sos.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/nocfile.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/nocomlib.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/o.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/object.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/objpage.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/oglestex.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/outside.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/paging.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/palette.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/parsarg.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/pcx.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/physics.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/piggy.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/player.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/playsave.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/polyobj.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/powerup.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/radar.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/readfile.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/rectogles.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/render.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/rle.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/robot.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/rodogles.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/scaleogles.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/scanline.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/scores.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/screens.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/segment.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/segment2.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/segpoint.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/seguvs.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/serial.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/settings.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/setupogles.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/ship.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/slew.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/songs.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/sounds.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/spx.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/state.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/switch.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/tcal.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/terrain.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/texmap.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/texmapl.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/texmerge.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/texpage.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/text.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/textures.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/timer.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/titles.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/tracker.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/types.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/ui.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/vclip.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/vecmat.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/vector1.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/vers_id.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/vesa.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/vfx.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/vfx1.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/victor.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/viewcontrollerc.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/wall.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/weapon.h">
+      </FileRef>
+      <FileRef
+         location = "group:../lib/xlftab.h">
+      </FileRef>
+   </Group>
+   <FileRef
+      location = "group:main/main.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:mem/mem.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:misc/misc.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:texmap/texmap.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:ui/ui.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:vecmat/vecmat.xcodeproj">
+   </FileRef>
+</Workspace>

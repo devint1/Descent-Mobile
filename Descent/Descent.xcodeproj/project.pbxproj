@@ -8,19 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0300DB411BDD4F4900AED00D /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0300DB401BDD4F4900AED00D /* OpenAL.framework */; };
-		031232591BD4C04600BEBA87 /* lib3D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0356D8301BD4A23500B013B9 /* lib3D.a */; };
-		0312325A1BD4C04600BEBA87 /* libFIX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0356D8321BD4A23500B013B9 /* libFIX.a */; };
-		0312325B1BD4C04600BEBA87 /* libIFF.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0356D8331BD4A23500B013B9 /* libIFF.a */; };
-		031232611BD4C04700BEBA87 /* libCFILE.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0312325C1BD4C04700BEBA87 /* libCFILE.a */; };
-		031232621BD4C04700BEBA87 /* libMEM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0312325D1BD4C04700BEBA87 /* libMEM.a */; };
-		031232631BD4C04700BEBA87 /* libMISC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0312325E1BD4C04700BEBA87 /* libMISC.a */; };
-		031232641BD4C04700BEBA87 /* libTEXMAP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0312325F1BD4C04700BEBA87 /* libTEXMAP.a */; };
-		031232651BD4C04700BEBA87 /* libVECMAT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 031232601BD4C04700BEBA87 /* libVECMAT.a */; };
-		031232661BD4C05200BEBA87 /* lib2D.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0356D82F1BD4A23500B013B9 /* lib2D.a */; settings = {ATTRIBUTES = (Required, ); }; };
-		031232C21BD4D78400BEBA87 /* libUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 031232C11BD4D78400BEBA87 /* libUI.a */; };
-		031232F01BD4DAD900BEBA87 /* libIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 031232EF1BD4DAD900BEBA87 /* libIO.a */; };
 		03376F5E1C052830009E3740 /* Main-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 03376F5C1C052830009E3740 /* Main-iPad.storyboard */; };
-		033B56661BD593F300A20894 /* libMAIN.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 033B56651BD593F300A20894 /* libMAIN.a */; };
 		03A28F341BE05BC400642A6D /* DESCENT.HOG in Resources */ = {isa = PBXBuildFile; fileRef = 03A28F321BE05BC400642A6D /* DESCENT.HOG */; };
 		03A28F351BE05BC400642A6D /* DESCENT.PIG in Resources */ = {isa = PBXBuildFile; fileRef = 03A28F331BE05BC400642A6D /* DESCENT.PIG */; };
 		03A28F401BE05BEB00642A6D /* Motion.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A28F3B1BE05BEB00642A6D /* Motion.m */; };
@@ -36,29 +24,24 @@
 		03A28FB11BE2E82200642A6D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A28FB01BE2E82200642A6D /* OpenGLES.framework */; };
 		03A28FB41BE2EA8900642A6D /* ControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A28FB31BE2EA8900642A6D /* ControlsView.m */; };
 		03B84A2A1BDB6E5F005D04FB /* merlin_silver.sf2 in Resources */ = {isa = PBXBuildFile; fileRef = 03B84A291BDB6E5F005D04FB /* merlin_silver.sf2 */; };
+		03D9DC431D0DCA6700853E40 /* lib2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D9DC371D0DCA6700853E40 /* lib2d.a */; };
+		03D9DC441D0DCA6700853E40 /* lib3d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D9DC381D0DCA6700853E40 /* lib3d.a */; };
+		03D9DC451D0DCA6700853E40 /* libcfile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D9DC391D0DCA6700853E40 /* libcfile.a */; };
+		03D9DC461D0DCA6700853E40 /* libfix.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D9DC3A1D0DCA6700853E40 /* libfix.a */; };
+		03D9DC471D0DCA6700853E40 /* libiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D9DC3B1D0DCA6700853E40 /* libiff.a */; };
+		03D9DC481D0DCA6700853E40 /* libio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D9DC3C1D0DCA6700853E40 /* libio.a */; };
+		03D9DC491D0DCA6700853E40 /* libmain.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D9DC3D1D0DCA6700853E40 /* libmain.a */; };
+		03D9DC4A1D0DCA6700853E40 /* libmem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D9DC3E1D0DCA6700853E40 /* libmem.a */; };
+		03D9DC4B1D0DCA6700853E40 /* libmisc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D9DC3F1D0DCA6700853E40 /* libmisc.a */; };
+		03D9DC4C1D0DCA6700853E40 /* libtexmap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D9DC401D0DCA6700853E40 /* libtexmap.a */; };
+		03D9DC4D1D0DCA6700853E40 /* libui.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D9DC411D0DCA6700853E40 /* libui.a */; };
+		03D9DC4E1D0DCA6700853E40 /* libvecmat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D9DC421D0DCA6700853E40 /* libvecmat.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0300DB401BDD4F4900AED00D /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
-		031232121BD4A5BD00BEBA87 /* libMISC.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMISC.a; path = "../MISC/build/Debug-iphoneos/libMISC.a"; sourceTree = "<group>"; };
-		031232321BD4A93000BEBA87 /* libTEXMAP.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTEXMAP.a; path = "../TEXMAP/build/Debug-iphoneos/libTEXMAP.a"; sourceTree = "<group>"; };
-		0312325C1BD4C04700BEBA87 /* libCFILE.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCFILE.a; path = "../../../../Library/Developer/Xcode/DerivedData/Descent-iOS-fmijdzbcfieidshjviilwfoeildt/Build/Products/Debug-iphoneos/libCFILE.a"; sourceTree = "<group>"; };
-		0312325D1BD4C04700BEBA87 /* libMEM.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMEM.a; path = "../../../../Library/Developer/Xcode/DerivedData/Descent-iOS-fmijdzbcfieidshjviilwfoeildt/Build/Products/Debug-iphoneos/libMEM.a"; sourceTree = "<group>"; };
-		0312325E1BD4C04700BEBA87 /* libMISC.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMISC.a; path = "../../../../Library/Developer/Xcode/DerivedData/Descent-iOS-fmijdzbcfieidshjviilwfoeildt/Build/Products/Debug-iphoneos/libMISC.a"; sourceTree = "<group>"; };
-		0312325F1BD4C04700BEBA87 /* libTEXMAP.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTEXMAP.a; path = "../../../../Library/Developer/Xcode/DerivedData/Descent-iOS-fmijdzbcfieidshjviilwfoeildt/Build/Products/Debug-iphoneos/libTEXMAP.a"; sourceTree = "<group>"; };
-		031232601BD4C04700BEBA87 /* libVECMAT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libVECMAT.a; path = "../../../../Library/Developer/Xcode/DerivedData/Descent-iOS-fmijdzbcfieidshjviilwfoeildt/Build/Products/Debug-iphoneos/libVECMAT.a"; sourceTree = "<group>"; };
-		031232C11BD4D78400BEBA87 /* libUI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libUI.a; path = "../../../../Library/Developer/Xcode/DerivedData/Descent-iOS-fmijdzbcfieidshjviilwfoeildt/Build/Products/Debug-iphoneos/libUI.a"; sourceTree = "<group>"; };
-		031232EF1BD4DAD900BEBA87 /* libIO.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIO.a; path = "../../../../Library/Developer/Xcode/DerivedData/Descent-iOS-fmijdzbcfieidshjviilwfoeildt/Build/Products/Debug-iphoneos/libIO.a"; sourceTree = "<group>"; };
 		03376F5D1C052830009E3740 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Main-iPad.storyboard"; sourceTree = "<group>"; };
-		033B56651BD593F300A20894 /* libMAIN.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMAIN.a; path = "../../../../Library/Developer/Xcode/DerivedData/Descent-iOS-fmijdzbcfieidshjviilwfoeildt/Build/Products/Debug-iphoneos/libMAIN.a"; sourceTree = "<group>"; };
 		0356D8151BD4A22A00B013B9 /* Descent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Descent.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0356D82F1BD4A23500B013B9 /* lib2D.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib2D.a; path = "../../../../Library/Developer/Xcode/DerivedData/Descent-iOS-fmijdzbcfieidshjviilwfoeildt/Build/Products/Debug-iphoneos/lib2D.a"; sourceTree = "<group>"; };
-		0356D8301BD4A23500B013B9 /* lib3D.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib3D.a; path = "../../../../Library/Developer/Xcode/DerivedData/Descent-iOS-fmijdzbcfieidshjviilwfoeildt/Build/Products/Debug-iphoneos/lib3D.a"; sourceTree = "<group>"; };
-		0356D8311BD4A23500B013B9 /* libCFILE.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCFILE.a; path = "../CFILE/build/Debug-iphoneos/libCFILE.a"; sourceTree = "<group>"; };
-		0356D8321BD4A23500B013B9 /* libFIX.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFIX.a; path = "../../../../Library/Developer/Xcode/DerivedData/Descent-iOS-fmijdzbcfieidshjviilwfoeildt/Build/Products/Debug-iphoneos/libFIX.a"; sourceTree = "<group>"; };
-		0356D8331BD4A23500B013B9 /* libIFF.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libIFF.a; path = "../../../../Library/Developer/Xcode/DerivedData/Descent-iOS-fmijdzbcfieidshjviilwfoeildt/Build/Products/Debug-iphoneos/libIFF.a"; sourceTree = "<group>"; };
-		0356D8341BD4A23500B013B9 /* libMEM.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMEM.a; path = "../MEM/build/Debug-iphoneos/libMEM.a"; sourceTree = "<group>"; };
-		0356D8351BD4A23500B013B9 /* libVECMAT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libVECMAT.a; path = "../VECMAT/build/Debug-iphoneos/libVECMAT.a"; sourceTree = "<group>"; };
 		03A28F321BE05BC400642A6D /* DESCENT.HOG */ = {isa = PBXFileReference; lastKnownFileType = file; path = DESCENT.HOG; sourceTree = "<group>"; };
 		03A28F331BE05BC400642A6D /* DESCENT.PIG */ = {isa = PBXFileReference; lastKnownFileType = file; path = DESCENT.PIG; sourceTree = "<group>"; };
 		03A28F361BE05BCE00642A6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -82,6 +65,18 @@
 		03A28FB21BE2EA8900642A6D /* ControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlsView.h; sourceTree = SOURCE_ROOT; };
 		03A28FB31BE2EA8900642A6D /* ControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ControlsView.m; sourceTree = SOURCE_ROOT; };
 		03B84A291BDB6E5F005D04FB /* merlin_silver.sf2 */ = {isa = PBXFileReference; lastKnownFileType = file; path = merlin_silver.sf2; sourceTree = "<group>"; };
+		03D9DC371D0DCA6700853E40 /* lib2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib2d.a; path = "../2D/build/Debug (OpenGL ES)-iphoneos/lib2d.a"; sourceTree = "<group>"; };
+		03D9DC381D0DCA6700853E40 /* lib3d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = lib3d.a; path = "../3D/build/Debug (OpenGL ES)-iphoneos/lib3d.a"; sourceTree = "<group>"; };
+		03D9DC391D0DCA6700853E40 /* libcfile.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcfile.a; path = "../CFILE/build/Debug (OpenGL ES)-iphoneos/libcfile.a"; sourceTree = "<group>"; };
+		03D9DC3A1D0DCA6700853E40 /* libfix.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfix.a; path = "../FIX/build/Debug (OpenGL ES)-iphoneos/libfix.a"; sourceTree = "<group>"; };
+		03D9DC3B1D0DCA6700853E40 /* libiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libiff.a; path = "../IFF/build/Debug (OpenGL ES)-iphoneos/libiff.a"; sourceTree = "<group>"; };
+		03D9DC3C1D0DCA6700853E40 /* libio.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libio.a; path = "../IO/build/Debug (OpenGL ES)-iphoneos/libio.a"; sourceTree = "<group>"; };
+		03D9DC3D1D0DCA6700853E40 /* libmain.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmain.a; path = "../MAIN/build/Debug (OpenGL ES)-iphoneos/libmain.a"; sourceTree = "<group>"; };
+		03D9DC3E1D0DCA6700853E40 /* libmem.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmem.a; path = "../MEM/build/Debug (OpenGL ES)-iphoneos/libmem.a"; sourceTree = "<group>"; };
+		03D9DC3F1D0DCA6700853E40 /* libmisc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libmisc.a; path = "../MISC/build/Debug (OpenGL ES)-iphoneos/libmisc.a"; sourceTree = "<group>"; };
+		03D9DC401D0DCA6700853E40 /* libtexmap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtexmap.a; path = "../TEXMAP/build/Debug (OpenGL ES)-iphoneos/libtexmap.a"; sourceTree = "<group>"; };
+		03D9DC411D0DCA6700853E40 /* libui.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libui.a; path = "../UI/build/Debug (OpenGL ES)-iphoneos/libui.a"; sourceTree = "<group>"; };
+		03D9DC421D0DCA6700853E40 /* libvecmat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libvecmat.a; path = "../VECMAT/build/Debug (OpenGL ES)-iphoneos/libvecmat.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,20 +84,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03D9DC431D0DCA6700853E40 /* lib2d.a in Frameworks */,
+				03D9DC441D0DCA6700853E40 /* lib3d.a in Frameworks */,
+				03D9DC451D0DCA6700853E40 /* libcfile.a in Frameworks */,
+				03D9DC461D0DCA6700853E40 /* libfix.a in Frameworks */,
+				03D9DC471D0DCA6700853E40 /* libiff.a in Frameworks */,
+				03D9DC481D0DCA6700853E40 /* libio.a in Frameworks */,
+				03D9DC491D0DCA6700853E40 /* libmain.a in Frameworks */,
+				03D9DC4A1D0DCA6700853E40 /* libmem.a in Frameworks */,
+				03D9DC4B1D0DCA6700853E40 /* libmisc.a in Frameworks */,
+				03D9DC4C1D0DCA6700853E40 /* libtexmap.a in Frameworks */,
+				03D9DC4D1D0DCA6700853E40 /* libui.a in Frameworks */,
+				03D9DC4E1D0DCA6700853E40 /* libvecmat.a in Frameworks */,
 				03A28FB11BE2E82200642A6D /* OpenGLES.framework in Frameworks */,
 				0300DB411BDD4F4900AED00D /* OpenAL.framework in Frameworks */,
-				033B56661BD593F300A20894 /* libMAIN.a in Frameworks */,
-				031232F01BD4DAD900BEBA87 /* libIO.a in Frameworks */,
-				031232C21BD4D78400BEBA87 /* libUI.a in Frameworks */,
-				031232661BD4C05200BEBA87 /* lib2D.a in Frameworks */,
-				031232611BD4C04700BEBA87 /* libCFILE.a in Frameworks */,
-				031232621BD4C04700BEBA87 /* libMEM.a in Frameworks */,
-				031232631BD4C04700BEBA87 /* libMISC.a in Frameworks */,
-				031232641BD4C04700BEBA87 /* libTEXMAP.a in Frameworks */,
-				031232651BD4C04700BEBA87 /* libVECMAT.a in Frameworks */,
-				031232591BD4C04600BEBA87 /* lib3D.a in Frameworks */,
-				0312325A1BD4C04600BEBA87 /* libFIX.a in Frameworks */,
-				0312325B1BD4C04600BEBA87 /* libIFF.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,23 +118,19 @@
 			isa = PBXGroup;
 			children = (
 				0300DB401BDD4F4900AED00D /* OpenAL.framework */,
-				033B56651BD593F300A20894 /* libMAIN.a */,
-				031232EF1BD4DAD900BEBA87 /* libIO.a */,
-				031232C11BD4D78400BEBA87 /* libUI.a */,
-				0312325C1BD4C04700BEBA87 /* libCFILE.a */,
-				0312325D1BD4C04700BEBA87 /* libMEM.a */,
-				0312325E1BD4C04700BEBA87 /* libMISC.a */,
-				0312325F1BD4C04700BEBA87 /* libTEXMAP.a */,
-				031232601BD4C04700BEBA87 /* libVECMAT.a */,
-				031232321BD4A93000BEBA87 /* libTEXMAP.a */,
-				031232121BD4A5BD00BEBA87 /* libMISC.a */,
-				0356D82F1BD4A23500B013B9 /* lib2D.a */,
-				0356D8301BD4A23500B013B9 /* lib3D.a */,
-				0356D8311BD4A23500B013B9 /* libCFILE.a */,
-				0356D8321BD4A23500B013B9 /* libFIX.a */,
-				0356D8331BD4A23500B013B9 /* libIFF.a */,
-				0356D8341BD4A23500B013B9 /* libMEM.a */,
-				0356D8351BD4A23500B013B9 /* libVECMAT.a */,
+				03A28FB01BE2E82200642A6D /* OpenGLES.framework */,
+				03D9DC371D0DCA6700853E40 /* lib2d.a */,
+				03D9DC381D0DCA6700853E40 /* lib3d.a */,
+				03D9DC391D0DCA6700853E40 /* libcfile.a */,
+				03D9DC3A1D0DCA6700853E40 /* libfix.a */,
+				03D9DC3B1D0DCA6700853E40 /* libiff.a */,
+				03D9DC3C1D0DCA6700853E40 /* libio.a */,
+				03D9DC3D1D0DCA6700853E40 /* libmain.a */,
+				03D9DC3E1D0DCA6700853E40 /* libmem.a */,
+				03D9DC3F1D0DCA6700853E40 /* libmisc.a */,
+				03D9DC401D0DCA6700853E40 /* libtexmap.a */,
+				03D9DC411D0DCA6700853E40 /* libui.a */,
+				03D9DC421D0DCA6700853E40 /* libvecmat.a */,
 			);
 			name = References;
 			sourceTree = "<group>";
@@ -157,7 +148,6 @@
 		0356D80C1BD4A22A00B013B9 = {
 			isa = PBXGroup;
 			children = (
-				03A28FB01BE2E82200642A6D /* OpenGLES.framework */,
 				03A28F361BE05BCE00642A6D /* Assets.xcassets */,
 				03A28F381BE05BD400642A6D /* Info.plist */,
 				033B56781BD5C47F00A20894 /* UI */,
@@ -367,6 +357,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -406,6 +397,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -427,7 +419,6 @@
 					NETWORK,
 					OGLES,
 				);
-				HEADER_SEARCH_PATHS = ../LIB;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LINKER_DISPLAYS_MANGLED_NAMES = NO;
@@ -451,7 +442,6 @@
 					NETWORK,
 					OGLES,
 				);
-				HEADER_SEARCH_PATHS = ../LIB;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LINKER_DISPLAYS_MANGLED_NAMES = NO;
@@ -499,6 +489,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -519,7 +510,6 @@
 					"$(inherited)",
 					NETWORK,
 				);
-				HEADER_SEARCH_PATHS = ../LIB;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LINKER_DISPLAYS_MANGLED_NAMES = NO;
@@ -561,6 +551,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = ../lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
@@ -581,7 +572,6 @@
 					RELEASE,
 					NETWORK,
 				);
-				HEADER_SEARCH_PATHS = ../LIB;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "";
 				LINKER_DISPLAYS_MANGLED_NAMES = NO;

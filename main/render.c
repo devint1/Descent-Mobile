@@ -298,6 +298,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 static char rcsid[] = "$Id: render.c 2.5 1995/12/19 15:31:36 john Exp $";
 #pragma on (unreferenced)
 
+#include <math.h>
 #include <stdlib.h>
 #include <string.h>
 
