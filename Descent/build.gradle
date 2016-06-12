@@ -20,7 +20,7 @@ model {
 		ndk {
 			moduleName = "Descent"
 			CFlags.addAll(["-DANDROID_NDK", "-DDISABLE_IMPORTGL", "-DOGLES", "-DNASM", "-DNETWORK",
-						   "-std=c99", "-I" + file("../LIB").absolutePath])
+						   "-std=c99", "-I" + file("../lib").absolutePath])
 			ldLibs.addAll(["GLESv1_CM", "EGL", "dl", "log", "android", "OpenSLES"])
 		}
 		productFlavors {
@@ -54,18 +54,18 @@ model {
 			main {
 				jni {
 					source {
-						srcDir "../2D"
-						srcDir "../3D"
-						srcDir "../CFILE"
-						srcDir "../FIX"
-						srcDir "../IFF"
-						srcDir "../IO"
-						srcDir "../MAIN"
-						srcDir "../MEM"
-						srcDir "../MISC"
-						srcDir "../TEXMAP"
-						srcDir "../UI"
-						srcDir "../VECMAT"
+						srcDir "../2d"
+						srcDir "../3d"
+						srcDir "../cfile"
+						srcDir "../fix"
+						srcDir "../iff"
+						srcDir "../io"
+						srcDir "../main"
+						srcDir "../mem"
+						srcDir "../misc"
+						srcDir "../texmap"
+						srcDir "../ui"
+						srcDir "../vecmat"
 					}
 				}
 			}
