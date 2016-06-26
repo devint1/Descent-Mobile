@@ -291,8 +291,8 @@ int show_title_screen( char * filename, int allow_keys )
 	vfx_set_palette_sub( New_pal );
 	gr_set_current_canvas( NULL );
 	scale_bitmap(&title_bm, scale_pts);
-	if (gr_palette_fade_in( New_pal, 32, allow_keys ))	
-		return 1;
+	gr_palette_fade_in(New_pal, 32, allow_keys);
+	showRenderBuffer();
 
 	gr_palette_load( New_pal );
 	timer	= timer_get_fixed_seconds() + i2f(3);
@@ -314,11 +314,7 @@ int show_title_screen( char * filename, int allow_keys )
 		}
 		#endif
 	}
-#ifdef OGLES
-	if (glIsTexture(title_bm.bm_ogles_tex_id))
-#endif
-		if (gr_palette_fade_out( New_pal, 32, allow_keys ))
-			return 1;
+	gr_palette_fade_out(New_pal, 32, allow_keys);
 	free(title_bm.bm_data);
 #ifdef OGLES
 	glDeleteTextures(1, &title_bm.bm_ogles_tex_id);
