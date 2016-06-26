@@ -119,6 +119,9 @@ grs_bitmap *gr_create_bitmap_raw(int w, int h, unsigned char * raw_data )
 	new_bitmap->bm_rowsize = w;
 	new_bitmap->bm_data = raw_data;
 	new_bitmap->bm_selector = 0;
+#ifdef OGLES
+	new_bitmap->bm_ogles_tex_id = 0;
+#endif
 
 	return new_bitmap;
 }
@@ -134,6 +137,9 @@ void gr_init_bitmap( grs_bitmap *bm, int mode, int x, int y, int w, int h, int b
 	bm->bm_rowsize = bytesperline;
 	bm->bm_data = data;
 	bm->bm_selector = 0;
+#ifdef OGLES
+	bm->bm_ogles_tex_id = 0;
+#endif
 }
 
 
@@ -151,6 +157,9 @@ grs_bitmap *gr_create_sub_bitmap(grs_bitmap *bm, int x, int y, int w, int h )
 	new_bitmap->bm_rowsize = bm->bm_rowsize;
 	new_bitmap->bm_data = bm->bm_data+(unsigned int)((y*bm->bm_rowsize) + x);
 	new_bitmap->bm_selector = 0;
+#ifdef OGLES
+	new_bitmap->bm_ogles_tex_id = 0;
+#endif
 
 	return new_bitmap;
 }
@@ -174,6 +183,10 @@ void gr_free_bitmap(grs_bitmap *bm )
 void gr_free_sub_bitmap(grs_bitmap *bm )
 {
 	if (bm!=NULL)
+#ifdef OGLES
+	glDeleteTextures(1, &bm->bm_ogles_tex_id);
+	bm->bm_ogles_tex_id = 0;
+#endif
     free(bm);
 }
 
