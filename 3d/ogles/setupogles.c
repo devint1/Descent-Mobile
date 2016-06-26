@@ -22,16 +22,19 @@ void g3_ogles_start_frame() {
 	GLint x, y;
 	GLsizei width, height;
 	GLint viewWidth, viewHeight;
-	
+
 	getRenderBufferSize(&viewWidth, &viewHeight);
 	x = (grd_curcanv->cv_bitmap.bm_x * viewWidth) / grd_curscreen->sc_w;
 	y = (grd_curcanv->cv_bitmap.bm_y * viewHeight) / grd_curscreen->sc_h;
 	width = (grd_curcanv->cv_bitmap.bm_w * viewWidth) / grd_curscreen->sc_w;
 	height = (grd_curcanv->cv_bitmap.bm_h * viewHeight) / grd_curscreen->sc_h;
 	y = viewHeight - y - height;
-	
+
 	glViewport(x, y, width, height);
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GEQUAL,0.02);
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
 	glCullFace(GL_FRONT);
 	glClear(GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
@@ -47,7 +50,7 @@ void g3_ogles_start_frame() {
 
 void g3_ogles_end_frame() {
 	GLint viewWidth, viewHeight;
-	
+
 	getRenderBufferSize(&viewWidth, &viewHeight);
 	glViewport(0, 0, viewWidth, viewHeight);
 	glMatrixMode(GL_PROJECTION);
@@ -57,6 +60,7 @@ void g3_ogles_end_frame() {
 	glLoadIdentity();
 	glCullFace(GL_BACK);
 	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_ALPHA_TEST);
 }
 
 #endif

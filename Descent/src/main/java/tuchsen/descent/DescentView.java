@@ -171,10 +171,6 @@ public class DescentView extends SurfaceView implements SurfaceHolder.Callback {
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 
-		// Enable depth test
-		gl.glClearDepthf(1.0f);
-		gl.glEnable(GL10.GL_DEPTH_TEST);
-
 		// Enable culling
 		gl.glEnable(GL10.GL_CULL_FACE);
 		gl.glCullFace(GL10.GL_BACK);
@@ -185,9 +181,6 @@ public class DescentView extends SurfaceView implements SurfaceHolder.Callback {
 		// Enable blending for alphas
 		gl.glEnable(GL10.GL_BLEND);
 		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-
-		// Disable depth mask (otherwise get artifacts with 3D sprites)
-		gl.glDepthMask(false);
 	}
 
 	private static native void mouseHandler(short x, short y, boolean down);
