@@ -586,8 +586,6 @@ void init_game()
 
 	init_ai_system();
 
-	init_gauge_canvases();
-
 	init_exploding_walls();
 
 	background_bitmap.bm_data=NULL;
@@ -4330,8 +4328,6 @@ void close_game()
 		gr_free_canvas(VR_offscreen_buffer);			
 		VR_offscreen_buffer = NULL;
 	}
-
-	close_gauge_canvases();
 
 	restore_effect_bitmap_icons();
 

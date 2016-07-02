@@ -277,11 +277,6 @@ static char rcsid[] = "$Id: gauges.c 2.7 1995/12/19 16:18:33 john Exp $";
 
 bitmap_index Gauges[MAX_GAUGE_BMS];   // Array of all gauge bitmaps.
 
-grs_canvas *Canv_LeftEnergyGauge;
-grs_canvas *Canv_SBEnergyGauge;
-grs_canvas *Canv_RightEnergyGauge;
-grs_canvas *Canv_NumericalGauge;
-
 //bitmap numbers for gauges
 
 #define GAUGE_SHIELDS			0		//0..9, in decreasing order (100%,90%...0%)
@@ -1363,22 +1358,6 @@ void add_bonus_points_to_score(int points)
 	}
 }
 
-void init_gauge_canvases()
-{
-	Canv_LeftEnergyGauge = gr_create_canvas( LEFT_ENERGY_GAUGE_W, LEFT_ENERGY_GAUGE_H );
-	Canv_SBEnergyGauge = gr_create_canvas( SB_ENERGY_GAUGE_W, SB_ENERGY_GAUGE_H );
-	Canv_RightEnergyGauge = gr_create_canvas( RIGHT_ENERGY_GAUGE_W, RIGHT_ENERGY_GAUGE_H );
-	Canv_NumericalGauge = gr_create_canvas( NUMERICAL_GAUGE_W, NUMERICAL_GAUGE_H );
-}
-
-void close_gauge_canvases()
-{
-	gr_free_canvas( Canv_LeftEnergyGauge );
-	gr_free_canvas( Canv_SBEnergyGauge );
-	gr_free_canvas( Canv_RightEnergyGauge );
-	gr_free_canvas( Canv_NumericalGauge );
-}
-
 void init_gauges()
 {
 	int i;
@@ -1408,26 +1387,20 @@ void draw_energy_bar(int energy)
 	int not_energy;
 	int x1, x2, y;
 	grs_point left_energy_scale_pts[] = {
-		{ 0, 0 },
+		{ fl2f(LEFT_ENERGY_GAUGE_X), fl2f(LEFT_ENERGY_GAUGE_Y) },
 		{ i2f(64), i2f(8) },
-		{ LEFT_ENERGY_GAUGE_W * 65536, LEFT_ENERGY_GAUGE_H * 65536 }
+		{ fl2f(LEFT_ENERGY_GAUGE_X + LEFT_ENERGY_GAUGE_W), fl2f(LEFT_ENERGY_GAUGE_Y + LEFT_ENERGY_GAUGE_H) }
 	};
 	grs_point right_energy_scale_pts[] = {
-		{ 0, 0 },
+		{ fl2f(RIGHT_ENERGY_GAUGE_X), fl2f(RIGHT_ENERGY_GAUGE_Y) },
 		{ i2f(64), i2f(8) },
-		{ RIGHT_ENERGY_GAUGE_W * 65536, RIGHT_ENERGY_GAUGE_H * 65536 }
+		{ fl2f(RIGHT_ENERGY_GAUGE_X + RIGHT_ENERGY_GAUGE_W), fl2f(RIGHT_ENERGY_GAUGE_Y + RIGHT_ENERGY_GAUGE_H) }
 	};
 
 	// Draw left energy bar
-	gr_set_current_canvas( Canv_LeftEnergyGauge );
-	gr_clear_canvas(255);
 	PIGGY_PAGE_IN(Gauges[GAUGE_ENERGY_LEFT]);
 	scale_bitmap(&GameBitmaps[Gauges[GAUGE_ENERGY_LEFT].index], left_energy_scale_pts);
-#ifdef OGLES
-	gr_setcolor(TRANSPARENCY_COLOR);
-#else
 	gr_setcolor(0);
-#endif
 
 	not_energy = (grd_curscreen->sc_w * 0.190625) - (energy*(grd_curscreen->sc_w * 0.190625))/100;
 
@@ -1439,23 +1412,15 @@ void draw_energy_bar(int energy)
 			if ( y>=0 && y<2 ) if (x2 > LEFT_ENERGY_GAUGE_W - 1) x2 = LEFT_ENERGY_GAUGE_W - 1;
 			if ( y>=2 && y<(grd_curscreen->sc_h * 0.03)) if (x2 > LEFT_ENERGY_GAUGE_W - 2) x2 = LEFT_ENERGY_GAUGE_W - 2;
 			if ( y>= (grd_curscreen->sc_h * 0.03) ) if (x2 > LEFT_ENERGY_GAUGE_W - 3) x2 = LEFT_ENERGY_GAUGE_W - 3;
-			
-			if (x2 > x1) gr_uscanline( x1, x2, y ); 
+			if (x2 > x1)
+				gr_uscanline((int) LEFT_ENERGY_GAUGE_X + x1, (int) LEFT_ENERGY_GAUGE_X + x2,
+							 (int) LEFT_ENERGY_GAUGE_Y + y);
 		}
 
-	gr_set_current_canvas( get_current_game_screen() );
-	gr_ubitmapm( LEFT_ENERGY_GAUGE_X, LEFT_ENERGY_GAUGE_Y, &Canv_LeftEnergyGauge->cv_bitmap );
-
 	// Draw right energy bar
-	gr_set_current_canvas( Canv_RightEnergyGauge );
-	gr_clear_canvas(255);
 	PIGGY_PAGE_IN(Gauges[GAUGE_ENERGY_RIGHT]);
 	scale_bitmap(&GameBitmaps[Gauges[GAUGE_ENERGY_RIGHT].index], right_energy_scale_pts);
-#ifdef OGLES
-	gr_setcolor(TRANSPARENCY_COLOR);
-#else
 	gr_setcolor(0);
-#endif
 
 	if (energy < 100)
 		for (y=0; y<LEFT_ENERGY_GAUGE_H; y++) {
@@ -1465,13 +1430,10 @@ void draw_energy_bar(int energy)
 			if ( y>=0 && y<2 ) if (x1 < 0) x1 = 0;
 			if ( y>=2 && y<(grd_curscreen->sc_h * 0.03)) if (x1 < 1) x1 = 1;
 			if ( y>= (grd_curscreen->sc_h * 0.03)) if (x1 < 2) x1 = 2;
-			
-			if (x2 > x1) gr_uscanline( x1, x2, y ); 
+			if (x2 > x1)
+				gr_uscanline((int) RIGHT_ENERGY_GAUGE_X + x1, (int) RIGHT_ENERGY_GAUGE_X + x2,
+							 (int) RIGHT_ENERGY_GAUGE_Y + y);
 		}
-
-	gr_set_current_canvas( get_current_game_screen() );
-	gr_ubitmapm( RIGHT_ENERGY_GAUGE_X, RIGHT_ENERGY_GAUGE_Y, &Canv_RightEnergyGauge->cv_bitmap );
-
 }
 
 void draw_shield_bar(int shield)
@@ -1582,13 +1544,11 @@ void draw_numerical_display(int shield, int energy) {
 
 	// Get scaling for font
 	grs_point scale_pts[] = {
-		{0, 0},
+		{fl2f(NUMERICAL_GAUGE_X), fl2f(NUMERICAL_GAUGE_X)},
 		{i2f(19), i2f(22)},
-		{(fix) NUMERICAL_GAUGE_W * 65536, (fix) NUMERICAL_GAUGE_H * 65536}
+		{fl2f(NUMERICAL_GAUGE_X + NUMERICAL_GAUGE_W), fl2f(NUMERICAL_GAUGE_Y + NUMERICAL_GAUGE_H)}
 	};
 
-	gr_set_current_canvas(Canv_NumericalGauge);
-	gr_clear_canvas(255);
 	gr_set_curfont(GAME_FONT);
 	PIGGY_PAGE_IN(Gauges[GAUGE_NUMERICAL]);
 	scale_bitmap(&GameBitmaps[Gauges[GAUGE_NUMERICAL].index], scale_pts);
@@ -1602,15 +1562,14 @@ void draw_numerical_display(int shield, int energy) {
 	shield_w *= f2fl(Scale_factor);
 	energy_w *= f2fl(Scale_factor);
 
-	gr_scale_printf((int) ((NUMERICAL_GAUGE_W - shield_w) / 2 + f2i(Scale_x) - f2i(Scale_factor)),
-					(int) (grd_curscreen->sc_h * 0.075), Scale_factor, Scale_factor, temp_shield);
+	gr_scale_printf((int) (NUMERICAL_GAUGE_X + (NUMERICAL_GAUGE_W - shield_w) / 2 + f2i(Scale_x)),
+					(int) (NUMERICAL_GAUGE_Y + grd_curscreen->sc_h * 0.08), Scale_factor,
+					Scale_factor, temp_shield);
 
 	gr_set_fontcolor(gr_getcolor(25, 18, 6), -1);
-	gr_scale_printf((int) ((NUMERICAL_GAUGE_W - energy_w) / 2 + f2i(Scale_x) - f2i(Scale_factor)),
-					(int) (grd_curscreen->sc_h * 0.01), Scale_factor, Scale_factor, temp_energy);
-
-	gr_set_current_canvas(get_current_game_screen());
-	gr_ubitmapm((int) NUMERICAL_GAUGE_X, (int) NUMERICAL_GAUGE_Y, &Canv_NumericalGauge->cv_bitmap);
+	gr_scale_printf((int) (NUMERICAL_GAUGE_X + (NUMERICAL_GAUGE_W - energy_w) / 2 + f2i(Scale_x)),
+					(int) (NUMERICAL_GAUGE_Y + grd_curscreen->sc_h * 0.015), Scale_factor,
+					Scale_factor, temp_energy);
 }
 
 void draw_keys()
@@ -1930,13 +1889,11 @@ void sb_draw_energy_bar(energy)
 {
 	int erase_height;
 	grs_point scale_pts[] = {
-		{ 0, 0 },
+		{ fl2f(SB_ENERGY_GAUGE_X), fl2f(SB_ENERGY_GAUGE_Y) },
 		{ i2f(64), i2f(8) },
-		{ SB_ENERGY_GAUGE_W * 65536, SB_ENERGY_GAUGE_H * 65536 },
+		{ fl2f(SB_ENERGY_GAUGE_X + SB_ENERGY_GAUGE_W), fl2f(SB_ENERGY_GAUGE_Y + SB_ENERGY_GAUGE_H) },
 	};
 
-	gr_set_current_canvas( Canv_SBEnergyGauge );
-	gr_clear_canvas(255);
 	PIGGY_PAGE_IN(Gauges[SB_GAUGE_ENERGY]);
 	scale_bitmap(&GameBitmaps[Gauges[SB_GAUGE_ENERGY].index],scale_pts);
 
@@ -1944,16 +1901,15 @@ void sb_draw_energy_bar(energy)
 
 	if (erase_height > 0) {
 		gr_setcolor( 0 );
-		gr_rect(0,0,SB_ENERGY_GAUGE_W-1,erase_height-1);
+		gr_rect((int) SB_ENERGY_GAUGE_X, (int) SB_ENERGY_GAUGE_Y,
+				(int) (SB_ENERGY_GAUGE_X + SB_ENERGY_GAUGE_W) - 1,
+				(int) SB_ENERGY_GAUGE_Y + erase_height - 1);
 	}
-
-	gr_set_current_canvas( get_current_game_screen() );
-	gr_ubitmapm( SB_ENERGY_GAUGE_X, SB_ENERGY_GAUGE_Y, &Canv_SBEnergyGauge->cv_bitmap );
 
 	//draw numbers
 	gr_set_fontcolor(gr_getcolor(25,18,6),-1 );
 	gr_scale_printf((energy>99)?SB_ENERGY_NUM_X:((energy>9)?SB_ENERGY_NUM_X+grd_curscreen->sc_w*0.00625:SB_ENERGY_NUM_X+grd_curscreen->sc_w*0.0125),SB_ENERGY_NUM_Y, Scale_factor, Scale_factor,"%d",energy);
-					  
+
 }
 
 void sb_draw_shield_num(int shield)

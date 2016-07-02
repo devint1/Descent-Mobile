@@ -74,6 +74,11 @@ void gr_uscanline( int x1, int x2, int y )
 		case BM_SVGA:
 			gr_vesa_scanline( x1+XOFFSET, x2+XOFFSET, y+YOFFSET, COLOR );
 			break;
+#ifdef OGLES
+		case BM_OGLES:
+			gr_rect(x1, y, x2, y);
+			break;
+#endif
 		}
 	} else {
 		switch(TYPE)
