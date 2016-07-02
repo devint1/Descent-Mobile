@@ -229,6 +229,10 @@ unsigned char gr_pal_default[768];
 
 int gr_installed = 0;
 
+#ifdef OGLES
+int can_save_screen = 0;
+#endif
+
 // This crap won't work in Windows
 /*ubyte * pVideoMode =  (volatile ubyte *)0x449;
 ushort * pNumColumns = (volatile ushort *)0x44a;
@@ -669,7 +673,10 @@ void ogles_draw_saved_screen(GLuint saved_screen_tex) {
 GLuint ogles_save_screen() {
 	GLuint tex;
 	GLint viewWidth, viewHeight;
-	
+
+	if (!can_save_screen) {
+		showRenderBuffer();
+	}
 	getRenderBufferSize(&viewWidth, &viewHeight);
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1, &tex);
@@ -701,4 +708,9 @@ void ogles_map_bitmap(unsigned char *dest, GLubyte *src, GLuint width, GLuint he
 		}
 	}
 }
+
+int ogles_can_save_screen() {
+	return can_save_screen;
+}
+
 #endif

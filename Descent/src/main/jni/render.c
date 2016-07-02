@@ -15,6 +15,7 @@ extern JavaVM *jvm;
 extern jobject Descent_view;
 extern bool Want_pause;
 extern grs_bitmap nm_background;
+extern int can_save_screen;
 
 extern void draw_buttons();
 extern void mouse_handler(short x, short y, bool down);
@@ -92,6 +93,7 @@ void showRenderBuffer() {
 	} else {
 		draw_buttons();
 		eglSwapBuffers(eglGetCurrentDisplay(), eglGetCurrentSurface(EGL_READ));
+		can_save_screen = !can_save_screen;
 	}
 }
 

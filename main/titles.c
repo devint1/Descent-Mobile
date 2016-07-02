@@ -290,9 +290,12 @@ int show_title_screen( char * filename, int allow_keys )
 	
 	vfx_set_palette_sub( New_pal );
 	gr_set_current_canvas( NULL );
+	gr_clear_canvas(BM_XRGB(0, 0, 0));
+	if (!ogles_can_save_screen()) {
+		showRenderBuffer();
+	}
 	scale_bitmap(&title_bm, scale_pts);
 	gr_palette_fade_in(New_pal, 32, allow_keys);
-	showRenderBuffer();
 
 	gr_palette_load( New_pal );
 	timer	= timer_get_fixed_seconds() + i2f(3);

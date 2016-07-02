@@ -581,6 +581,7 @@ extern void gr_sync_display();
 extern void ogles_draw_saved_screen(GLuint saved_screen_tex);
 extern GLuint ogles_save_screen();
 void ogles_map_bitmap(unsigned char *dest, GLubyte *src, GLuint width, GLuint height);
+int ogles_can_save_screen();
 #endif
 
 #endif

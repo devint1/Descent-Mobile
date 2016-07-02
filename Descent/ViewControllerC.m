@@ -17,6 +17,8 @@
 #include "key.h"
 #include "ViewControllerC.h"
 
+extern int can_save_screen;
+
 int textIsActive() {
 	AppDelegate	*appDelegate = [[UIApplication sharedApplication] delegate];
 	ViewController *viewController = (ViewController*)[[appDelegate window] rootViewController];
@@ -51,5 +53,6 @@ void showRenderBuffer() {
 	AppDelegate	*appDelegate = [[UIApplication sharedApplication] delegate];
 	RenderView *view = (RenderView*)[[[appDelegate window] rootViewController] view];
 	[[view context] presentRenderbuffer:GL_RENDERBUFFER_OES];
+	can_save_screen = 1;
 }
 #endif
