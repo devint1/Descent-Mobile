@@ -1372,14 +1372,11 @@ void init_gauges()
 		old_energy[i]			= -1;
 		old_shields[i]			= -1;
 		old_flags[i]			= -1;
-		old_cloak[i]			= -1;
 		old_lives[i]			= -1;
 
 		force_weapon_draw[i] = true;
 		old_ammo_count[0][i] = old_ammo_count[1][i] = -1;
 	}
-
-	cloak_fade_state = 0;
 }
 
 void draw_energy_bar(int energy)
@@ -1503,7 +1500,7 @@ void draw_player_ship(int cloak_state,int old_cloak_state,int x, int y)
 	if (cloak_fade_state)
 		cloak_fade_timer -= FrameTime;
 
-	while (cloak_fade_state && cloak_fade_timer < 0) {
+	if (cloak_fade_state && cloak_fade_timer < 0) {
 
 		cloak_fade_timer += CLOAK_FADE_WAIT_TIME;
 
@@ -1525,15 +1522,21 @@ void draw_player_ship(int cloak_state,int old_cloak_state,int x, int y)
 		}
 	}
 
-	gr_set_current_canvas(VR_offscreen_buffer);
-	gr_clear_canvas(255);
-	scale_bitmap(bm, scale_pts);
+#ifdef OGLES
 	Gr_scanline_darkening_level = cloak_fade_value;
-	gr_rect(x, y, x+scale_w-1, y+scale_h-1);
+	scale_bitmap(bm, scale_pts);
 	Gr_scanline_darkening_level = GR_FADE_LEVELS;
-
-	gr_set_current_canvas(get_current_game_screen());
-	gr_bm_ubitbltm(scale_w, scale_h, x, y, x, y, &VR_offscreen_buffer->cv_bitmap, &grd_curcanv->cv_bitmap);
+#else
+	gr_set_current_canvas(VR_offscreen_buffer);
+	gr_setcolor(TRANSPARENCY_COLOR);
+	gr_rect(0, 0, bm->bm_w*f2fl(Scale_x)-1, bm->bm_h*f2fl(Scale_y)-1);
+	scale_bitmap(bm, scale_pts, 0);
+	Gr_scanline_darkening_level = cloak_fade_value;
+	gr_rect(0, 0, bm->bm_w*f2fl(Scale_x)-1, bm->bm_h*f2fl(Scale_y)-1);
+	Gr_scanline_darkening_level = GR_FADE_LEVELS;
+	gr_set_current_canvas( get_current_game_screen() );
+	gr_bm_ubitbltm( bm->bm_w * f2fl(Scale_x), bm->bm_h * f2fl(Scale_y), x, y, 0, 0, &VR_offscreen_buffer->cv_bitmap, &grd_curcanv->cv_bitmap);
+#endif
 }
 
 #define INV_FRAME_TIME	(f1_0/10)		//how long for each frame
@@ -2518,13 +2521,14 @@ void render_gauges()
 
 	}
 
-	if (cloak != old_cloak[VR_current_page] || cloak_fade_state || (cloak && GameTime>Players[Player_num].cloak_time+CLOAK_TIME_MAX-i2f(3))) {
+	if (cloak != old_cloak[VR_current_page] || cloak_fade_state ||
+		(cloak && GameTime > Players[Player_num].cloak_time + CLOAK_TIME_MAX - i2f(3)) || !cloak) {
 		if (Cockpit_mode == CM_FULL_COCKPIT)
-			draw_player_ship(cloak,old_cloak[VR_current_page],SHIP_GAUGE_X,SHIP_GAUGE_Y);
+			draw_player_ship(cloak, old_cloak[VR_current_page], SHIP_GAUGE_X, SHIP_GAUGE_Y);
 		else
-			draw_player_ship(cloak,old_cloak[VR_current_page],SB_SHIP_GAUGE_X,SB_SHIP_GAUGE_Y);
+			draw_player_ship(cloak, old_cloak[VR_current_page], SB_SHIP_GAUGE_X, SB_SHIP_GAUGE_Y);
 
-		old_cloak[VR_current_page]=cloak;
+		old_cloak[VR_current_page] = cloak;
 	}
 
 	draw_weapon_boxes();
