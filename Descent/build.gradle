@@ -1,7 +1,7 @@
 apply plugin: 'com.android.model.application'
 model {
 	android {
-		compileSdkVersion 19
+		compileSdkVersion 23
 		buildToolsVersion "23.0.3"
 
 		defaultConfig {
