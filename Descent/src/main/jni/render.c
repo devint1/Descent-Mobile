@@ -18,6 +18,8 @@ extern grs_bitmap nm_background;
 extern int can_save_screen;
 
 extern void draw_buttons();
+extern void digi_close_digi();
+extern void digi_init_digi();
 extern void mouse_handler(short x, short y, bool down);
 
 void getRenderBufferSize(GLint *width, GLint *height) {
@@ -41,12 +43,17 @@ void showRenderBuffer() {
 		eglDisplay = eglGetCurrentDisplay();
 		eglSurface = eglGetCurrentSurface(EGL_DRAW);
 
+		// Close digi so another application can use the OpenSL ES objects
+		digi_close_digi();
+
 		(*jvm)->GetEnv(jvm, (void **) &env, JNI_VERSION_1_6);
 		clazz = (*env)->FindClass(env, "tuchsen/descent/DescentView");
 
 		// Pause this thread
 		method = (*env)->GetMethodID(env, clazz, "pauseRenderThread", "()V");
 		(*env)->CallVoidMethod(env, Descent_view, method);
+
+		digi_init_digi();
 
 		if (Surface_was_destroyed) {
 			// Purge all texture assets, since the EGL context will be blown away
