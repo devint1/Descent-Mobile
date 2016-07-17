@@ -5,7 +5,7 @@ model {
 		buildToolsVersion "23.0.3"
 
 		defaultConfig {
-			minSdkVersion.apiLevel = 19
+			minSdkVersion.apiLevel = 10
 			targetSdkVersion.apiLevel = 23
 		}
 		buildTypes {

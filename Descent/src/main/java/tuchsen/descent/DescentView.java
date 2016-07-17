@@ -3,11 +3,15 @@ package tuchsen.descent;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Point;
+import android.os.Build;
+import android.os.Handler;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
@@ -16,10 +20,12 @@ import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLSurface;
 import javax.microedition.khronos.opengles.GL10;
 
-public class DescentView extends SurfaceView implements SurfaceHolder.Callback {
-	private boolean descentRunning, paused, surfaceWasDestroyed;
+public class DescentView extends SurfaceView implements KeyEvent.Callback,  SurfaceHolder.Callback {
+	private boolean descentRunning, paused, surfaceWasDestroyed, textActive;
 	private Context context;
 	private DescentView thiz;
+	private Handler mainHandler;
+	private InputMethodManager imm;
 	private final Object renderThreadObj = new Object();
 	private Point size;
 	private SurfaceHolder holder;
@@ -30,6 +36,10 @@ public class DescentView extends SurfaceView implements SurfaceHolder.Callback {
 		this.descentRunning = false;
 		this.holder = getHolder();
 		this.thiz = this;
+		this.textActive = false;
+		this.imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+		this.mainHandler = new Handler(context.getMainLooper());
+		this.setFocusableInTouchMode(true);
 		holder.addCallback(this);
 	}
 
@@ -73,7 +83,71 @@ public class DescentView extends SurfaceView implements SurfaceHolder.Callback {
 		return touchHandled;
 	}
 
+	@SuppressWarnings("unused")
+	private boolean textIsActive() {
+		return textActive;
+	}
+
+	@SuppressWarnings("unused")
+	private void activateText() {
+		mainHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				requestFocus();
+				imm.showSoftInput(thiz, InputMethodManager.SHOW_FORCED);
+				textActive = true;
+			}
+		});
+	}
+
+	@SuppressWarnings("unused")
+	private void deactivateText() {
+		mainHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				imm.hideSoftInputFromWindow(getWindowToken(), 0);
+				clearFocus();
+				textActive = false;
+			}
+		});
+	}
+
 	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_DEL) {
+			keyHandler((char) 0x0E, false);
+		} else if (keyCode == KeyEvent.KEYCODE_ENTER) {
+			keyHandler((char) 0x1C, false);
+		} else {
+			keyHandler((char) event.getUnicodeChar(), false);
+		}
+		return event.getUnicodeChar() != 0;
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_DEL) {
+			keyHandler((char) 0x0E, true);
+		} else if (keyCode == KeyEvent.KEYCODE_ENTER) {
+			keyHandler((char) 0x1C, true);
+		} else {
+			keyHandler((char) event.getUnicodeChar(), true);
+		}
+		return event.getUnicodeChar() != 0;
+	}
+
+	@Override
+	public boolean onKeyPreIme(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && textActive) {
+			keyHandler((char) 0x01, true);
+			keyHandler((char) 0x01, false);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
 	public void surfaceCreated(SurfaceHolder holder) {
 		if (!descentRunning) {
 			new Thread(new Runnable() {
@@ -82,7 +156,13 @@ public class DescentView extends SurfaceView implements SurfaceHolder.Callback {
 					WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 					Display display = wm.getDefaultDisplay();
 					size = new Point();
-					display.getRealSize(size);
+					if (Build.VERSION.SDK_INT >= 19) {
+						display.getRealSize(size);
+					} else if (Build.VERSION.SDK_INT >= 13) {
+						display.getSize(size);
+					} else {
+						size.set(display.getWidth(), display.getHeight());
+					}
 					initEgl();
 
 					// Start Descent!
@@ -182,6 +262,8 @@ public class DescentView extends SurfaceView implements SurfaceHolder.Callback {
 		gl.glEnable(GL10.GL_BLEND);
 		gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 	}
+
+	private static native void keyHandler(char key, boolean down);
 
 	private static native void mouseHandler(short x, short y, boolean down);
 

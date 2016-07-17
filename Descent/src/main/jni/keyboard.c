@@ -6,7 +6,7 @@
 #include "types.h"
 
 extern JavaVM *jvm;
-extern jobject Activity;
+extern jobject Descent_view;
 
 extern void key_handler(unsigned char scancode, bool down);
 
@@ -17,9 +17,9 @@ int textIsActive() {
 	jboolean retval;
 
 	(*jvm)->GetEnv(jvm, (void **) &env, JNI_VERSION_1_6);
-	clazz = (*env)->FindClass(env, "tuchsen/descent/DescentActivity");
+	clazz = (*env)->FindClass(env, "tuchsen/descent/DescentView");
 	method = (*env)->GetMethodID(env, clazz, "textIsActive", "()Z");
-	retval = (*env)->CallBooleanMethod(env, Activity, method);
+	retval = (*env)->CallBooleanMethod(env, Descent_view, method);
 	(*env)->DeleteLocalRef(env, clazz);
 	return retval;
 }
@@ -30,9 +30,9 @@ void activateText() {
 	jmethodID method;
 
 	(*jvm)->GetEnv(jvm, (void **) &env, JNI_VERSION_1_6);
-	clazz = (*env)->FindClass(env, "tuchsen/descent/DescentActivity");
+	clazz = (*env)->FindClass(env, "tuchsen/descent/DescentView");
 	method = (*env)->GetMethodID(env, clazz, "activateText", "()V");
-	(*env)->CallVoidMethod(env, Activity, method);
+	(*env)->CallVoidMethod(env, Descent_view, method);
 	(*env)->DeleteLocalRef(env, clazz);
 }
 
@@ -42,13 +42,12 @@ void deactivateText() {
 	jmethodID method;
 
 	(*jvm)->GetEnv(jvm, (void **) &env, JNI_VERSION_1_6);
-	clazz = (*env)->FindClass(env, "tuchsen/descent/DescentActivity");
+	clazz = (*env)->FindClass(env, "tuchsen/descent/DescentView");
 	method = (*env)->GetMethodID(env, clazz, "deactivateText", "()V");
-	(*env)->CallVoidMethod(env, Activity, method);
+	(*env)->CallVoidMethod(env, Descent_view, method);
 	(*env)->DeleteLocalRef(env, clazz);
 }
 
-void Java_tuchsen_descent_DescentActivity_keyHandler(JNIEnv *env, jobject thiz, jchar c) {
-	key_handler((unsigned char) c, true);
-	key_handler((unsigned char) c, false);
+void Java_tuchsen_descent_DescentView_keyHandler(JNIEnv *env, jobject thiz, jchar c, jboolean down) {
+	key_handler((unsigned char) c, down);
 }
