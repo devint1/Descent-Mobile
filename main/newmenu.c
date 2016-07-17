@@ -1454,7 +1454,7 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 			int ascii;
 
 			if ( ((item[choice].type==NM_TYPE_INPUT)||((item[choice].type==NM_TYPE_INPUT_MENU)&&(item[choice].group==1)) )&& (old_choice==choice) )	{
-				if ( k==KEY_LEFT || k==KEY_BACKSP || k==KEY_PAD4 )	{
+				if ( k==KEY_LEFT || k==KEY_BACKSP )	{
 					if (item[choice].value==-1) item[choice].value = strlen(item[choice].text);
 					if (item[choice].value > 0)
 						item[choice].value--;
@@ -1516,7 +1516,6 @@ int newmenu_do3( char * title, char * subtitle, int nitems, newmenu_item * item,
 			if ( (item[choice].type==NM_TYPE_NUMBER) || (item[choice].type==NM_TYPE_SLIDER)) 	{
 				int ov=item[choice].value;
 				switch( k ) {
-				case KEY_PAD4:
 			  	case KEY_LEFT:
 			  	case KEY_MINUS:
 				case KEY_MINUS+KEY_SHIFTED:

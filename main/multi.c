@@ -1156,7 +1156,6 @@ void multi_message_input_sub( int key )
 		break;
 	case KEY_LEFT:
 	case KEY_BACKSP:
-	case KEY_PAD4:
 		if (multi_message_index > 0)
 			multi_message_index--;
 		Network_message[multi_message_index] = 0;
