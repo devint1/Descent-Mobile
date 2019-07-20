@@ -48,6 +48,6 @@ void deactivateText() {
 	(*env)->DeleteLocalRef(env, clazz);
 }
 
-void Java_tuchsen_descent_DescentView_keyHandler(JNIEnv *env, jobject thiz, jchar c, jboolean down) {
+void Java_tuchsen_descent_DescentView_keyHandler(JNIEnv *env, jclass type, jchar c, jboolean down) {
 	key_handler((unsigned char) c, down);
 }

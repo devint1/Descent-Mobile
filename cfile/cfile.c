@@ -101,6 +101,8 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 static char rcsid[] = "$Id: cfile.c 1.24 1995/03/15 14:20:27 john Exp $";
 #pragma unused(rcsid)
 
+#define  __USE_BSD
+
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -183,7 +185,7 @@ FILE * cfile_get_filehandle( char * filename, char * mode )
 
 	descent_critical_error = 0;
 #ifdef ANDROID_NDK
-	AAsset* asset = AAssetManager_open(Asset_manager, filename, AASSET_MODE_BUFFER);
+	AAsset* asset = AAssetManager_open(Asset_manager, filename, AASSET_MODE_RANDOM);
 	if (!asset) {
 		fp = NULL;
 	} else {

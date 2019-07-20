@@ -58,7 +58,7 @@ int	slew_frame(int dont_check_keys);		// Does slew frame
 #else
 
 #define slew_init(obj)
-int slew_stop(obj) {}
+inline int slew_stop(obj) {}
 #define slew_reset_orient()
 //#define slew_frame(dont_check_keys) //KRB hack
 int	slew_frame(int dont_check_keys);		// Does slew frame

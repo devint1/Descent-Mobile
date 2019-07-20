@@ -1506,7 +1506,7 @@ network_endlevel_poll( int nitems, newmenu_item * menus, int * key, int citem )
 	{
 		if (Fuelcen_seconds_left < 0)
 		{
-			sprintf(menus[N_players].text, TXT_REACTOR_EXPLODED);
+			sprintf(menus[N_players].text, "%s", TXT_REACTOR_EXPLODED);
 			menus[N_players].redraw = 1;
 		}
 		else
@@ -1601,7 +1601,7 @@ newmenu:
 	m[N_players].text = menu_text[N_players];
 
 	if (Fuelcen_seconds_left < 0)
-		sprintf(m[N_players].text, TXT_REACTOR_EXPLODED);
+		sprintf(m[N_players].text, "%s", TXT_REACTOR_EXPLODED);
 	else
 		sprintf(m[N_players].text, "%s: %d %s  ", TXT_TIME_REMAINING, Fuelcen_seconds_left, TXT_SECONDS);
 

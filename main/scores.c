@@ -332,7 +332,7 @@ void scores_read()
 		int i;
 
 	 	// No error message needed, code will work without a scores file
-		sprintf( Scores.cool_saying, TXT_REGISTER_DESCENT );
+		sprintf( Scores.cool_saying, "%s", TXT_REGISTER_DESCENT );
 		sprintf( Scores.stats[0].name, "Parallax" );
 		sprintf( Scores.stats[1].name, "Mike" );
 		sprintf( Scores.stats[2].name, "Matt" );

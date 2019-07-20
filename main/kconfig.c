@@ -2291,6 +2291,6 @@ void kconfig_sense_init()
 			printf("%s\n", TXT_VFX1_ERROR1);
 		}
 	} else {
-		printf( TXT_VFX1_ERROR2 );
+		printf( "%s", TXT_VFX1_ERROR2 );
 	}
 }

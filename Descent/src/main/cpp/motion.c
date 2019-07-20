@@ -67,6 +67,6 @@ int haveGyroscope() {
 	return gyroscope;
 }
 
-jboolean Java_tuchsen_descent_DescentActivity_getUseGyroscope(JNIEnv *env, jobject thiz) {
+jboolean Java_tuchsen_descent_DescentActivity_getUseGyroscope(JNIEnv *env, jclass type) {
 	return Config_use_gyroscope;
 }

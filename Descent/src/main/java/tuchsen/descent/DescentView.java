@@ -1,5 +1,6 @@
 package tuchsen.descent;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Point;
@@ -20,7 +21,7 @@ import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLSurface;
 import javax.microedition.khronos.opengles.GL10;
 
-public class DescentView extends SurfaceView implements KeyEvent.Callback,  SurfaceHolder.Callback {
+public class DescentView extends SurfaceView implements KeyEvent.Callback, SurfaceHolder.Callback {
 	private boolean descentRunning, paused, surfaceWasDestroyed, textActive;
 	private Context context;
 	private DescentView thiz;
@@ -43,6 +44,7 @@ public class DescentView extends SurfaceView implements KeyEvent.Callback,  Surf
 		holder.addCallback(this);
 	}
 
+	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public boolean onTouchEvent(final MotionEvent event) {
 		int i, historySize, firstPointerIndex, numPointers;
@@ -147,21 +149,19 @@ public class DescentView extends SurfaceView implements KeyEvent.Callback,  Surf
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public void surfaceCreated(SurfaceHolder holder) {
 		if (!descentRunning) {
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
 					WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+					assert wm != null;
 					Display display = wm.getDefaultDisplay();
 					size = new Point();
 					if (Build.VERSION.SDK_INT >= 19) {
 						display.getRealSize(size);
-					} else if (Build.VERSION.SDK_INT >= 13) {
-						display.getSize(size);
 					} else {
-						size.set(display.getWidth(), display.getHeight());
+						display.getSize(size);
 					}
 					initEgl();
 
@@ -221,7 +221,7 @@ public class DescentView extends SurfaceView implements KeyEvent.Callback,  Surf
 	private void initEgl() {
 		int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
 		int[] num_config = new int[1];
-		final EGLConfig configs[] = new EGLConfig[1];
+		final EGLConfig[] configs = new EGLConfig[1];
 		int[] attrib_list = {EGL_CONTEXT_CLIENT_VERSION, 1, EGL10.EGL_NONE};
 		EGL10 egl;
 		EGLConfig eglConfig;

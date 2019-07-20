@@ -277,7 +277,7 @@ void handle_move(jint pointerId, jfloat x, jfloat y, jfloat prevX, jfloat prevY)
 	}
 }
 
-jboolean Java_tuchsen_descent_DescentView_touchHandler(JNIEnv *env, jobject thiz,
+jboolean Java_tuchsen_descent_DescentView_touchHandler(JNIEnv *env, jclass type,
 													   jint action, jint pointerId,
 													   jfloat x, jfloat y, jfloat prevX,
 													   jfloat prevY) {

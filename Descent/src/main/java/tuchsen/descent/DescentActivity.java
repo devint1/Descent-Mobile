@@ -28,7 +28,7 @@ public class DescentActivity extends Activity implements SensorEventListener {
 	private Sensor gyroscopeSensor;
 	private SensorManager sensorManager;
 	private float buttonSizeBias;
-	private float acceleration[];
+	private float[] acceleration;
 	private int mediaPlayerPosition;
 
 	@Override
@@ -60,7 +60,9 @@ public class DescentActivity extends Activity implements SensorEventListener {
 
 		// Set up gyroscope
 		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-		gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+		if (sensorManager != null) {
+			gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+		}
 
 		// Create media player for MIDI
 		mediaPlayer = new MediaPlayer();
@@ -196,6 +198,6 @@ public class DescentActivity extends Activity implements SensorEventListener {
 	private static native boolean getUseGyroscope();
 
 	static {
-		System.loadLibrary("Descent");
+		System.loadLibrary("descent");
 	}
 }

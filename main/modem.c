@@ -1496,7 +1496,7 @@ newmenu:
 	else if (Game_mode & GM_MODEM)
 		sprintf(subtitle+strlen(subtitle), "%d %s %s %s\n%s", com_baud_rate, TXT_BAUD, TXT_MODEM, TXT_LINK_ACTIVE, Players[OtherPlayer].callsign);	
 	else
-		sprintf(subtitle+strlen(subtitle), TXT_NOT_CONNECTED);
+		sprintf(subtitle+strlen(subtitle), "%s", TXT_NOT_CONNECTED);
 
 	multi_leave_menu = 0;
 

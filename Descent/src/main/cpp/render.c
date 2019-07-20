@@ -104,6 +104,6 @@ void showRenderBuffer() {
 	}
 }
 
-void Java_tuchsen_descent_DescentView_surfaceWasDestroyed(JNIEnv *env) {
+void Java_tuchsen_descent_DescentView_surfaceWasDestroyed(JNIEnv *env, jclass type) {
 	Surface_was_destroyed = true;
 }
