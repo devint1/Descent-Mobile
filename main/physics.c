@@ -307,7 +307,9 @@ void check_and_fix_matrix(vms_matrix *m)
 
 	vm_vector_2_matrix(&tempm,&m->fvec,&m->uvec,NULL);
 
-	memcpy(m, &tempm, sizeof(vms_matrix));
+	m->rvec = tempm.rvec;
+	m->uvec = tempm.uvec;
+	m->fvec = tempm.fvec;
 }
 
 
