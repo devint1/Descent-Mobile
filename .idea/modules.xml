@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/Descent/Descent.iml" filepath="$PROJECT_DIR$/Descent/Descent.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Descent-Mobile.iml" filepath="$PROJECT_DIR$/Descent-Mobile.iml" />
-    </modules>
-  </component>
-</project>

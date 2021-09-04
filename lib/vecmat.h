@@ -158,6 +158,7 @@ COPYRIGHT 1993-1998 PARALLAX SOFTWARE CORPORATION.  ALL RIGHTS RESERVED.
 //#define INLINE 1		//are some of these functions inline?
 
 //The basic fixed-point vector.  Access elements by name or position
+#pragma pack(1)
 typedef struct vms_vector {
 	fix x, y, z;
 } vms_vector;
