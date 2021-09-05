@@ -1,6 +1,7 @@
 package tuchsen.descent;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -10,6 +11,7 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
@@ -30,6 +32,7 @@ public class DescentActivity extends Activity implements SensorEventListener {
 	private float buttonSizeBias;
 	private float[] acceleration;
 	private int mediaPlayerPosition;
+	private int refreshPeriodUs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,10 @@ public class DescentActivity extends Activity implements SensorEventListener {
 		if (sensorManager != null) {
 			gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 		}
+
+		final Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		final float refreshRate = display.getRefreshRate();
+		refreshPeriodUs = (int) (1.0 / refreshRate * 1000000);
 
 		// Create media player for MIDI
 		mediaPlayer = new MediaPlayer();
@@ -128,7 +135,7 @@ public class DescentActivity extends Activity implements SensorEventListener {
 	}
 
 	private void startMotion() {
-		sensorManager.registerListener(this, gyroscopeSensor, SensorManager.SENSOR_DELAY_GAME);
+		sensorManager.registerListener(this, gyroscopeSensor, refreshPeriodUs);
 	}
 
 	private void stopMotion() {
