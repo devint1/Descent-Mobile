@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 31
+    buildToolsVersion "31.0.0"
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 30
+        targetSdkVersion 31
         externalNativeBuild {
             cmake {
                 cFlags "-DANDROID_NDK", "-DDISABLE_IMPORTGL", "-DOGLES", "-DNASM", "-DNETWORK"
@@ -14,7 +14,6 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            useProguard false
             signingConfig debug.signingConfig
             externalNativeBuild {
                 cmake {
